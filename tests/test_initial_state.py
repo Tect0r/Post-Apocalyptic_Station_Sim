@@ -1,6 +1,3 @@
-#pytest -v <- run tests
-#python -m metro_sim.main <- run the main function to see the initial state
-
 from metro_sim.services.state_factory import create_initial_station
 
 
