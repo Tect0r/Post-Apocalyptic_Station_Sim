@@ -6,18 +6,18 @@
 from time import sleep
 
 from metro_sim.services.state_factory import create_initial_station
-from metro_sim.ui.cli import clear_console, show_station_status, show_input_options, show_upgrade_options, slot_upgrade_options
+from metro_sim.ui.cli import clear_console, show_station_overview, show_upgrade_options, slot_upgrade_options
 from metro_sim.services.simulation_service import simulate_next_day
 
 
 
 def main() -> None:
     station = create_initial_station()
+    
 
     while True:
         clear_console()
-        show_station_status(station)
-        show_input_options()
+        show_station_overview(station)
         user_input = input("")
 
         match user_input:
@@ -49,8 +49,7 @@ def upgrade_station(station: dict) -> None:
         case "4":
             upgrade_slots(4, station)
         case "Esc":
-            show_station_status(station)
-            show_input_options()
+            show_station_overview(station)
         case _:
             print("Ungültige Eingabe")
 

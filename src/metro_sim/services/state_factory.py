@@ -13,13 +13,14 @@ def create_initial_station():
 
     "population": {
         "total": balancing_dict["population"]["initial"],
-        "employed": balancing_dict["population"]["start_employed"],
-        "unemployed": balancing_dict["population"]["start_unemployed"]
+        "employed": balancing_dict["population"]["start_working"],
+        "children": balancing_dict["population"]["start_children"],
+        "elderly": balancing_dict["population"]["start_elderly"]
     },
 
     "resources": {
         "food": balancing_dict["food"]["storage_start"],
-        "water": balancing_dict["water"]["storage_start"],
+        "water": balancing_dict["water_system"]["storage_start"],
         "medicine": 200,
         "power_consumption": 0,
         "trade_goods": balancing_dict["trade_goods"]["storage_start"],
@@ -31,29 +32,33 @@ def create_initial_station():
         "comfort": 70,
         "safety": 90,
         "power_stability": 85,
-        "power_level": 2
+        "power_contract": "minimal"
     },
 
     #0: broken, 1: basic, 2: improved, 3: advanced
     "infrastructure_status": {
         "food_production": 1,
-        "water_purification": 1,
+        "water_system": 1,
         "medical_facilities": 1,
-        "defenses": 1,
+        "guard_post": 1,
         "power_generation": 1,
         "living_quarters": 1,
-        "trade_goods_production": 1
+        "trade_goods_production": 1,
+        "trade_post": 1,
+        "bar": 1
     },
 
     #0: not build, 1:basic, 2: improved, 3: advanced
     "infrastructure_levels": {
         "food_production": 0,
-        "water_purification": 0,
+        "water_system": 0,
         "medical_facilities": 0,
-        "defenses": 0,
+        "guard_post": 0,
         "power_generation": 0,
-        "living_quarters": 0,
-        "trade_goods_production": 0
+        "living_quarters": 1,
+        "trade_goods_production": 0,
+        "trade_post": 0,
+        "bar": 0
     },
 
     "slots": {
