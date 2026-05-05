@@ -1,9 +1,16 @@
-
 import os
-
 from metro_sim.utils.file_loader import load_balancing, load_map_data, load_buildings_data
 import metro_sim.services.consumption_service as consumption_calcs
+import re
 
+ANSI_PATTERN = re.compile(r"\033\[[0-9;]*m")
+
+def visible_len(text: str) -> int:
+    return len(ANSI_PATTERN.sub("", text))
+
+def pad_ansi(text: str, width: int) -> str:
+    padding = max(0, width - visible_len(text))
+    return text + " " * padding
 
 def clear_console() -> None:
     os.system("cls" if os.name == "nt" else "clear")
@@ -15,47 +22,13 @@ def print_side_by_side(left_lines: list[str], right_lines: list[str], left_width
         left = left_lines[index] if index < len(left_lines) else ""
         right = right_lines[index] if index < len(right_lines) else ""
 
-        print(f"{left:<{left_width}} {right}")
+        print(f"{pad_ansi(left, left_width)} {right}")
 
-def show_station_overview(station: dict) -> None:
-    left_lines = build_station_status_lines(station)
-    left_lines += [""]
-    left_lines += build_input_option_lines()
+def show_station_overview(station: dict, last_report: dict | None = None) -> None:
+    left_lines = build_station_status_lines(station, last_report)
     map_lines = build_station_map_lines(station=station)
 
     print_side_by_side(left_lines, map_lines)
-
-def build_input_option_lines() -> list[str]:
-    return [
-        "Optionen:",
-        "1. Ressourcen zuweisen",
-        "2. Bewohner zuweisen",
-        "3. Station verbessern",
-        "4. Nächster Tag"
-    ]
-
-def show_upgrade_options() -> None:
-    print("Station (Wähle einen Slot zum verbessern):")
-    print("Slot 1: Leer")
-    print("Slot 2: Leer")
-    print("Slot 3: Leer")
-    print("Slot 4: Leer")
-    print("")
-    print("Esc: Zurück zum Hauptmenü")
-
-def slot_upgrade_options(slot_number: int, station: dict) -> None:
-    clear_console()
-    print(f"Upgrade-Optionen für Slot {slot_number}:")
-    print("1. Upgrade 1")
-    print("2. Upgrade 2")
-    print("3. Upgrade 3")
-    print("4. Upgrade 4")
-    print("")
-    print("Esc: Zurück zum Stationsmenü")
-
-    upgrade_dict = {}
-
-    return upgrade_dict
 
 def show_day_transition_report(station: dict, report_dict : dict) -> None:
     clear_console()
@@ -142,8 +115,23 @@ def build_station_map_lines(station: dict | None = None) -> list[str]:
 
     return result_map
 
-def build_station_status_lines(station: dict) -> list[str]:
+def format_resource_change(report: dict | None, resource_name: str) -> str:
+    if report is None:
+        return ""
+
+    change = report.get("resource_changes", {}).get(resource_name, 0)
+
+    if change > 0:
+        return f" \033[32m+{change}\033[0m"
+    if change < 0:
+        return f" \033[31m{change}\033[0m"
+
+    return ""
+
+def build_station_status_lines(station: dict, report: dict | None) -> list[str]:
     balancing_dict = load_balancing()
+    power_contract = station["stats"]["power_contract"]
+    available_power = balancing_dict["power"]["contracts"][power_contract]["kwh_per_day"]
     return [
         f"Station: {station['name']}",
         f"Tag: {station['time']['day']}",
@@ -161,21 +149,21 @@ def build_station_status_lines(station: dict) -> list[str]:
             f"  Alte: {station['population']['elderly']}",
         "",
         "Ressourcen",
-            f"  Nahrung:",
-            f"    Pilze: {station['resources']['mushrooms']}",
-            f"    Schweine: {station['resources']['pigs']}",
-            f"  Wasser: {station['resources']['water']}",
-            f"  Munition: {station['resources']['ammo']}",
-            f"  Medikamente: {station['resources']['medicine']}",
-            f"  Handelsressourcen: {station['resources']['trade_goods']}",
-            f"  Ersatzteile: {station['resources']['spare_parts']}",
-            f"  Stromverbrauch: {station['resources']['power_consumption']} kWh / {balancing_dict['power']['contracts'][station['stats']['power_contract']]["kwh_per_day"]} kWh",
+        f"  Nahrung:",
+        f"    Pilze: {station['resources']['mushrooms']}{format_resource_change(report, 'mushrooms')}",
+        f"    Schweine: {station['resources']['pigs']}{format_resource_change(report, 'pigs')}",
+        f"  Wasser: {station['resources']['water']}{format_resource_change(report, 'water')}",
+        f"  Munition: {station['resources']['ammo']}{format_resource_change(report, 'ammo')}",
+        f"  Medikamente: {station['resources']['medicine']}{format_resource_change(report, 'medicine')}",
+        f"  Handelsressourcen: {station['resources']['trade_goods']}{format_resource_change(report, 'trade_goods')}",
+        f"  Ersatzteile: {station['resources']['spare_parts']}{format_resource_change(report, 'spare_parts')}",
+        f"  Stromverbrauch: {station['resources']['power_consumption']} kWh / {available_power} kWh",
         "",
         "Stationswerte",
             f"  Moral: {station['stats']['morale']}",
             f"  Komfort: {station['stats']['comfort']}",
             f"  Sicherheit: {station['stats']['safety']}",
             f"  Stromstabilität: {station['stats']['power_stability']}",
-            f"  Stromstufe: {station['stats']['power_contract']}",
+            f"  Stromstufe: {power_contract}",
         "",
     ]

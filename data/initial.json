@@ -19,8 +19,8 @@
     "water": 500,
     "ammo": 80,
     "medicine": 0,
-    "trade_goods": 100,
-    "spare_parts": 50
+    "trade_goods": 300,
+    "spare_parts": 100
   },
 
   "resource_storage": {

@@ -3,23 +3,53 @@ from metro_sim.services.simulation_service import simulate_next_day
 from metro_sim.utils.file_loader import load_balancing, load_buildings_data, load_buildings_effects_data
 import metro_sim.services.production_service as production_service
 import metro_sim.services.consumption_service as consumption_service
+from metro_sim.services.report_service import add_resource_change, add_stat_change
 
 
-
-def calculate_next_tick(station: dict) -> None:
+def calculate_next_tick(station: dict, report: dict) -> dict:
     # Berechnet die Ereignisse des nächsten Ticks und aktualisiert den Stationsstatus entsprechend
     time_service.advance_time(station, 1)
     balancing_dict = load_balancing()
 
     if station["time"]["hour"] >= balancing_dict["time"]["work_start_hour"] and station["time"]["hour"] <= balancing_dict["time"]["work_end_hour"]:
-        calculate_production_for_tick(station)
+        production_report = calculate_production_for_tick(station)
+        merge_reports(report, production_report)
 
-    calculate_consumption_for_tick(station)
+    consumption_report = calculate_consumption_for_tick(station)
+        
+    merge_reports(report, consumption_report)
 
-def calculate_consumption_for_tick(station: dict) -> None:
+def merge_reports(target: dict, source: dict) -> None:
+    for resource, change in source.get("resource_changes", {}).items():
+        target["resource_changes"][resource] = (
+            target["resource_changes"].get(resource, 0) + change
+        )
 
-    if station["time"]["hour"] in load_balancing()["time"]["meal_hours"] and station["time"]["minute"] == 0:
-        consumption_service.apply_food_consumption(station)
+    for stat, change in source.get("stat_changes", {}).items():
+        target["stat_changes"][stat] = (
+            target["stat_changes"].get(stat, 0) + change
+        )
+
+    target["messages"].extend(source.get("messages", []))
+
+def calculate_consumption_for_tick(station: dict) -> dict:
+    balancing = load_balancing()
+
+    report = {
+        "resource_changes": {},
+        "stat_changes": {},
+        "messages": []
+    }
+
+    is_meal_time = (
+        station["time"]["hour"] in balancing["time"]["meal_hours"]
+        and station["time"]["minute"] == 0
+    )
+
+    if is_meal_time:
+        consumption_service.apply_food_consumption(station, report=report)
+
+    return report
 
 def calculate_production_for_tick(station: dict) -> dict:
     """
@@ -117,8 +147,9 @@ def apply_building_yield(
         case "generator":
             # Generator erzeugt keine lagerbare Ressource,
             # sondern kann später die verfügbare kWh-Leistung erhöhen.
-            amount = effects["kwh_per_day"]
-            add_resource_change(report, "generated_kwh", amount)
+            #amount = effects["kwh_per_day"]
+            #add_resource_change(report, "generated_kwh", amount)
+            pass
 
         case "bar":
             morale_bonus = effects["morale_bonus_per_day"]
@@ -157,13 +188,3 @@ def apply_building_yield(
         case _:
             report["messages"].append(f"Kein Yield für Gebäude '{building}' definiert.")
                     
-def add_resource_change(report: dict, resource_name: str, amount: int | float) -> None:
-    report["resource_changes"][resource_name] = (
-        report["resource_changes"].get(resource_name, 0) + amount
-    )
-
-
-def add_stat_change(report: dict, stat_name: str, amount: int | float) -> None:
-    report["stat_changes"][stat_name] = (
-        report["stat_changes"].get(stat_name, 0) + amount
-    )

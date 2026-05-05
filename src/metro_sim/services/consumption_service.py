@@ -3,6 +3,7 @@
 import math
 
 from metro_sim.utils.file_loader import load_balancing, load_buildings_cost_data, load_buildings_effects_data
+from metro_sim.services.report_service import add_resource_change, add_stat_change
 
 
 def calculate_trade_goods_consumption(station: dict) -> int:
@@ -25,21 +26,25 @@ def calculate_power_consumption(station: dict) -> int:
 
     return power_consumption
 
-def apply_food_consumption(station: dict) -> None:
+def apply_food_consumption(station: dict, report: dict) -> None:
     food_consumption = calculate_food_consumption(station)
 
     if station['resources']['pigs'] >= food_consumption:
         station['resources']['pigs'] -= food_consumption
+        add_resource_change(report, "pigs", -food_consumption)
         return
     else:
-        food_consumption -= station['resources']['pigs']
+        amount_left = food_consumption-station['resources']['pigs']
         station['resources']['pigs'] = 0
+        add_resource_change(report, "pigs", -(amount_left-food_consumption))
     
-    if station['resources']['mushrooms'] >= food_consumption:
-        station['resources']['mushrooms'] -= food_consumption
+    if station['resources']['mushrooms'] >= amount_left:
+        station['resources']['mushrooms'] -= amount_left
+        add_resource_change(report, "mushrooms", -amount_left)
     else:
-        food_consumption -= station['resources']['mushrooms']
+        amount_not_covered = amount_left-station['resources']['mushrooms']
         station['resources']['mushrooms'] = 0
+        add_resource_change(report, "mushrooms", -amount_not_covered)
 
 def calculate_food_consumption(station: dict) -> int:
     # Berechnet den Nahrungsverbrauch basierend auf der Bevölkerung und den zugewiesenen Arbeitern
