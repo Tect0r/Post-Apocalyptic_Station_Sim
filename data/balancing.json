@@ -1,6 +1,17 @@
 {
+
+  "time": {
+    "minutes_per_tick": 30,
+    "real_seconds_per_tick": 1,
+    "work_start_hour": 8,
+    "work_end_hour": 18,
+    "sleep_start_hour": 22,
+    "sleep_end_hour": 6,
+    "meal_hours": [8, 14, 20]
+  },
+
   "food": {
-    "consumption_per_person": 1
+    "consumption_per_person_per_day": 1
   },
 
   "water_system": {

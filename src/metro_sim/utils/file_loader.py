@@ -31,7 +31,7 @@ def load_buildings_effects_data() -> dict:
     
 def load_buildings_cost_data() -> dict:
     project_root = Path(__file__).resolve().parents[3]
-    buildings_path = project_root / "data" / "buildings_cost.json"
+    buildings_path = project_root / "data" / "buildings_costs.json"
 
     with open(buildings_path, "r", encoding="utf-8") as file:
         return json.load(file)

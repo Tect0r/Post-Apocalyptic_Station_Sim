@@ -2,6 +2,7 @@
 import os
 
 from metro_sim.utils.file_loader import load_balancing, load_map_data, load_buildings_data
+import metro_sim.services.consumption_service as consumption_calcs
 
 
 def clear_console() -> None:
@@ -113,7 +114,7 @@ def build_station_map_lines(station: dict | None = None) -> list[str]:
                     orientation = slot_data["orientation"]
 
                     try:
-                        template = building_slots["buildings"][current_building][orientation]
+                        template = building_slots[current_building]["templates"][orientation]
                     except KeyError:
                         raise ValueError(
                             f"Kein Template für building='{current_building}' "
@@ -145,8 +146,13 @@ def build_station_status_lines(station: dict) -> list[str]:
     balancing_dict = load_balancing()
     return [
         f"Station: {station['name']}",
-        f"Tag: {station['day']}",
-        f"Datum: {station['date']}",
+        f"Tag: {station['time']['day']}",
+        f"Datum: {station['time']['date']}",
+        f"Uhrzeit: {station['time']['hour']:02d}:{station['time']['minute']:02d}",
+        "",
+        f"Unterkünfte:",
+            f"Bewohner: {station['population']['total']}",
+            f"Obdachlos: {max(0, station['population']['total'] - consumption_calcs.calculate_living_quarters_capacity(station))}",
         "",
         "Bevölkerung",
             f"  Arbeitsfähig: {station['population']['employed']}",

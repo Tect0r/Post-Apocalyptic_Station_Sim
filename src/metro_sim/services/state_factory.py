@@ -1,5 +1,5 @@
 
-from metro_sim.services.simulation_calcs import calculate_power_consumption
+from metro_sim.services.consumption_service import calculate_power_consumption
 from metro_sim.utils.file_loader import load_initial_data
 
 
@@ -8,8 +8,13 @@ def create_initial_station():
 
     station= {
         "name": "Paveletskaya",
-        "day": 1,
-        "date": "01.01.2033",
+        "time": {
+            "day": 1,
+            "date": "01.01.2033",
+            "hour": 6,
+            "minute": 0,
+            "ticks_total": 0
+        },
 
         "population": {
             "total": initial_dict["population"]["total"],
@@ -59,27 +64,27 @@ def create_initial_station():
         },
 
         "slots": {
-            "slot_1": {"building": None, "level": 0},
-            "slot_2": {"building": None, "level": 0},
-            "slot_3": {"building": None, "level": 0},
-            "slot_4": {"building": None, "level": 0},
-            "slot_5": {"building": None, "level": 0},
-            "slot_6": {"building": None, "level": 0},
-            "slot_7": {"building": None, "level": 0},
-            "slot_8": {"building": None, "level": 0},
-            "slot_9": {"building": None, "level": 0},
-            "slot_10": {"building": None, "level": 0},
-            "slot_11": {"building": None, "level": 0},
-            "slot_12": {"building": None, "level": 0},
-            "slot_13": {"building": None, "level": 0},
-            "slot_14": {"building": None, "level": 0},
-            "slot_15": {"building": None, "level": 0},
-            "slot_16": {"building": None, "level": 0},
-            "slot_17": {"building": None, "level": 0},
-            "slot_18": {"building": None, "level": 0},
-            "slot_19": {"building": None, "level": 0},
-            "slot_20": {"building": None, "level": 0},
-            "slot_21": {"building": None, "level": 0},
+            "slot_1": {"building": None, "level": 0, "production_progress": 0},
+            "slot_2": {"building": None, "level": 0, "production_progress": 0},
+            "slot_3": {"building": None, "level": 0, "production_progress": 0},
+            "slot_4": {"building": None, "level": 0, "production_progress": 0},
+            "slot_5": {"building": None, "level": 0, "production_progress": 0},
+            "slot_6": {"building": None, "level": 0, "production_progress": 0},
+            "slot_7": {"building": "mushroom_farm", "level": 1, "production_progress": 0},
+            "slot_8": {"building": "living_quarters", "level": 1, "production_progress": 0},
+            "slot_9": {"building": None, "level": 0, "production_progress": 0},
+            "slot_10": {"building": None, "level": 0, "production_progress": 0},
+            "slot_11": {"building": None, "level": 0, "production_progress": 0},
+            "slot_12": {"building": None, "level": 0, "production_progress": 0},
+            "slot_13": {"building": None, "level": 0, "production_progress": 0},
+            "slot_14": {"building": None, "level": 0, "production_progress": 0},
+            "slot_15": {"building": None, "level": 0, "production_progress": 0},
+            "slot_16": {"building": None, "level": 0, "production_progress": 0},
+            "slot_17": {"building": None, "level": 0, "production_progress": 0},
+            "slot_18": {"building": None, "level": 0, "production_progress": 0},
+            "slot_19": {"building": None, "level": 0, "production_progress": 0},
+            "slot_20": {"building": None, "level": 0, "production_progress": 0},
+            "slot_21": {"building": None, "level": 0, "production_progress": 0},
         }
     }
 
