@@ -1,4 +1,5 @@
 from metro_sim.utils.file_loader import load_balancing, load_buildings_cost_data, load_buildings_effects_data
+from metro_sim.services.report_service import add_resource_change, add_stat_change
 
 def calculate_mushroom_production(station: dict, effects: dict) -> int:
     # Berechnet die Pilzproduktion basierend auf den zugewiesenen Arbeitern und der Infrastruktur
@@ -14,7 +15,9 @@ def calculate_pig_production(station: dict, effects: dict) -> int:
 
 def calculate_kitchen_production(station: dict, effects: dict) -> int:
     # Berechnet die Nahrungsproduktion basierend auf den zugewiesenen Arbeitern und der Infrastruktur
-
+    # nimm 1 pilz 1 pig und mach daraus 1 soup
+    #strom verbrauch balancen
+    # suppe gibt komfort
     return 0
 
 def calculate_water_production(station: dict, effects: dict) -> int:
@@ -44,45 +47,140 @@ def calculate_medical_production(station: dict, effects: dict) -> int:
     amount = workers * effects["medicine_per_worker"]
     return amount
 
-def calculate_stalker_expedition_production(station: dict, effects: dict) -> int:
-    # Berechnet die Produktion von Handelsgütern basierend auf den zugewiesenen Arbeitern und der Infrastruktur
+def calculate_production_for_tick(station: dict) -> dict:
+    """
+    Berechnet die Produktion für einen einzelnen Tick.
 
-    return 0
+    Ein Tick erhöht den Produktionsfortschritt belegter Gebäudeslots.
+    Wenn der Fortschritt eines Gebäudes den Wert `ticks_per_yield`
+    erreicht, wird der passende Ertrag erzeugt und der Fortschritt
+    des Slots zurückgesetzt.
 
-def calculate_service_work_production(station: dict, effects: dict) -> int:
-    # Berechnet die Produktion von Handelsgütern basierend auf den zugewiesenen Arbeitern und der Infrastruktur
-    balancing_dict = load_balancing()
-    if station['infrastructure_status']['bar'] > 0:
-        service_work_production = station['work_assignment']['service_work'] * (effects["production_per_worker_by_level"][str(station['infrastructure_levels']['bar'])])
-    else:
-        service_work_production = 0
-    return service_work_production
+    Gibt einen Report mit den erzeugten Ressourcen und Effekten zurück.
+    """
 
-def calculate_leadership_production(station: dict, effects: dict) -> int:
-    # Berechnet die Produktion von Handelsgütern basierend auf den zugewiesenen Arbeitern und der Infrastruktur
-    balancing_dict = load_balancing()
-    if station['infrastructure_status']['station_leadership'] > 0:
-        leadership_production = station['work_assignment']['station_leadership'] * (effects["production_per_worker_by_level"][str(station['infrastructure_levels']['station_leadership'])])
-    else:
-        leadership_production = 0
-    return leadership_production
+    building_slots = station.get("slots", {})
+    building_effects = load_buildings_effects_data()
 
-def calculate_generator_production(station: dict, effects: dict) -> int:
-    # Berechnet die Stromproduktion basierend auf den zugewiesenen Arbeitern und der Infrastruktur
-    balancing_dict = load_balancing()
-    if station['infrastructure_status']['power_generation'] > 0:
-        generator_production = station['work_assignment']['generator'] * (effects["production_per_worker_by_level"][str(station['infrastructure_levels']['generator'])])
-    else:
-        generator_production = 0
-    return generator_production
+    report = {
+        "resource_changes": {},
+        "stat_changes": {},
+        "messages": []
+    }
 
-def assign_workers(
+    for slot_id, slot in building_slots.items():
+        building = slot.get("building")
+        level = slot.get("level", 0)
+
+        if building is None or level <= 0:
+            continue
+
+        level_key = str(level)
+        effects = building_effects[building]["effects_by_level"][level_key]
+
+        ticks_per_yield = effects.get("ticks_per_yield")
+
+        if ticks_per_yield is None:
+            continue
+
+        slot["production_progress"] += 1
+
+        if slot["production_progress"] < ticks_per_yield:
+            continue
+
+        slot["production_progress"] = 0
+
+        apply_building_yield(
+            station=station,
+            building=building,
+            effects=effects,
+            report=report
+        )
+
+    return report
+
+def apply_building_yield(
     station: dict,
     building: str,
-    workers: int
+    effects: dict,
+    report: dict
 ) -> None:
     """
-    Weist eine bestimmte Anzahl von Arbeitern einem Gebäude zu, um die Produktion zu steigern.
+    Wendet den Ertrag eines Gebäudes an, sobald dessen Produktionsintervall
+    abgeschlossen ist.
     """
 
-    station["employment"][building] += workers
+    match building:
+        case "mushroom_farm":
+            amount = calculate_mushroom_production(station, effects)
+            station["ressources"]["mushrooms"] += amount
+            add_resource_change(report, "mushrooms", amount)
+
+        case "pig_farm":
+            amount = calculate_pig_production(station, effects)
+
+            station["ressources"]["pigs"] += amount
+            add_resource_change(report, "pigs", amount)
+
+        case "trading_goods":
+            amount = calculate_trade_goods_production(station, effects)
+
+            station["ressources"]["trade_goods"] += amount
+            add_resource_change(report, "trade_goods", amount)
+
+        case "machine_shop":
+            amount = calculate_machine_shop_production(station, effects)
+
+            station["ressources"]["spare_parts"] += amount
+            add_resource_change(report, "spare_parts", amount)
+
+        case "medical":
+            amount = calculate_medical_production(station, effects)
+
+            station["ressources"]["medicine"] += amount
+            add_resource_change(report, "medicine", amount)
+
+        case "generator":
+            # Generator erzeugt keine lagerbare Ressource,
+            # sondern kann später die verfügbare kWh-Leistung erhöhen.
+            #amount = effects["kwh_per_day"]
+            #add_resource_change(report, "generated_kwh", amount)
+            pass
+
+        case "bar":
+            morale_bonus = effects["morale_bonus_per_day"]
+
+            station["stats"]["morale"] = min(
+                100,
+                station["stats"]["morale"] + morale_bonus
+            )
+
+            add_stat_change(report, "morale", morale_bonus)
+
+        case "market":
+            morale_bonus = effects["morale_bonus"]
+
+            station["stats"]["morale"] = min(
+                100,
+                station["stats"]["morale"] + morale_bonus
+            )
+
+            add_stat_change(report, "morale", morale_bonus)
+
+        case "station_leadership":
+            # Passive Effekte wie Effizienzbonus oder Verlustreduktion
+            # werden später besser zentral in den jeweiligen Berechnungen genutzt.
+            report["messages"].append("Stationsleitung koordiniert die Arbeit.")
+
+        case "stalker_den":
+            # Loot-Logik später mit Zufall/Event-System.
+            report["messages"].append("Stalker bereiten eine Expedition vor.")
+
+        case "kitchen":
+            amount = calculate_kitchen_production(station, effects)
+
+            report["messages"].append("Küche verbessert die Essensversorgung.")
+
+        case _:
+            report["messages"].append(f"Kein Yield für Gebäude '{building}' definiert.")
+                    

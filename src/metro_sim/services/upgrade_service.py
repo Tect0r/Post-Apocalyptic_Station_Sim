@@ -1,9 +1,13 @@
 import metro_sim.utils.file_loader as loader
 
 def upgrade_building(station: dict, building: str, selected_slot: str) -> bool:
-    building_costs_data = loader.load_buildings_cost_data()
-
+    
     slot = station["slots"][selected_slot]
+
+    if slot["building"] is not None and slot["building"] != building:
+        return False
+    
+    building_costs_data = loader.load_buildings_cost_data()
     current_level = slot["level"]
     new_level = current_level + 1
 
@@ -25,7 +29,6 @@ def upgrade_building(station: dict, building: str, selected_slot: str) -> bool:
     }
 
     return True
-
 
 def can_afford(ressources: dict, costs: dict) -> bool:
     for resource_name, needed_amount in costs.items():

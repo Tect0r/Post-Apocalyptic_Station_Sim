@@ -1,6 +1,6 @@
 import os
 from metro_sim.utils.file_loader import load_balancing, load_map_data, load_buildings_data
-import metro_sim.services.consumption_service as consumption_calcs
+import metro_sim.services.station_service as station_service
 import re
 
 ANSI_PATTERN = re.compile(r"\033\[[0-9;]*m")
@@ -155,7 +155,7 @@ def build_station_status_lines(station: dict, report: dict | None) -> list[str]:
         "",
         f"Unterkünfte:",
             f"Bewohner: {station['population']['total']}",
-            f"Obdachlos: {max(0, station['population']['total'] - consumption_calcs.calculate_living_quarters_capacity(station))}",
+            f"Obdachlos: {max(0, station['population']['total'] - station_service.calculate_living_quarters_capacity(station))}",
         "",
         "Bevölkerung",
             f"  Arbeitsfähig: {station['population']['employed']}",

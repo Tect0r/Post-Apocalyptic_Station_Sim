@@ -52,3 +52,12 @@ def calculate_power_consumption(station: dict) -> float:
         power_consumption += worker_count * worker_power[power_key]
 
     return round(power_consumption, 2)
+
+def calculate_generator_production(station: dict, effects: dict) -> int:
+    # Berechnet die Stromproduktion basierend auf den zugewiesenen Arbeitern und der Infrastruktur
+    balancing_dict = loader.load_balancing()
+    if station['infrastructure_status']['power_generation'] > 0:
+        generator_production = station['work_assignment']['generator'] * (effects["production_per_worker_by_level"][str(station['infrastructure_levels']['generator'])])
+    else:
+        generator_production = 0
+    return generator_production

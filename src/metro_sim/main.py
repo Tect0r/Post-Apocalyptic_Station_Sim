@@ -10,7 +10,7 @@ from metro_sim.utils.file_loader import load_balancing
 from metro_sim.utils.utility import ask_until_valid
 from metro_sim.services.state_factory import create_initial_station
 from metro_sim.services.tick_service import calculate_next_tick
-from metro_sim.services.production_service import assign_workers
+from metro_sim.services.station_service import assign_workers
 from metro_sim.services.upgrade_service import upgrade_building
 from metro_sim.ui.production_menu import create_employment_menu
 from metro_sim.ui.upgrade_menu import create_building_upgrade_menu, create_upgrade_menu, create_possible_buildings_menu
@@ -43,10 +43,12 @@ def show_pause_menu() -> str:
     print()
     print("Simulation pausiert")
     print("[Enter] Fortsetzen")
+    print("")
+    print("[1] Bewohner zuweisen")
+    print("[2] Station verbessern")
+    print("[3] Handel")
+    print("")
     print("[q] Beenden")
-    print("[1] Ressourcen zuweisen")
-    print("[2] Bewohner zuweisen")
-    print("[3] Station verbessern")
     return input("> ").lower()
 
 def handle_employment_menu(station: dict) -> None:
@@ -168,15 +170,12 @@ def main() -> None:
                     running = False
 
                 case "1":
-                    print("Ressourcen zuweisen")
-                    input("Enter zum Fortfahren...")
-
-                case "2":
                     handle_employment_menu(station)
-
-                case "3":
+                case "2":
                     handle_upgrade_overview_menu(station)
-
+                
+                case "3":
+                    input("Enter zum Fortfahren...")
                 case _:
                     print("Ungültige Eingabe")
                     input("Enter zum Fortfahren...")

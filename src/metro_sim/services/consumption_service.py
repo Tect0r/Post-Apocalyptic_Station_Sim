@@ -4,13 +4,6 @@ from metro_sim.utils.file_loader import load_balancing, load_buildings_cost_data
 from metro_sim.services.report_service import add_resource_change, add_stat_change
 
 
-def calculate_trade_goods_consumption(station: dict) -> int:
-    # Berechnet den Verbrauch von Handelsgütern basierend auf der Bevölkerung und den zugewiesenen Arbeitern
-    balancing_dict = load_balancing()
-    trade_goods_consumption = station['work_assignment']['trading'] * balancing_dict["trade_post"]["trade_capacity_per_worker_by_level"][str(station['infrastructure_levels']['trade_post'])]
-    ammo_gained = station['work_assignment']['trading'] * balancing_dict["trade_goods"]["ammo_per_trade_good"]
-    return trade_goods_consumption, ammo_gained
-
 def apply_food_consumption(station: dict, report: dict) -> None:
     food_consumption = calculate_food_consumption(station)
 
@@ -47,11 +40,6 @@ def calculate_water_consumption(station: dict) -> int:
         water_consumption = 0
     return water_consumption
 
-def calculate_ammo_consumption(station: dict) -> int:
-    # Berechnet den Munitionsverbrauch basierend auf der Bevölkerung, den zugewiesenen Arbeitern und der Sicherheit
-    balancing_dict = load_balancing()
-    ammo_consumption = station['work_assignment']['guards'] * balancing_dict["guards"]["ammo_consumption_per_guard_by_level"][str(station['infrastructure_levels']['guard_post'])]
-    return ammo_consumption
 
 def calculate_spare_parts_consumption(station: dict) -> int:
     # Berechnet den Ersatzteilverbrauch basierend auf den zugewiesenen Arbeitern und der Infrastruktur
@@ -65,18 +53,21 @@ def calculate_bar_consumption(station: dict) -> int:
     bar_consumption = station['work_assignment']['service_work'] * balancing_dict["bar"]["trade_goods_consumption_per_worker_by_level"][str(station['infrastructure_levels']['bar'])]
     return bar_consumption
 
-def calculate_stalker_den_consumption(station: dict) -> int:
-    # Berechnet den Verbrauch von Handelsgütern basierend auf der Bevölkerung und den zugewiesenen Arbeitern
-    balancing_dict = load_balancing()
-    stalker_den_consumption = station['work_assignment']['stalker_expedition'] * balancing_dict["stalker_den"]["trade_goods_consumption_per_worker_by_level"][str(station['infrastructure_levels']['stalker_den'])]
-    return stalker_den_consumption
+def calculate_consumption_for_tick(station: dict) -> dict:
+    balancing = load_balancing()
 
-def calculate_living_quarters_capacity(station: dict) -> int:
-    # Berechnet die Kapazität der Unterkünfte basierend auf der Infrastruktur
-    building_effects = load_buildings_effects_data()
-    station_slots = station.get("slots", {}).values()
-    for slot in station_slots:
-        if slot.get("building") == "living_quarters":
-            living_quarters_capacity = building_effects["living_quarters"]["effects_by_level"][str(slot.get("level", {}))]["population_capacity"]
+    report = {
+        "resource_changes": {},
+        "stat_changes": {},
+        "messages": []
+    }
 
-    return living_quarters_capacity
+    is_meal_time = (
+        station["time"]["hour"] in balancing["time"]["meal_hours"]
+        and station["time"]["minute"] == 0
+    )
+
+    if is_meal_time:
+        apply_food_consumption(station, report=report)
+
+    return report
