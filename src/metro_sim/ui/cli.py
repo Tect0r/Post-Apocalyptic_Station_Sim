@@ -46,7 +46,14 @@ def show_day_transition_report(station: dict, report_dict : dict) -> None:
 
     print("")
 
-def build_station_map_lines(station: dict | None = None) -> list[str]:
+def color_lines(lines: list[str], color: str) -> list[str]:
+    GREEN = "\033[32m"
+    RESET = "\033[0m"
+    return [f"{color}{line}{GREEN}" for line in lines]
+
+def build_station_map_lines(station: dict | None = None, 
+                            upgrade_mode : bool = False, 
+                            selected_slot : str | None = None) -> list[str]:
     result_map = []
 
     map_data = load_map_data()
@@ -71,12 +78,20 @@ def build_station_map_lines(station: dict | None = None) -> list[str]:
             current_slot = station_slots.get(slot_id)
             current_building = current_slot.get("building") if current_slot else None
 
-            if current_building is None:
+            if current_building is None and not upgrade_mode:
                 template = slot_data.get("empty_template")
 
                 if template is None:
                     raise ValueError(f"Slot '{slot_id}' hat kein empty_template.")
+            
+            elif current_building is None and upgrade_mode:
+                template = slot_data.get("upgrade_template")
 
+                if selected_slot is not None and selected_slot == slot_id:
+                    template = [f"\033[32m{line}\033[0m" for line in template]
+
+                if template is None:
+                    raise ValueError(f"Slot '{slot_id}' hat kein upgrade_template.")
             else:
                 if building_slots is None:
                     template = slot_data.get("upgrade_template")
@@ -150,14 +165,14 @@ def build_station_status_lines(station: dict, report: dict | None) -> list[str]:
         "",
         "Ressourcen",
         f"  Nahrung:",
-        f"    Pilze: {station['resources']['mushrooms']}{format_resource_change(report, 'mushrooms')}",
-        f"    Schweine: {station['resources']['pigs']}{format_resource_change(report, 'pigs')}",
-        f"  Wasser: {station['resources']['water']}{format_resource_change(report, 'water')}",
-        f"  Munition: {station['resources']['ammo']}{format_resource_change(report, 'ammo')}",
-        f"  Medikamente: {station['resources']['medicine']}{format_resource_change(report, 'medicine')}",
-        f"  Handelsressourcen: {station['resources']['trade_goods']}{format_resource_change(report, 'trade_goods')}",
-        f"  Ersatzteile: {station['resources']['spare_parts']}{format_resource_change(report, 'spare_parts')}",
-        f"  Stromverbrauch: {station['resources']['power_consumption']} kWh / {available_power} kWh",
+        f"    Pilze: {station['ressources']['mushrooms']}{format_resource_change(report, 'mushrooms')}",
+        f"    Schweine: {station['ressources']['pigs']}{format_resource_change(report, 'pigs')}",
+        f"  Wasser: {station['ressources']['water']}{format_resource_change(report, 'water')}",
+        f"  Munition: {station['ressources']['ammo']}{format_resource_change(report, 'ammo')}",
+        f"  Medikamente: {station['ressources']['medicine']}{format_resource_change(report, 'medicine')}",
+        f"  Handelsressourcen: {station['ressources']['trade_goods']}{format_resource_change(report, 'trade_goods')}",
+        f"  Ersatzteile: {station['ressources']['spare_parts']}{format_resource_change(report, 'spare_parts')}",
+        f"  Stromverbrauch: {station['ressources']['power_consumption']} kWh / {available_power} kWh",
         "",
         "Stationswerte",
             f"  Moral: {station['stats']['morale']}",

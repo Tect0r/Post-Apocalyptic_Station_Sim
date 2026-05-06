@@ -117,31 +117,31 @@ def apply_building_yield(
     match building:
         case "mushroom_farm":
             amount = production_service.calculate_mushroom_production(station, effects)
-            station["resources"]["mushrooms"] += amount
+            station["ressources"]["mushrooms"] += amount
             add_resource_change(report, "mushrooms", amount)
 
         case "pig_farm":
             amount = production_service.calculate_pig_production(station, effects)
 
-            station["resources"]["pig_meat"] += amount
-            add_resource_change(report, "pig_meat", amount)
+            station["ressources"]["pigs"] += amount
+            add_resource_change(report, "pigs", amount)
 
         case "trading_goods":
             amount = production_service.calculate_trade_goods_production(station, effects)
 
-            station["resources"]["trade_goods"] += amount
+            station["ressources"]["trade_goods"] += amount
             add_resource_change(report, "trade_goods", amount)
 
         case "machine_shop":
             amount = production_service.calculate_machine_shop_production(station, effects)
 
-            station["resources"]["spare_parts"] += amount
+            station["ressources"]["spare_parts"] += amount
             add_resource_change(report, "spare_parts", amount)
 
         case "medical":
             amount = production_service.calculate_medical_production(station, effects)
 
-            station["resources"]["medicine"] += amount
+            station["ressources"]["medicine"] += amount
             add_resource_change(report, "medicine", amount)
 
         case "generator":

@@ -8,7 +8,7 @@ def create_test_station() -> dict:
         "population": {
             "total": 10
         },
-        "resources": {
+        "ressources": {
             "food": 100,
             "water": 100,
             "trade_goods": 0
@@ -94,7 +94,7 @@ def test_simulate_next_day_consumes_food(monkeypatch):
     simulate_next_day(station)
 
     # Start 100 - Verbrauch 10 + Produktion 15
-    assert station["resources"]["food"] == 105
+    assert station["ressources"]["food"] == 105
 
 
 def test_simulate_next_day_does_not_consume_water_when_water_purification_works(monkeypatch):
@@ -104,7 +104,7 @@ def test_simulate_next_day_does_not_consume_water_when_water_purification_works(
     simulate_next_day(station)
 
     # Start 100 - Verbrauch 0 + Produktion 20
-    assert station["resources"]["water"] == 120
+    assert station["ressources"]["water"] == 120
 
 
 def test_simulate_next_day_consumes_water_when_water_purification_is_broken(monkeypatch):
@@ -115,7 +115,7 @@ def test_simulate_next_day_consumes_water_when_water_purification_is_broken(monk
     simulate_next_day(station)
 
     # Start 100 - Verbrauch 10 + Produktion 0
-    assert station["resources"]["water"] == 90
+    assert station["ressources"]["water"] == 90
 
 
 def test_simulate_next_day_produces_food_when_power_and_food_production_work(monkeypatch):
@@ -126,7 +126,7 @@ def test_simulate_next_day_produces_food_when_power_and_food_production_work(mon
 
     # 5 Arbeiter * Produktionswert 3 = 15
     # Gleichzeitig werden 10 Nahrung verbraucht
-    assert station["resources"]["food"] == 105
+    assert station["ressources"]["food"] == 105
 
 
 def test_simulate_next_day_produces_water_when_power_and_water_purification_work(monkeypatch):
@@ -135,7 +135,7 @@ def test_simulate_next_day_produces_water_when_power_and_water_purification_work
 
     simulate_next_day(station)
 
-    assert station["resources"]["water"] == 120
+    assert station["ressources"]["water"] == 120
 
 
 def test_simulate_next_day_produces_trade_goods_when_power_works(monkeypatch):
@@ -145,7 +145,7 @@ def test_simulate_next_day_produces_trade_goods_when_power_works(monkeypatch):
     simulate_next_day(station)
 
     # 4 Arbeiter * 1 * Level 2 = 8
-    assert station["resources"]["trade_goods"] == 8
+    assert station["ressources"]["trade_goods"] == 8
 
 
 def test_simulate_next_day_does_not_produce_when_power_is_down(monkeypatch):
@@ -156,33 +156,33 @@ def test_simulate_next_day_does_not_produce_when_power_is_down(monkeypatch):
     simulate_next_day(station)
 
     # Nahrung: 100 - 10 Verbrauch, keine Produktion
-    assert station["resources"]["food"] == 90
+    assert station["ressources"]["food"] == 90
 
     # Wasser: keine Verbrauch, weil Wasseraufbereitung nicht defekt,
     # aber auch keine Produktion, weil kein Strom
-    assert station["resources"]["water"] == 100
+    assert station["ressources"]["water"] == 100
 
-    assert station["resources"]["trade_goods"] == 0
+    assert station["ressources"]["trade_goods"] == 0
 
 
-def test_simulate_next_day_resources_do_not_go_below_zero(monkeypatch):
+def test_simulate_next_day_ressources_do_not_go_below_zero(monkeypatch):
     patch_dependencies(monkeypatch)
     station = create_test_station()
-    station["resources"]["food"] = 5
-    station["resources"]["water"] = 5
+    station["ressources"]["food"] = 5
+    station["ressources"]["water"] = 5
     station["infrastructure_status"]["water_purification"] = 0
     station["infrastructure_status"]["power_generation"] = 0
 
     simulate_next_day(station)
 
-    assert station["resources"]["food"] == 0
-    assert station["resources"]["water"] == 0
+    assert station["ressources"]["food"] == 0
+    assert station["ressources"]["water"] == 0
 
 
 def test_simulate_next_day_lowers_morale_and_safety_when_food_reaches_zero(monkeypatch):
     patch_dependencies(monkeypatch)
     station = create_test_station()
-    station["resources"]["food"] = 5
+    station["ressources"]["food"] = 5
     station["infrastructure_status"]["power_generation"] = 0
 
     simulate_next_day(station)
@@ -194,7 +194,7 @@ def test_simulate_next_day_lowers_morale_and_safety_when_food_reaches_zero(monke
 def test_simulate_next_day_lowers_morale_and_safety_when_water_reaches_zero(monkeypatch):
     patch_dependencies(monkeypatch)
     station = create_test_station()
-    station["resources"]["water"] = 5
+    station["ressources"]["water"] = 5
     station["infrastructure_status"]["water_purification"] = 0
     station["infrastructure_status"]["power_generation"] = 0
 
@@ -207,8 +207,8 @@ def test_simulate_next_day_lowers_morale_and_safety_when_water_reaches_zero(monk
 def test_simulate_next_day_morale_and_safety_do_not_go_below_zero(monkeypatch):
     patch_dependencies(monkeypatch)
     station = create_test_station()
-    station["resources"]["food"] = 0
-    station["resources"]["water"] = 0
+    station["ressources"]["food"] = 0
+    station["ressources"]["water"] = 0
     station["stats"]["morale"] = 5
     station["stats"]["safety"] = 5
     station["infrastructure_status"]["water_purification"] = 0

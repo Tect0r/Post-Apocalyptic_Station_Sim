@@ -22,26 +22,26 @@ def simulate_next_day(station: dict) -> None:
     ##Produktion
     #food_produced = calcs.calculate_food_production(station)
     #water_produced = calcs.calculate_water_production(station)
-    #station['resources']['food'] += food_produced
-    #station['resources']['water'] += water_produced
+    #station['ressources']['food'] += food_produced
+    #station['ressources']['water'] += water_produced
 #
     #food_consumed = calcs.calculate_food_consumption(station)
     #water_consumed = calcs.calculate_water_consumption(station)
-    #station['resources']['food'] = max(0, station['resources']['food'] - food_consumed)
-    #station['resources']['water'] = max(0, station['resources']['water'] - water_consumed)
+    #station['ressources']['food'] = max(0, station['ressources']['food'] - food_consumed)
+    #station['ressources']['water'] = max(0, station['ressources']['water'] - water_consumed)
 #
     ##Trade
     #trade_goods_produced = calcs.calculate_trade_goods_production(station)
-    #station['resources']['trade_goods'] += trade_goods_produced
+    #station['ressources']['trade_goods'] += trade_goods_produced
 #
     #trade_goods_consumed, ammo_gained = calcs.calculate_trade_goods_consumption(station)
-    #station['resources']['trade_goods'] = max(0, station['resources']['trade_goods'] - trade_goods_consumed)
-    #station['resources']['ammo'] += ammo_gained
+    #station['ressources']['trade_goods'] = max(0, station['ressources']['trade_goods'] - trade_goods_consumed)
+    #station['ressources']['ammo'] += ammo_gained
 #
     ##Stromverbrauch
-    #station['resources']['power_consumption'] = calcs.calculate_power_consumption(station)
+    #station['ressources']['power_consumption'] = calcs.calculate_power_consumption(station)
 #
-    #if(station['resources']['food'] == 0 or station['resources']['water'] == 0):
+    #if(station['ressources']['food'] == 0 or station['ressources']['water'] == 0):
     #    station['stats']['morale'] = max(0, station['stats']['morale'] - 10)
     #    station['stats']['safety'] = max(0, station['stats']['safety'] - 10)
 #

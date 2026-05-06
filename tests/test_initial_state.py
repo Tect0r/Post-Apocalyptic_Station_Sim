@@ -7,16 +7,16 @@ def test_initial_station_has_expected_name():
     assert station["name"] == "Paveletskaya"
 
 
-def test_initial_station_has_resources():
+def test_initial_station_has_ressources():
     station = create_initial_station()
 
-    assert "resources" in station
-    assert "food" in station["resources"]
-    assert "water" in station["resources"]
-    assert "ammo" in station["resources"]
-    assert "trade_goods" in station["resources"]
-    assert "medicine" in station["resources"]
-    assert "power_usage" in station["resources"]
+    assert "ressources" in station
+    assert "food" in station["ressources"]
+    assert "water" in station["ressources"]
+    assert "ammo" in station["ressources"]
+    assert "trade_goods" in station["ressources"]
+    assert "medicine" in station["ressources"]
+    assert "power_usage" in station["ressources"]
 
 
 def test_initial_population_is_consistent():

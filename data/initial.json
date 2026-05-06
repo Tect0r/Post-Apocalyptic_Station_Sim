@@ -6,14 +6,14 @@
   },
 
   "population": {
-    "total": 200,
+    "total": 75,
     "employed": 0,
-    "unemployed": 150,
-    "children": 25,
-    "elderly": 25
+    "unemployed": 50,
+    "children": 10,
+    "elderly": 15
   },
 
-  "resources": {
+  "ressources": {
     "mushrooms": 500,
     "pig_meat": 0,
     "water": 500,

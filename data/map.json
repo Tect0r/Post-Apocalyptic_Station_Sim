@@ -24,7 +24,7 @@
 
     "slot_2" : {
         "id": "slot_2",
-        "allowed_building_types": ["none"],
+        "allowed_building_types": ["stalker_den", "weapon_chamber"],
         "orientation": "top_middle",
         "width": 18,
         "height": 5,
@@ -69,7 +69,7 @@
 
     "slot_4" : {
         "id": "slot_4",
-        "allowed_building_types": ["none"],
+        "allowed_building_types": ["market", "generator", "maintenance", "living_quarters", "machine_shop", "trading_goods", "trading_post", "storage", "kitchen", "pig_farm", "mushroom_farm"],
         "orientation": "left",
         "width": 16,
         "height": 5,
@@ -91,7 +91,7 @@
 
     "slot_5" : {
         "id": "slot_5",
-        "allowed_building_types": ["none"],
+        "allowed_building_types": ["station_leadership", "market", "bar", "medical", "generator", "maintenance", "living_quarters", "trading_goods", "storage", "kitchen", "pig_farm", "mushroom_farm"],
         "orientation": "middle",
         "width": 18,
         "height": 5,
@@ -113,7 +113,7 @@
 
     "slot_6" : {
         "id": "slot_6",
-        "allowed_building_types": ["none"],
+        "allowed_building_types": ["market", "generator", "maintenance", "living_quarters", "machine_shop", "trading_goods", "trading_post", "storage", "kitchen", "pig_farm", "mushroom_farm"],
         "orientation": "right",
         "width": 16,
         "height": 5,
@@ -136,7 +136,7 @@
 
     "slot_7" : {
         "id": "slot_7",
-        "allowed_building_types": ["none"],
+        "allowed_building_types": ["market", "generator", "maintenance", "living_quarters", "machine_shop", "trading_goods", "trading_post", "storage", "kitchen", "pig_farm", "mushroom_farm"],
         "orientation": "left",
         "width": 16,
         "height": 5,
@@ -158,7 +158,7 @@
 
     "slot_8" : {
         "id": "slot_8",
-        "allowed_building_types": ["none"],
+        "allowed_building_types": ["station_leadership", "market", "bar", "medical", "generator", "maintenance", "living_quarters", "trading_goods", "storage", "kitchen", "pig_farm", "mushroom_farm"],
         "orientation": "middle",
         "width": 18,
         "height": 5,
@@ -180,7 +180,7 @@
 
     "slot_9" : {
         "id": "slot_9",
-        "allowed_building_types": ["none"],
+        "allowed_building_types": ["market", "generator", "maintenance", "living_quarters", "machine_shop", "trading_goods", "trading_post", "storage", "kitchen", "pig_farm", "mushroom_farm"],
         "orientation": "right",
         "width": 16,
         "height": 5,
@@ -203,7 +203,7 @@
 
     "slot_10" : {
         "id": "slot_10",
-        "allowed_building_types": ["none"],
+        "allowed_building_types": ["market", "generator", "maintenance", "living_quarters", "machine_shop", "trading_goods", "trading_post", "storage", "kitchen", "pig_farm", "mushroom_farm"],
         "orientation": "left",
         "width": 16,
         "height": 5,
@@ -225,7 +225,7 @@
 
     "slot_11" : {
         "id": "slot_11",
-        "allowed_building_types": ["none"],
+        "allowed_building_types": ["station_leadership", "market", "bar", "medical", "generator", "maintenance", "living_quarters", "trading_goods", "storage", "kitchen", "pig_farm", "mushroom_farm"],
         "orientation": "middle",
         "width": 18,
         "height": 5,
@@ -247,7 +247,7 @@
 
     "slot_12" : {
         "id": "slot_12",
-        "allowed_building_types": ["none"],
+        "allowed_building_types": ["market", "generator", "maintenance", "living_quarters", "machine_shop", "trading_goods", "trading_post", "storage", "kitchen", "pig_farm", "mushroom_farm"],
         "orientation": "right",
         "width": 16,
         "height": 5,
@@ -270,7 +270,7 @@
 
     "slot_13" : {
         "id": "slot_13",
-        "allowed_building_types": ["none"],
+        "allowed_building_types": ["market", "generator", "maintenance", "living_quarters", "machine_shop", "trading_goods", "trading_post", "storage", "kitchen", "pig_farm", "mushroom_farm"],
         "orientation": "left",
         "width": 16,
         "height": 5,
@@ -292,7 +292,7 @@
 
     "slot_14" : {
         "id": "slot_14",
-        "allowed_building_types": ["none"],
+        "allowed_building_types": ["station_leadership", "market", "bar", "medical", "generator", "maintenance", "living_quarters", "trading_goods", "storage", "kitchen", "pig_farm", "mushroom_farm"],
         "orientation": "middle",
         "width": 18,
         "height": 5,
@@ -314,7 +314,7 @@
 
     "slot_15" : {
         "id": "slot_15",
-        "allowed_building_types": ["none"],
+        "allowed_building_types": ["market", "generator", "maintenance", "living_quarters", "machine_shop", "trading_goods", "trading_post", "storage", "kitchen", "pig_farm", "mushroom_farm"],
         "orientation": "right",
         "width": 16,
         "height": 5,
@@ -337,7 +337,7 @@
 
     "slot_16" : {
         "id": "slot_16",
-        "allowed_building_types": ["none"],
+        "allowed_building_types": ["market", "generator", "maintenance", "living_quarters", "machine_shop", "trading_goods", "trading_post", "storage", "kitchen", "pig_farm", "mushroom_farm"],
         "orientation": "left",
         "width": 16,
         "height": 5,
@@ -359,7 +359,7 @@
 
     "slot_17" : {
         "id": "slot_17",
-        "allowed_building_types": ["none"],
+        "allowed_building_types": ["station_leadership", "market", "bar", "medical", "generator", "maintenance", "living_quarters", "trading_goods", "storage", "kitchen", "pig_farm", "mushroom_farm"],
         "orientation": "middle",
         "width": 18,
         "height": 5,
@@ -381,7 +381,7 @@
 
     "slot_18" : {
         "id": "slot_18",
-        "allowed_building_types": ["none"],
+        "allowed_building_types": ["market", "generator", "maintenance", "living_quarters", "machine_shop", "trading_goods", "trading_post", "storage", "kitchen", "pig_farm", "mushroom_farm"],
         "orientation": "right",
         "width": 16,
         "height": 5,
@@ -425,7 +425,7 @@
 
     "slot_20" : {
         "id": "slot_20",
-        "allowed_building_types": ["none"],
+        "allowed_building_types": ["stalker_den", "weapon_chamber"],
         "orientation": "bottom_middle",
         "width": 18,
         "height": 5,

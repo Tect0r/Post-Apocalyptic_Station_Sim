@@ -1,5 +1,3 @@
-
-
 import math
 
 from metro_sim.utils.file_loader import load_balancing, load_buildings_cost_data, load_buildings_effects_data
@@ -13,37 +11,24 @@ def calculate_trade_goods_consumption(station: dict) -> int:
     ammo_gained = station['work_assignment']['trading'] * balancing_dict["trade_goods"]["ammo_per_trade_good"]
     return trade_goods_consumption, ammo_gained
 
-def calculate_power_consumption(station: dict) -> int:
-    # Berechnet den Stromverbrauch basierend auf der Infrastruktur und den zugewiesenen Arbeitern
-    building_cost = load_buildings_cost_data()
-    power_consumption = 0
-    # Slots von Station durchgehen
-    station_slots = station.get("slots", {}).values()
-    for slot in station_slots:
-        current_building = slot.get("building")
-        if current_building is not None:
-            power_consumption += building_cost[current_building]["kwh_per_day_by_level"][str(slot.get("level", 0))]
-
-    return power_consumption
-
 def apply_food_consumption(station: dict, report: dict) -> None:
     food_consumption = calculate_food_consumption(station)
 
-    if station['resources']['pigs'] >= food_consumption:
-        station['resources']['pigs'] -= food_consumption
+    if station['ressources']['pigs'] >= food_consumption:
+        station['ressources']['pigs'] -= food_consumption
         add_resource_change(report, "pigs", -food_consumption)
         return
     else:
-        amount_left = food_consumption-station['resources']['pigs']
-        station['resources']['pigs'] = 0
+        amount_left = food_consumption-station['ressources']['pigs']
+        station['ressources']['pigs'] = 0
         add_resource_change(report, "pigs", -(amount_left-food_consumption))
     
-    if station['resources']['mushrooms'] >= amount_left:
-        station['resources']['mushrooms'] -= amount_left
+    if station['ressources']['mushrooms'] >= amount_left:
+        station['ressources']['mushrooms'] -= amount_left
         add_resource_change(report, "mushrooms", -amount_left)
     else:
-        amount_not_covered = amount_left-station['resources']['mushrooms']
-        station['resources']['mushrooms'] = 0
+        amount_not_covered = amount_left-station['ressources']['mushrooms']
+        station['ressources']['mushrooms'] = 0
         add_resource_change(report, "mushrooms", -amount_not_covered)
 
 def calculate_food_consumption(station: dict) -> int:

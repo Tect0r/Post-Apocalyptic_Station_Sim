@@ -1,5 +1,5 @@
 
-from metro_sim.services.consumption_service import calculate_power_consumption
+from metro_sim.services.power_service import calculate_power_consumption
 from metro_sim.utils.file_loader import load_initial_data
 
 
@@ -38,15 +38,15 @@ def create_initial_station():
             "service_work": 0
         },
 
-        "resources": {
-            "mushrooms": initial_dict["resources"]["mushrooms"],
-            "pigs": initial_dict["resources"]["pig_meat"],
-            "water": initial_dict["resources"]["water"],
-            "medicine": initial_dict["resources"]["medicine"],
+        "ressources": {
+            "mushrooms": initial_dict["ressources"]["mushrooms"],
+            "pigs": initial_dict["ressources"]["pig_meat"],
+            "water": initial_dict["ressources"]["water"],
+            "medicine": initial_dict["ressources"]["medicine"],
             "power_consumption": 0,
-            "trade_goods": initial_dict["resources"]["trade_goods"],
-            "spare_parts": initial_dict["resources"]["spare_parts"],
-            "ammo": initial_dict["resources"]["ammo"]
+            "trade_goods": initial_dict["ressources"]["trade_goods"],
+            "spare_parts": initial_dict["ressources"]["spare_parts"],
+            "ammo": initial_dict["ressources"]["ammo"]
         },
 
         "stats": {
@@ -89,6 +89,6 @@ def create_initial_station():
     }
 
 
-    station["resources"]["power_consumption"] = calculate_power_consumption(station)
+    station["ressources"]["power_consumption"] = calculate_power_consumption(station)
 
     return station

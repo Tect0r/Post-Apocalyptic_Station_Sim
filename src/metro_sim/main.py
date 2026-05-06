@@ -92,7 +92,7 @@ def handle_upgrade_overview_menu(station: dict) -> None:
     clear_console()
 
     menu_lines, menu_actions = create_upgrade_menu(station)
-    station_map = build_station_map_lines(station=station)
+    station_map = build_station_map_lines(station=station, upgrade_mode=True)
     print_side_by_side(menu_lines, station_map)
 
     user_input = input("Wähle einen Slot zum upgraden. ")
@@ -112,7 +112,7 @@ def handle_build_new_building_menu(station: dict, selected_slot: str) -> None:
 
     clear_console()
 
-    station_map = build_station_map_lines(station=station)
+    station_map = build_station_map_lines(station=station, upgrade_mode=True, selected_slot=selected_slot)
     print_side_by_side(menu_lines, station_map)
 
     user_input = input("Wähle einen Gebäude zum bauen.")
@@ -128,15 +128,16 @@ def handle_upgrade_detail_menu(station: dict, selected_building: dict, selected_
 
     clear_console()
 
-    station_map = build_station_map_lines(station=station)
+    station_map = build_station_map_lines(station=station, upgrade_mode=True, selected_slot=selected_slot)
     print_side_by_side(menu_lines, station_map)
+    
 
     user_input = ask_until_valid(["q", "y", "n"] ,"Möchtest du das Gebäude upgraden?")
 
     if user_input == "q" or user_input == "n":
         return
     elif user_input == "y":
-        upgrade_building(selected_building, selected_slot)
+        upgrade_building(station, selected_building, selected_slot)
         return
 
 
