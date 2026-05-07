@@ -53,6 +53,7 @@ def create_initial_station():
             "morale": initial_dict["stats"]["morale"],
             "comfort": initial_dict["stats"]["comfort"],
             "safety": initial_dict["stats"]["safety"],
+            "discontent" : 0,
             "power_stability": initial_dict["stats"]["power_stability"],
             "power_contract": initial_dict["stats"]["power_contract"]
         },

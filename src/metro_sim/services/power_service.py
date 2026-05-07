@@ -61,3 +61,13 @@ def calculate_generator_production(station: dict, effects: dict) -> int:
     else:
         generator_production = 0
     return generator_production
+
+def power_overusage() -> None:
+    # berechnet chance, das eine produktionsstätte ausfällt
+    #fällt für eine random tick anzahl aus
+    # desto weiter man über limit ist, desto wahrscheinlicher allgemein
+    # desto mehr ein gebäude verbraucht, desto eher fällt das gebäude aus
+    pass
+
+def apply_power_outage() -> None:
+    pass
