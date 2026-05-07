@@ -9,10 +9,16 @@ def assign_workers(
     Weist eine bestimmte Anzahl von Arbeitern einem Gebäude zu, um die Produktion zu steigern.
     """
 
+    #umstellen auf pro slot
+
     station["employment"][building] += workers
     
     station["population"]["employed"] += workers
     station["population"]["unemployed"] -= workers
+
+def unassign_workers() -> None:
+    #das gleiche wie oben nur anders rum :)
+    pass
 
 def calculate_leadership_production(station: dict, effects: dict) -> int:
     # Berechnet die Produktion von Handelsgütern basierend auf den zugewiesenen Arbeitern und der Infrastruktur

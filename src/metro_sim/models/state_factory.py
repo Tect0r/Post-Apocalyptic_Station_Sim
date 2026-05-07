@@ -18,35 +18,21 @@ def create_initial_station():
 
         "population": {
             "total": initial_dict["population"]["total"],
-            "employed": initial_dict["population"]["employed"],
+            "employed": 0,
             "unemployed": initial_dict["population"]["unemployed"],
             "children": initial_dict["population"]["children"],
             "elderly": initial_dict["population"]["elderly"]
         },
 
-        "employment": {
-            "mushroom_production": 0,
-            "pig_production": 0,
-            "kitchen_work": 0,
-            "maintenance": 0,
-            "trade_goods_production": 0,
-            "trading": 0,
-            "guards": 0,
-            "medical": 0,
-            "machine_shop": 0,
-            "stalker_expedition": 0,
-            "service_work": 0
-        },
-
-        "ressources": {
-            "mushrooms": initial_dict["ressources"]["mushrooms"],
-            "pigs": initial_dict["ressources"]["pig_meat"],
-            "water": initial_dict["ressources"]["water"],
-            "medicine": initial_dict["ressources"]["medicine"],
+        "resources": {
+            "mushrooms": initial_dict["resources"]["mushrooms"],
+            "pigs": initial_dict["resources"]["pig_meat"],
+            "water": initial_dict["resources"]["water"],
+            "medicine": initial_dict["resources"]["medicine"],
             "power_consumption": 0,
-            "trade_goods": initial_dict["ressources"]["trade_goods"],
-            "spare_parts": initial_dict["ressources"]["spare_parts"],
-            "ammo": initial_dict["ressources"]["ammo"]
+            "trade_goods": initial_dict["resources"]["trade_goods"],
+            "spare_parts": initial_dict["resources"]["spare_parts"],
+            "ammo": initial_dict["resources"]["ammo"]
         },
 
         "stats": {
@@ -61,35 +47,35 @@ def create_initial_station():
         #0: broken, 1: working
         "infrastructure_status": {
             "water_system": 1,
-            "power_generation": 1
+            "power_line": 1
         },
 
         "slots": {
-            "slot_1": {"building": None, "level": 0, "production_progress": 0},
-            "slot_2": {"building": None, "level": 0, "production_progress": 0},
-            "slot_3": {"building": None, "level": 0, "production_progress": 0},
-            "slot_4": {"building": None, "level": 0, "production_progress": 0},
-            "slot_5": {"building": None, "level": 0, "production_progress": 0},
-            "slot_6": {"building": None, "level": 0, "production_progress": 0},
-            "slot_7": {"building": "mushroom_farm", "level": 1, "production_progress": 0},
-            "slot_8": {"building": "living_quarters", "level": 1, "production_progress": 0},
-            "slot_9": {"building": None, "level": 0, "production_progress": 0},
-            "slot_10": {"building": None, "level": 0, "production_progress": 0},
-            "slot_11": {"building": None, "level": 0, "production_progress": 0},
-            "slot_12": {"building": None, "level": 0, "production_progress": 0},
-            "slot_13": {"building": None, "level": 0, "production_progress": 0},
-            "slot_14": {"building": None, "level": 0, "production_progress": 0},
-            "slot_15": {"building": None, "level": 0, "production_progress": 0},
-            "slot_16": {"building": None, "level": 0, "production_progress": 0},
-            "slot_17": {"building": None, "level": 0, "production_progress": 0},
-            "slot_18": {"building": None, "level": 0, "production_progress": 0},
-            "slot_19": {"building": None, "level": 0, "production_progress": 0},
-            "slot_20": {"building": None, "level": 0, "production_progress": 0},
-            "slot_21": {"building": None, "level": 0, "production_progress": 0},
+            "slot_1": {"building": None, "level": 0, "production_progress": 0, "employed_worker" : 0, "building_status" : 1},
+            "slot_2": {"building": None, "level": 0, "production_progress": 0, "employed_worker" : 0, "building_status" : 1},
+            "slot_3": {"building": None, "level": 0, "production_progress": 0, "employed_worker" : 0, "building_status" : 1},
+            "slot_4": {"building": None, "level": 0, "production_progress": 0, "employed_worker" : 0, "building_status" : 1},
+            "slot_5": {"building": None, "level": 0, "production_progress": 0, "employed_worker" : 0, "building_status" : 1},
+            "slot_6": {"building": None, "level": 0, "production_progress": 0, "employed_worker" : 0, "building_status" : 1},
+            "slot_7": {"building": None, "level": 0, "production_progress": 0, "employed_worker" : 0, "building_status" : 1},
+            "slot_8": {"building": None, "level": 0, "production_progress": 0, "employed_worker" : 0, "building_status" : 1},
+            "slot_9": {"building": None, "level": 0, "production_progress": 0, "employed_worker" : 0, "building_status" : 1},
+            "slot_10": {"building": None, "level": 0, "production_progress": 0, "employed_worker" : 0, "building_status" : 1},
+            "slot_11": {"building": None, "level": 0, "production_progress": 0, "employed_worker" : 0, "building_status" : 1},
+            "slot_12": {"building": None, "level": 0, "production_progress": 0, "employed_worker" : 0, "building_status" : 1},
+            "slot_13": {"building": None, "level": 0, "production_progress": 0, "employed_worker" : 0, "building_status" : 1},
+            "slot_14": {"building": None, "level": 0, "production_progress": 0, "employed_worker" : 0, "building_status" : 1},
+            "slot_15": {"building": None, "level": 0, "production_progress": 0, "employed_worker" : 0, "building_status" : 1},
+            "slot_16": {"building": None, "level": 0, "production_progress": 0, "employed_worker" : 0, "building_status" : 1},
+            "slot_17": {"building": None, "level": 0, "production_progress": 0, "employed_worker" : 0, "building_status" : 1},
+            "slot_18": {"building": None, "level": 0, "production_progress": 0, "employed_worker" : 0, "building_status" : 1},
+            "slot_19": {"building": None, "level": 0, "production_progress": 0, "employed_worker" : 0, "building_status" : 1},
+            "slot_20": {"building": None, "level": 0, "production_progress": 0, "employed_worker" : 0, "building_status" : 1},
+            "slot_21": {"building": None, "level": 0, "production_progress": 0, "employed_worker" : 0, "building_status" : 1},
         }
     }
 
 
-    station["ressources"]["power_consumption"] = calculate_power_consumption(station)
+    station["resources"]["power_consumption"] = calculate_power_consumption(station)
 
     return station

@@ -1,26 +1,28 @@
 import metro_sim.utils.file_loader as loader
 
-def upgrade_building(station: dict, building: str, selected_slot: str) -> bool:
+def upgrade_building(station: dict, building: str, selected_slot: str) -> {bool, str}:
     
     slot = station["slots"][selected_slot]
 
     if slot["building"] is not None and slot["building"] != building:
-        return False
+        return {"success" : False, "msg" : "Slots ist bereits belegt."}
     
     building_costs_data = loader.load_buildings_cost_data()
     current_level = slot["level"]
     new_level = current_level + 1
 
     if new_level > 3:
-        return False
+        return {"success" : False, "msg" : "Slot ist bereits auf dem maixmalen Level."}
 
     building_costs = building_costs_data[building]["upgrade_cost"][str(new_level)]
-    player_ressources = station["ressources"]
+    player_resources = station["resources"]
+    
+    can_afford, msg = can_afford(player_resources, building_costs)
+    
+    if not can_afford:
+        return {"success" : False, "msg" : msg}
 
-    if not can_afford(player_ressources, building_costs):
-        return False
-
-    pay_ressources(player_ressources, building_costs)
+    pay_resources(player_resources, building_costs)
 
     station["slots"][selected_slot] = {
         "building": building,
@@ -28,18 +30,18 @@ def upgrade_building(station: dict, building: str, selected_slot: str) -> bool:
         "production_progress": 0
     }
 
-    return True
+    return {"success" : True, "msg" : "Gebäude erfolgreich geupgraded."}
 
-def can_afford(ressources: dict, costs: dict) -> bool:
+def can_afford(resources: dict, costs: dict) -> {bool, str}:
     for resource_name, needed_amount in costs.items():
-        available_amount = ressources.get(resource_name, 0)
+        available_amount = resources.get(resource_name, 0)
 
         if available_amount < needed_amount:
-            return False
+            return {"success" : False, "msg" : f"Es fehlt: {resource_name}"}
 
-    return True
+    return {"success" : True, "msg" : f"Alle Ressource sind vorrätig."}
 
 
-def pay_ressources(ressources: dict, costs: dict) -> None:
+def pay_resources(resources: dict, costs: dict) -> None:
     for resource_name, amount in costs.items():
-        ressources[resource_name] -= amount
+        resources[resource_name] -= amount

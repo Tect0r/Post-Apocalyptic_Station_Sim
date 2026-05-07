@@ -30,22 +30,6 @@ def show_station_overview(station: dict, last_report: dict | None = None) -> Non
 
     print_side_by_side(left_lines, map_lines)
 
-def show_day_transition_report(station: dict, report_dict : dict) -> None:
-    clear_console()
-    print("Der nächste Tag bricht an...")
-    print(f"Tag: {report_dict['day']} - Datum: {report_dict['date']}")
-    print(f"Ressourcenverbrauch: Nahrung: {report_dict['food_produced']-report_dict['food_consumed']}, Wasser: {report_dict['water_produced']-report_dict['water_consumed']}")
-    print(f"Produktion: Handelsressourcen: {report_dict['trade_goods_produced']}")
-    print(f"Handel: tbd")
-
-    if station['stats']['morale'] < 30 and station['stats']['morale'] > 0:
-        print("Die Moral der Bewohner ist kritisch niedrig! Versuche, die Moral zu verbessern, um Unruhen zu vermeiden.")
-
-    if station['stats']['morale'] == 0:
-        print("Die Moral der Bewohner ist auf 0 gesunken! Es kommt zu Unruhen und Plünderungen in der Station!")
-
-    print("")
-
 def color_lines(lines: list[str], color: str) -> list[str]:
     GREEN = "\033[32m"
     RESET = "\033[0m"
@@ -163,16 +147,16 @@ def build_station_status_lines(station: dict, report: dict | None) -> list[str]:
             f"  Kinder: {station['population']['children']}",
             f"  Alte: {station['population']['elderly']}",
         "",
-        "Ressourcen",
+        "resourcen",
         f"  Nahrung:",
-        f"    Pilze: {station['ressources']['mushrooms']}{format_resource_change(report, 'mushrooms')}",
-        f"    Schweine: {station['ressources']['pigs']}{format_resource_change(report, 'pigs')}",
-        f"  Wasser: {station['ressources']['water']}{format_resource_change(report, 'water')}",
-        f"  Munition: {station['ressources']['ammo']}{format_resource_change(report, 'ammo')}",
-        f"  Medikamente: {station['ressources']['medicine']}{format_resource_change(report, 'medicine')}",
-        f"  Handelsressourcen: {station['ressources']['trade_goods']}{format_resource_change(report, 'trade_goods')}",
-        f"  Ersatzteile: {station['ressources']['spare_parts']}{format_resource_change(report, 'spare_parts')}",
-        f"  Stromverbrauch: {station['ressources']['power_consumption']} kWh / {available_power} kWh",
+        f"    Pilze: {station['resources']['mushrooms']}{format_resource_change(report, 'mushrooms')}",
+        f"    Schweine: {station['resources']['pigs']}{format_resource_change(report, 'pigs')}",
+        f"  Wasser: {station['resources']['water']}{format_resource_change(report, 'water')}",
+        f"  Munition: {station['resources']['ammo']}{format_resource_change(report, 'ammo')}",
+        f"  Medikamente: {station['resources']['medicine']}{format_resource_change(report, 'medicine')}",
+        f"  Handelsresourcen: {station['resources']['trade_goods']}{format_resource_change(report, 'trade_goods')}",
+        f"  Ersatzteile: {station['resources']['spare_parts']}{format_resource_change(report, 'spare_parts')}",
+        f"  Stromverbrauch: {station['resources']['power_consumption']} kWh / {available_power} kWh",
         "",
         "Stationswerte",
             f"  Moral: {station['stats']['morale']}",

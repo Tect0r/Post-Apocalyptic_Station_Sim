@@ -1,4 +1,4 @@
-from metro_sim.services.state_factory import create_initial_station
+from metro_sim.models.state_factory import create_initial_station
 
 
 def test_initial_station_has_expected_name():

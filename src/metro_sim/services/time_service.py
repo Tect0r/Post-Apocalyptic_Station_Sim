@@ -1,9 +1,5 @@
 from datetime import datetime, timedelta
-
 from metro_sim.utils.file_loader import load_balancing
-
-from datetime import datetime, timedelta
-
 
 def advance_time(station: dict, ticks: int) -> None:
     balancing = load_balancing()
