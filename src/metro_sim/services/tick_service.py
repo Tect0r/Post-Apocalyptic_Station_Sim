@@ -17,7 +17,3 @@ def calculate_next_tick(station: dict, report: dict) -> dict:
     consumption_report = consumption_service.calculate_consumption_for_tick(station)
         
     report_service.merge_reports(report, consumption_report)
-
-
-
-

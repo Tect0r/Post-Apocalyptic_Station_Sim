@@ -1,0 +1,1 @@
+#Der ResourceManager ist also eher eine Art Lager-/Buchhaltungssystem.

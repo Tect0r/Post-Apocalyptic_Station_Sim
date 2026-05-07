@@ -1,5 +1,5 @@
 from metro_sim.utils.file_loader import load_balancing, load_buildings_cost_data, load_buildings_effects_data
-from metro_sim.services.report_service import add_resource_change, add_stat_change
+import metro_sim.services.report_service as report_service
 
 def calculate_mushroom_production(station: dict, effects: dict) -> int:
     # Berechnet die Pilzproduktion basierend auf den zugewiesenen Arbeitern und der Infrastruktur
@@ -19,15 +19,6 @@ def calculate_kitchen_production(station: dict, effects: dict) -> int:
     #strom verbrauch balancen
     # suppe gibt komfort
     return 0
-
-def calculate_water_production(station: dict, effects: dict) -> int:
-    # Berechnet die Wasserproduktion basierend auf den zugewiesenen Arbeitern und der Wasserreinigung
-    balancing_dict = load_balancing()
-    if station['infrastructure_status']['water_system'] > 0:
-        water_production = station['work_assignment']['water_system'] * (effects["water_per_worker_by_level"][str(station['infrastructure_levels']['water_system'])])
-    else:            
-        water_production = 0
-    return water_production
 
 def calculate_trade_goods_production(station: dict, effects: dict) -> int:
     # Berechnet die Produktion von Handelsgütern basierend auf den zugewiesenen Arbeitern und der Infrastruktur
@@ -56,17 +47,13 @@ def calculate_production_for_tick(station: dict) -> dict:
     erreicht, wird der passende Ertrag erzeugt und der Fortschritt
     des Slots zurückgesetzt.
 
-    Gibt einen Report mit den erzeugten Ressourcen und Effekten zurück.
+    Gibt einen Report mit den erzeugten resourcen und Effekten zurück.
     """
 
     building_slots = station.get("slots", {})
     building_effects = load_buildings_effects_data()
 
-    report = {
-        "resource_changes": {},
-        "stat_changes": {},
-        "messages": []
-    }
+    report = report_service.create_empty_report()
 
     for slot_id, slot in building_slots.items():
         building = slot.get("building")
@@ -113,35 +100,35 @@ def apply_building_yield(
     match building:
         case "mushroom_farm":
             amount = calculate_mushroom_production(station, effects)
-            station["ressources"]["mushrooms"] += amount
-            add_resource_change(report, "mushrooms", amount)
+            station["resources"]["mushrooms"] += amount
+            report_service.add_resource_change(report, "mushrooms", amount)
 
         case "pig_farm":
             amount = calculate_pig_production(station, effects)
 
-            station["ressources"]["pigs"] += amount
-            add_resource_change(report, "pigs", amount)
+            station["resources"]["pigs"] += amount
+            report_service.add_resource_change(report, "pigs", amount)
 
         case "trading_goods":
             amount = calculate_trade_goods_production(station, effects)
 
-            station["ressources"]["trade_goods"] += amount
-            add_resource_change(report, "trade_goods", amount)
+            station["resources"]["trade_goods"] += amount
+            report_service.add_resource_change(report, "trade_goods", amount)
 
         case "machine_shop":
             amount = calculate_machine_shop_production(station, effects)
 
-            station["ressources"]["spare_parts"] += amount
-            add_resource_change(report, "spare_parts", amount)
+            station["resources"]["spare_parts"] += amount
+            report_service.add_resource_change(report, "spare_parts", amount)
 
         case "medical":
             amount = calculate_medical_production(station, effects)
 
-            station["ressources"]["medicine"] += amount
-            add_resource_change(report, "medicine", amount)
+            station["resources"]["medicine"] += amount
+            report_service.add_resource_change(report, "medicine", amount)
 
         case "generator":
-            # Generator erzeugt keine lagerbare Ressource,
+            # Generator erzeugt keine lagerbare resource,
             # sondern kann später die verfügbare kWh-Leistung erhöhen.
             #amount = effects["kwh_per_day"]
             #add_resource_change(report, "generated_kwh", amount)
@@ -155,7 +142,7 @@ def apply_building_yield(
                 station["stats"]["morale"] + morale_bonus
             )
 
-            add_stat_change(report, "morale", morale_bonus)
+            report_service.add_stat_change(report, "morale", morale_bonus)
 
         case "market":
             morale_bonus = effects["morale_bonus"]
@@ -165,7 +152,7 @@ def apply_building_yield(
                 station["stats"]["morale"] + morale_bonus
             )
 
-            add_stat_change(report, "morale", morale_bonus)
+            report_service.add_stat_change(report, "morale", morale_bonus)
 
         case "station_leadership":
             # Passive Effekte wie Effizienzbonus oder Verlustreduktion

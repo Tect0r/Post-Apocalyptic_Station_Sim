@@ -1,4 +1,25 @@
 from metro_sim.utils.file_loader import load_buildings_cost_data, load_buildings_effects_data, load_map_data
+import metro_sim.ui.cli as cli
+
+def show_upgrade_overview_menu(station: dict) -> list[str]:
+    cli.clear_console()
+
+    menu = create_upgrade_menu(station)
+    station_map = cli.build_station_map_lines(station=station)
+
+    cli.print_side_by_side(menu, station_map)
+
+    return menu
+
+def show_upgrade_detail_menu(station: dict) -> list[str]:
+    cli.clear_console()
+
+    menu = create_building_upgrade_menu(station)
+    station_map = cli.build_station_map_lines(station=station)
+
+    cli.print_side_by_side(menu, station_map)
+
+    return menu
 
 def create_upgrade_menu(station: dict) -> tuple[list[str], dict[str, str]]:
     menu_lines = ["Slots:"]

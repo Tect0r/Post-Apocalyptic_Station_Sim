@@ -22,3 +22,10 @@ def merge_reports(target: dict, source: dict) -> None:
         )
 
     target["messages"].extend(source.get("messages", []))
+
+def create_empty_report() -> dict:
+    return {
+        "resource_changes": {},
+        "stat_changes": {},
+        "messages": []
+    }

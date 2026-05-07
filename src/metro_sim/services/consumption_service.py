@@ -1,28 +1,32 @@
 import math
 
 from metro_sim.utils.file_loader import load_balancing, load_buildings_cost_data, load_buildings_effects_data
-from metro_sim.services.report_service import add_resource_change, add_stat_change
+import metro_sim.services.report_service as report_service
 
 
 def apply_food_consumption(station: dict, report: dict) -> None:
     food_consumption = calculate_food_consumption(station)
 
-    if station['ressources']['pigs'] >= food_consumption:
-        station['ressources']['pigs'] -= food_consumption
-        add_resource_change(report, "pigs", -food_consumption)
+    #umbauen, sodass alles irgendwie (balancing.json) im verhältnis gegessen wird und das eine varity an essen einen moral und komfort boost
+    # gibt. desto weniger versch. essen da ist, desto geringer ist der bonus. gibt es nur eine sache, gibt es einen kleinen komfort und moral negativ malus
+    # aber nicht zu krass, damit early game nicht zu hart ist
+
+    if station['resources']['pigs'] >= food_consumption:
+        station['resources']['pigs'] -= food_consumption
+        report_service.add_resource_change(report, "pigs", -food_consumption)
         return
     else:
-        amount_left = food_consumption-station['ressources']['pigs']
-        station['ressources']['pigs'] = 0
-        add_resource_change(report, "pigs", -(amount_left-food_consumption))
+        amount_left = food_consumption-station['resources']['pigs']
+        station['resources']['pigs'] = 0
+        report_service.add_resource_change(report, "pigs", -(amount_left-food_consumption))
     
-    if station['ressources']['mushrooms'] >= amount_left:
-        station['ressources']['mushrooms'] -= amount_left
-        add_resource_change(report, "mushrooms", -amount_left)
+    if station['resources']['mushrooms'] >= amount_left:
+        station['resources']['mushrooms'] -= amount_left
+        report_service.add_resource_change(report, "mushrooms", -amount_left)
     else:
-        amount_not_covered = amount_left-station['ressources']['mushrooms']
-        station['ressources']['mushrooms'] = 0
-        add_resource_change(report, "mushrooms", -amount_not_covered)
+        amount_not_covered = amount_left-station['resources']['mushrooms']
+        station['resources']['mushrooms'] = 0
+        report_service.add_resource_change(report, "mushrooms", -amount_not_covered)
 
 def calculate_food_consumption(station: dict) -> int:
     # Berechnet den Nahrungsverbrauch basierend auf der Bevölkerung und den zugewiesenen Arbeitern
@@ -33,6 +37,9 @@ def calculate_food_consumption(station: dict) -> int:
 
 def calculate_water_consumption(station: dict) -> int:
     # Berechnet den Wasserverbrauch basierend auf der Bevölkerung, den zugewiesenen Arbeitern und der Wasserreinigung
+
+    # calculation für die einzelnen buildings
+
     balancing_dict = load_balancing()
     if station['infrastructure_status']['water_system'] == 0:
         water_consumption = station['population']['total'] * balancing_dict["water"]["consumption_per_person_on_failure"]
@@ -44,23 +51,26 @@ def calculate_water_consumption(station: dict) -> int:
 def calculate_spare_parts_consumption(station: dict) -> int:
     # Berechnet den Ersatzteilverbrauch basierend auf den zugewiesenen Arbeitern und der Infrastruktur
     balancing_dict = load_balancing()
-    spare_parts_consumption = station['work_assignment']['maintenance'] * balancing_dict["maintenance"]["spare_parts_consumption_per_worker_by_level"][str(station['infrastructure_levels']['maintenance'])]
-    return spare_parts_consumption
+    
+    # geh alle infrastructures durch (slots + power + water) und calc die instandhaltung
+    # wie geht man damit um, wenn nicht genug spare_parts da sind?
+
+    return 0
 
 def calculate_bar_consumption(station: dict) -> int:
     # Berechnet den Verbrauch von Handelsgütern basierend auf der Bevölkerung und den zugewiesenen Arbeitern
     balancing_dict = load_balancing()
-    bar_consumption = station['work_assignment']['service_work'] * balancing_dict["bar"]["trade_goods_consumption_per_worker_by_level"][str(station['infrastructure_levels']['bar'])]
-    return bar_consumption
+
+    # calculate food und wasser verbrauch
+    # calc power usage
+    # set effect status (genug essen, gutes essen, kein essen)
+
+    return 0
 
 def calculate_consumption_for_tick(station: dict) -> dict:
     balancing = load_balancing()
 
-    report = {
-        "resource_changes": {},
-        "stat_changes": {},
-        "messages": []
-    }
+    report = report_service.create_empty_report()
 
     is_meal_time = (
         station["time"]["hour"] in balancing["time"]["meal_hours"]
