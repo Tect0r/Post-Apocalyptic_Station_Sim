@@ -1,0 +1,493 @@
+{
+  "production_chains": {
+
+    "mushroom_farm": {
+      "description": "Basis-Nahrungsquelle. Produziert immer Pilze, kann aber durch Wasser und organische Abfälle deutlich effizienter werden.",
+      "base": {
+        "needs": {},
+        "gives": {
+          "mushrooms": 8
+        }
+      },
+      "boosts": {
+        "watered": {
+          "needs": {
+            "water": 5
+          },
+          "gives_bonus": {
+            "mushrooms": 4
+          }
+        },
+        "fertilized": {
+          "needs": {
+            "organic_waste": 2
+          },
+          "gives_bonus": {
+            "mushrooms": 6
+          }
+        }
+      }
+    },
+
+    "pig_farm": {
+      "description": "Züchtet Schweine als hochwertigere Nahrungsquelle. Funktioniert langsam mit einfachem Futter, wird aber durch bessere Versorgung deutlich effizienter.",
+      "base": {
+        "needs": {
+          "mushrooms": 4,
+          "water": 4
+        },
+        "gives": {
+          "pig_meat": 2,
+          "organic_waste": 1
+        }
+      },
+      "boosts": {
+        }
+      }
+    },
+
+    "kitchen": {
+      "description": "Verarbeitet einfache Nahrung zu besseren Mahlzeiten. Pilze reichen für einfache Suppe, Fleisch und sauberes Wasser erhöhen Ertrag und Qualität.",
+      "soup": {
+        "needs": {
+          "mushrooms": 6,
+          "water": 3
+        },
+        "gives": {
+          "soup": 8
+        }
+      },
+      "pig_meat": {
+        "needs": {
+          "pigs": 1,
+          "water": 3
+        },
+        "gives": {
+          "pig_meat": 4
+        }
+      },
+      "meat_soup": {
+        "needs": {
+          "mushrooms": 6,
+          "pig_meat": 4,
+          "water": 3
+        },
+        "gives": {
+          "meat_soup": 8
+        }
+      }
+    },
+
+    "storage": {
+      "description": "Passives Gebäude. Erhöht Lagerkapazitäten und schützt Vorräte besser. Produziert keine Ressourcen.",
+      "base": {
+        "needs": {},
+        "gives": {}
+      },
+      "boosts": {}
+    },
+
+    "trading_post": {
+      "description": "Tauscht Handelsgüter gegen benötigte Ressourcen. Bessere Waren erhöhen den Tauschwert.",
+      "base": {
+        "needs": {
+          "trade_goods": 10
+        },
+        "gives": {
+          "ammo": 5
+        }
+      },
+      "boosts": {
+        "valuable_goods": {
+          "needs": {
+            "mechanical_parts": 1
+          },
+          "gives_bonus": {
+            "ammo": 4,
+            "spare_parts": 1
+          }
+        },
+        "medical_trade": {
+          "needs": {
+            "medicine": 1
+          },
+          "gives_bonus": {
+            "ammo": 2,
+            "trade_goods": 2
+          }
+        }
+      }
+    },
+
+    "trading_goods": {
+      "description": "Produziert einfache Tauschware aus Schrott und kleinen technischen Teilen. Höherwertige Inputs verbessern den Handelswert.",
+      "base": {
+        "needs": {
+          "scrap": 4
+        },
+        "gives": {
+          "trade_goods": 6
+        }
+      },
+      "boosts": {
+        "spare_parts_bundle": {
+          "needs": {
+            "spare_parts": 1
+          },
+          "gives_bonus": {
+            "trade_goods": 3
+          }
+        },
+        "prepared_meals": {
+          "needs": {
+            "cooked_meals": 2
+          },
+          "gives_bonus": {
+            "trade_goods": 2
+          }
+        }
+      }
+    },
+
+    "machine_shop": {
+      "description": "Verarbeitet Schrott zu Ersatzteilen und technischen Komponenten. Mit besseren Werkzeugen oder Bauteilen steigt der Ertrag.",
+      "base": {
+        "needs": {
+          "scrap": 6
+        },
+        "gives": {
+          "spare_parts": 4
+        }
+      },
+      "boosts": {
+        "power_units": {
+          "needs": {
+            "power_units": 1
+          },
+          "gives_bonus": {
+            "spare_parts": 2,
+            "mechanical_parts": 1
+          }
+        },
+        "mechanical_parts_rework": {
+          "needs": {
+            "mechanical_parts": 1
+          },
+          "gives_bonus": {
+            "spare_parts": 3
+          }
+        }
+      }
+    },
+
+    "living_quarters": {
+      "description": "Passives Gebäude. Erhöht Bevölkerungskapazität und Komfort. Produziert keine Ressourcen.",
+      "base": {
+        "needs": {},
+        "gives": {}
+      },
+      "boosts": {}
+    },
+
+    "maintenance": {
+      "description": "Wartung stabilisiert Infrastruktur. Ohne Ersatzteile wird nur einfache Inspektion geleistet, mit Ersatzteilen entstehen echte Wartungspunkte.",
+      "base": {
+        "needs": {},
+        "gives": {
+          "maintenance_points": 2
+        }
+      },
+      "boosts": {
+        "spare_parts": {
+          "needs": {
+            "spare_parts": 2
+          },
+          "gives_bonus": {
+            "maintenance_points": 5
+          }
+        },
+        "machine_support": {
+          "needs": {
+            "mechanical_parts": 1
+          },
+          "gives_bonus": {
+            "maintenance_points": 4
+          }
+        }
+      }
+    },
+
+    "generator": {
+      "description": "Erzeugt lokalen Strom. Funktioniert mit einfachem Treibstoff, kann durch Ersatzteile und technische Komponenten stabiler und effizienter laufen.",
+      "base": {
+        "needs": {
+          "fuel": 4
+        },
+        "gives": {
+          "local_kwh": 40
+        }
+      },
+      "boosts": {
+        "maintenance_parts": {
+          "needs": {
+            "spare_parts": 1
+          },
+          "gives_bonus": {
+            "local_kwh": 15
+          }
+        },
+        "power_unit": {
+          "needs": {
+            "power_units": 1
+          },
+          "gives_bonus": {
+            "local_kwh": 30
+          }
+        }
+      }
+    },
+
+    "medical": {
+      "description": "Stellt einfache Medizin her und versorgt Verletzte. Chemikalien oder sauberes Wasser verbessern die Versorgung deutlich.",
+      "base": {
+        "needs": {
+          "water": 3,
+          "mushrooms": 2
+        },
+        "gives": {
+          "medicine": 1,
+          "treated_patients": 1
+        }
+      },
+      "boosts": {
+        "chemicals": {
+          "needs": {
+            "chemicals": 1
+          },
+          "gives_bonus": {
+            "medicine": 3
+          }
+        },
+        "clean_supplies": {
+          "needs": {
+            "cooked_meals": 1,
+            "water": 2
+          },
+          "gives_bonus": {
+            "treated_patients": 2
+          }
+        }
+      }
+    },
+
+    "bar": {
+      "description": "Verbraucht Nahrung und Wasser, erzeugt dafür Moral und Komfort. Bessere Mahlzeiten oder seltene Güter erhöhen den Effekt.",
+      "base": {
+        "needs": {
+          "water": 4,
+          "mushrooms": 4
+        },
+        "gives": {
+          "morale_points": 2,
+          "comfort_points": 1
+        }
+      },
+      "boosts": {
+        "served_meals": {
+          "needs": {
+            "cooked_meals": 3
+          },
+          "gives_bonus": {
+            "morale_points": 3,
+            "comfort_points": 2
+          }
+        },
+        "rare_goods": {
+          "needs": {
+            "rare_loot": 1
+          },
+          "gives_bonus": {
+            "morale_points": 5
+          }
+        }
+      }
+    },
+
+    "market": {
+      "description": "Verbessert Stationsleben, Versorgung und Handel. Funktioniert mit normalen Handelsgütern, profitiert aber von Nahrung, Medizin und seltenen Waren.",
+      "base": {
+        "needs": {
+          "trade_goods": 5
+        },
+        "gives": {
+          "morale_points": 2,
+          "comfort_points": 2,
+          "market_value": 3
+        }
+      },
+      "boosts": {
+        "food_stalls": {
+          "needs": {
+            "cooked_meals": 2
+          },
+          "gives_bonus": {
+            "comfort_points": 2,
+            "market_value": 2
+          }
+        },
+        "rare_trade": {
+          "needs": {
+            "rare_loot": 1
+          },
+          "gives_bonus": {
+            "morale_points": 3,
+            "market_value": 5
+          }
+        }
+      }
+    },
+
+    "guard_post": {
+      "description": "Passives Verteidigungsgebäude. Erhöht Verteidigung und Sicherheit, produziert aber keine regulären Ressourcen.",
+      "base": {
+        "needs": {},
+        "gives": {}
+      },
+      "boosts": {}
+    },
+
+    "weapon_chamber": {
+      "description": "Wartet Waffen und verbessert Kampfbereitschaft. Ersatzteile und Munition erhöhen die Verteidigungswirkung.",
+      "base": {
+        "needs": {
+          "spare_parts": 1
+        },
+        "gives": {
+          "combat_readiness": 3
+        }
+      },
+      "boosts": {
+        "ammo_stock": {
+          "needs": {
+            "ammo": 3
+          },
+          "gives_bonus": {
+            "combat_readiness": 4
+          }
+        },
+        "mechanical_parts": {
+          "needs": {
+            "mechanical_parts": 1
+          },
+          "gives_bonus": {
+            "combat_readiness": 3,
+            "safety_points": 1
+          }
+        }
+      }
+    },
+
+    "stalker_den": {
+      "description": "Organisiert Expeditionen. Basisexpeditionen bringen Schrott, bessere Ausrüstung erhöht Loot-Chancen und senkt Risiko indirekt.",
+      "base": {
+        "needs": {
+          "cooked_meals": 1
+        },
+        "gives": {
+          "scrap": 4
+        }
+      },
+      "boosts": {
+        "armed_expedition": {
+          "needs": {
+            "ammo": 5
+          },
+          "gives_bonus": {
+            "scrap": 4,
+            "rare_loot": 1
+          }
+        },
+        "medical_supplies": {
+          "needs": {
+            "medicine": 1
+          },
+          "gives_bonus": {
+            "chemicals": 2,
+            "fuel": 1
+          }
+        }
+      }
+    },
+
+    "station_leadership": {
+      "description": "Verwaltet die Station und erzeugt Organisationsvorteile. Mit Handelsgütern und Informationen wird die Koordination effektiver.",
+      "base": {
+        "needs": {},
+        "gives": {
+          "administration_points": 2
+        }
+      },
+      "boosts": {
+        "admin_supplies": {
+          "needs": {
+            "trade_goods": 2
+          },
+          "gives_bonus": {
+            "administration_points": 3
+          }
+        },
+        "intel_reports": {
+          "needs": {
+            "rare_loot": 1
+          },
+          "gives_bonus": {
+            "administration_points": 4,
+            "safety_points": 1
+          }
+        }
+      }
+    },
+
+    "water_system": {
+      "description": "Füllt Wasservorräte auf, solange das System intakt ist. Ersatzteile verbessern Wartung und Durchsatz.",
+      "base": {
+        "needs": {},
+        "gives": {
+          "water": 40
+        }
+      },
+      "boosts": {
+        "spare_parts": {
+          "needs": {
+            "spare_parts": 1
+          },
+          "gives_bonus": {
+            "water": 20,
+            "maintenance_points": 1
+          }
+        }
+      }
+    },
+
+    "power_line": {
+      "description": "Externe Stromversorgung. Handelsgüter bezahlen den Vertrag, Wartung verbessert Stabilität.",
+      "base": {
+        "needs": {
+          "trade_goods": 6
+        },
+        "gives": {
+          "contract_kwh": 150
+        }
+      },
+      "boosts": {
+        "line_maintenance": {
+          "needs": {
+            "spare_parts": 1
+          },
+          "gives_bonus": {
+            "maintenance_points": 2
+          }
+        }
+      }
+  }
+}

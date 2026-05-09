@@ -17,10 +17,10 @@ def upgrade_building(station: dict, building: str, selected_slot: str) -> {bool,
     building_costs = building_costs_data[building]["upgrade_cost"][str(new_level)]
     player_resources = station["resources"]
     
-    can_afford, msg = can_afford(player_resources, building_costs)
+    can_afford_dict = can_afford(player_resources, building_costs)
     
-    if not can_afford:
-        return {"success" : False, "msg" : msg}
+    if not can_afford_dict["success"]:
+        return {"success" : False, "msg" : can_afford_dict["msg"]}
 
     pay_resources(player_resources, building_costs)
 
@@ -31,6 +31,11 @@ def upgrade_building(station: dict, building: str, selected_slot: str) -> {bool,
     }
 
     return {"success" : True, "msg" : "Gebäude erfolgreich geupgraded."}
+
+def demolish_building(station: dict, building: str, selected_slot: str) -> {bool, str}:
+    #ausgewältes gebäude wird zerstört
+    # ressourcen werden anteilhaft vom letzten upgrade zurück gegeben (50% oder so)
+    pass
 
 def can_afford(resources: dict, costs: dict) -> {bool, str}:
     for resource_name, needed_amount in costs.items():
@@ -45,3 +50,8 @@ def can_afford(resources: dict, costs: dict) -> {bool, str}:
 def pay_resources(resources: dict, costs: dict) -> None:
     for resource_name, amount in costs.items():
         resources[resource_name] -= amount
+
+def salvage_resources(resources: dict, costs: dict) -> None:
+    balancing_dict = loader.load_balancing()
+    for resource_name, amount in costs.items():
+        resources[resource_name] += amount * balancing_dict["building_demolishing"]["salvaged_resource_percentage"]

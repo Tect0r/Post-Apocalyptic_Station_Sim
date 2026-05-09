@@ -12,7 +12,19 @@
   },
 
   "food": {
-    "consumption_per_person_per_day": 1
+    "consumption_per_person_per_day": 3,
+    "food_values": {
+      "mushrooms": 1,
+      "pig_meat": 2,
+      "soup": 3,
+      "meat_soup": 5
+    },
+    "meal_mix_weights": {
+      "mushrooms": 0.35,
+      "soup": 0.35,
+      "pig_meat": 0.15,
+      "meat_soup": 0.15
+    }
   },
 
   "water_system": {
@@ -141,5 +153,18 @@
     "attack_chance_base": 0.05,
     "attack_chance_safety_modifier": 0.002,
     "immigration_check_interval_days": 7
+  },
+
+  "building_demolishing" : {
+    "salvaged_resource_percentage" : 0.5
+  },
+
+  "tunnel_scavenging" : {
+    "resource_ratio": {
+                "mushrooms" : 0.5,
+                "trade_goods": 0.2,
+                "spare_parts" : 0.3
+    },
+    "chance_to_loot" : 75
   }
 }

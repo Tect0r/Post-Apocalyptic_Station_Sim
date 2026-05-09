@@ -1,0 +1,117 @@
+{
+    "tunnel_scavenging":{
+        "description": "Basis-Ressourcenquelle. Bewohner suchen im Tunnel nach Nahrung, Trade Goods und Spare Parts.",
+        
+        "levels": {
+            "1": {
+                "work_required": 50,
+                "work_per_worker_per_tick": 5,
+                "max_workers": 20,
+                "base": {
+                    "needs": {},
+                    "gives":{
+                        "mushrooms" : 2,
+                        "trade_goods": 1,
+                        "spare_parts" : 1
+                    }
+                }
+            }
+        }
+    },
+
+  "mushroom_farm": {
+    "description": "Basis-Nahrungsquelle. Arbeiter erzeugen über Zeit Pilze. Wasser und organische Abfälle verbessern den Ertrag.",
+
+    "levels": {
+      "1": {
+        "work_required": 100,
+        "work_per_worker_per_tick": 5,
+        "max_workers": 8,
+        "base": {
+          "needs": {},
+          "gives": {
+            "mushrooms": 40
+          }
+        },
+        "boosts": {
+          "watered": {
+            "needs": {
+              "water": 5
+            },
+            "gives_bonus": {
+              "mushrooms": 10
+            }
+          },
+          "fertilized": {
+            "needs": {
+              "organic_waste": 2
+            },
+            "gives_bonus": {
+              "mushrooms": 15
+            }
+          }
+        }
+      },
+
+      "2": {
+        "work_required": 110,
+        "work_per_worker_per_tick": 7,
+        "max_workers": 12,
+        "base": {
+          "needs": {},
+          "gives": {
+            "mushrooms": 60
+          }
+        },
+        "boosts": {
+          "watered": {
+            "needs": {
+              "water": 8
+            },
+            "gives_bonus": {
+              "mushrooms": 18
+            }
+          },
+          "fertilized": {
+            "needs": {
+              "organic_waste": 3
+            },
+            "gives_bonus": {
+              "mushrooms": 25
+            }
+          }
+        }
+      },
+
+      "3": {
+        "work_required": 130,
+        "work_per_worker_per_tick": 10,
+        "max_workers": 18,
+        "base": {
+          "needs": {},
+          "gives": {
+            "mushrooms": 90
+          }
+        },
+        "boosts": {
+          "watered": {
+            "needs": {
+              "water": 12
+            },
+            "gives_bonus": {
+              "mushrooms": 30
+            }
+          },
+          "fertilized": {
+            "needs": {
+              "organic_waste": 5
+            },
+            "gives_bonus": {
+              "mushrooms": 45
+            }
+          }
+        }
+      }
+    }
+  }
+}

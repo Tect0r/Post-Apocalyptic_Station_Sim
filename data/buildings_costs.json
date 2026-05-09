@@ -1,9 +1,17 @@
 {
+  "tunnel_scavenging": {
+    "upgrade_cost": {
+    },
+    "kwh_per_day_by_level": {
+      "1": 0
+    }
+  },
+
   "mushroom_farm": {
     "upgrade_cost": {
-      "1": { "trade_goods": 150, "spare_parts": 20 },
-      "2": { "trade_goods": 350, "spare_parts": 60 },
-      "3": { "trade_goods": 700, "spare_parts": 140 }
+      "1": { "spare_parts": 150, "trade_goods": 20 },
+      "2": { "spare_parts": 350, "trade_goods": 60 },
+      "3": { "spare_parts": 700, "trade_goods": 140 }
     },
     "kwh_per_day_by_level": {
       "1": 15,
@@ -14,9 +22,9 @@
 
   "pig_farm": {
     "upgrade_cost": {
-      "1": { "trade_goods": 180, "spare_parts": 25 },
-      "2": { "trade_goods": 420, "spare_parts": 75 },
-      "3": { "trade_goods": 800, "spare_parts": 160 }
+      "1": { "spare_parts": 180, "trade_goods": 25 },
+      "2": { "spare_parts": 420, "trade_goods": 75 },
+      "3": { "spare_parts": 800, "trade_goods": 160 }
     },
     "kwh_per_day_by_level": {
       "1": 10,
@@ -27,9 +35,9 @@
 
   "kitchen": {
     "upgrade_cost": {
-      "1": { "trade_goods": 100, "spare_parts": 15 },
-      "2": { "trade_goods": 240, "spare_parts": 45 },
-      "3": { "trade_goods": 450, "spare_parts": 100 }
+      "1": { "spare_parts": 100, "trade_goods": 15 },
+      "2": { "spare_parts": 240, "trade_goods": 45 },
+      "3": { "spare_parts": 450, "trade_goods": 100 }
     },
     "kwh_per_day_by_level": {
       "1": 8,
@@ -40,9 +48,9 @@
 
   "storage": {
     "upgrade_cost": {
-      "1": { "trade_goods": 80, "spare_parts": 10 },
-      "2": { "trade_goods": 180, "spare_parts": 35 },
-      "3": { "trade_goods": 350, "spare_parts": 80 }
+      "1": { "spare_parts": 80, "trade_goods": 10 },
+      "2": { "spare_parts": 180, "trade_goods": 35 },
+      "3": { "spare_parts": 350, "trade_goods": 80 }
     },
     "kwh_per_day_by_level": {
       "1": 3,
@@ -53,9 +61,9 @@
 
   "trading_post": {
     "upgrade_cost": {
-      "1": { "trade_goods": 120, "spare_parts": 20 },
-      "2": { "trade_goods": 280, "spare_parts": 60 },
-      "3": { "trade_goods": 550, "spare_parts": 130 }
+      "1": { "spare_parts": 120, "trade_goods": 20 },
+      "2": { "spare_parts": 280, "trade_goods": 60 },
+      "3": { "spare_parts": 550, "trade_goods": 130 }
     },
     "kwh_per_day_by_level": {
       "1": 7,
@@ -66,9 +74,9 @@
 
   "trading_goods": {
     "upgrade_cost": {
-      "1": { "trade_goods": 140, "spare_parts": 25 },
-      "2": { "trade_goods": 320, "spare_parts": 70 },
-      "3": { "trade_goods": 650, "spare_parts": 150 }
+      "1": { "spare_parts": 140, "trade_goods": 25 },
+      "2": { "spare_parts": 320, "trade_goods": 70 },
+      "3": { "spare_parts": 650, "trade_goods": 150 }
     },
     "kwh_per_day_by_level": {
       "1": 12,
@@ -79,9 +87,9 @@
 
   "machine_shop": {
     "upgrade_cost": {
-      "1": { "trade_goods": 160, "spare_parts": 40 },
-      "2": { "trade_goods": 360, "spare_parts": 110 },
-      "3": { "trade_goods": 700, "spare_parts": 240 }
+      "1": { "spare_parts": 160, "trade_goods": 40 },
+      "2": { "spare_parts": 360, "trade_goods": 110 },
+      "3": { "spare_parts": 700, "trade_goods": 240 }
     },
     "kwh_per_day_by_level": {
       "1": 18,
@@ -92,9 +100,9 @@
 
   "living_quarters": {
     "upgrade_cost": {
-      "1": { "trade_goods": 150, "spare_parts": 20 },
-      "2": { "trade_goods": 350, "spare_parts": 55 },
-      "3": { "trade_goods": 700, "spare_parts": 120 }
+      "1": { "spare_parts": 150, "trade_goods": 20 },
+      "2": { "spare_parts": 350, "trade_goods": 55 },
+      "3": { "spare_parts": 700, "trade_goods": 120 }
     },
     "kwh_per_day_by_level": {
       "1": 7,
@@ -105,9 +113,9 @@
 
   "maintenance": {
     "upgrade_cost": {
-      "1": { "trade_goods": 130, "spare_parts": 30 },
-      "2": { "trade_goods": 300, "spare_parts": 90 },
-      "3": { "trade_goods": 600, "spare_parts": 200 }
+      "1": { "spare_parts": 130, "trade_goods": 30 },
+      "2": { "spare_parts": 300, "trade_goods": 90 },
+      "3": { "spare_parts": 600, "trade_goods": 200 }
     },
     "kwh_per_day_by_level": {
       "1": 10,
@@ -118,9 +126,9 @@
 
   "generator": {
     "upgrade_cost": {
-      "1": { "trade_goods": 200, "spare_parts": 80 },
-      "2": { "trade_goods": 450, "spare_parts": 200 },
-      "3": { "trade_goods": 900, "spare_parts": 420 }
+      "1": { "spare_parts": 200, "trade_goods": 80 },
+      "2": { "spare_parts": 450, "trade_goods": 200 },
+      "3": { "spare_parts": 900, "trade_goods": 420 }
     },
     "kwh_per_day_by_level": {
       "1": 0,
@@ -131,9 +139,9 @@
 
   "medical": {
     "upgrade_cost": {
-      "1": { "trade_goods": 160, "spare_parts": 35 },
-      "2": { "trade_goods": 360, "spare_parts": 100 },
-      "3": { "trade_goods": 720, "spare_parts": 220 }
+      "1": { "spare_parts": 160, "trade_goods": 35 },
+      "2": { "spare_parts": 360, "trade_goods": 100 },
+      "3": { "spare_parts": 720, "trade_goods": 220 }
     },
     "kwh_per_day_by_level": {
       "1": 10,
@@ -144,9 +152,9 @@
 
   "bar": {
     "upgrade_cost": {
-      "1": { "trade_goods": 90, "spare_parts": 10 },
-      "2": { "trade_goods": 220, "spare_parts": 35 },
-      "3": { "trade_goods": 450, "spare_parts": 80 }
+      "1": { "spare_parts": 90, "trade_goods": 10 },
+      "2": { "spare_parts": 220, "trade_goods": 35 },
+      "3": { "spare_parts": 450, "trade_goods": 80 }
     },
     "kwh_per_day_by_level": {
       "1": 8,
@@ -157,9 +165,9 @@
 
   "market": {
     "upgrade_cost": {
-      "1": { "trade_goods": 120, "spare_parts": 15 },
-      "2": { "trade_goods": 280, "spare_parts": 45 },
-      "3": { "trade_goods": 550, "spare_parts": 100 }
+      "1": { "spare_parts": 120, "trade_goods": 15 },
+      "2": { "spare_parts": 280, "trade_goods": 45 },
+      "3": { "spare_parts": 550, "trade_goods": 100 }
     },
     "kwh_per_day_by_level": {
       "1": 7,
@@ -170,9 +178,9 @@
 
   "guard_post": {
     "upgrade_cost": {
-      "1": { "trade_goods": 170, "spare_parts": 35 },
-      "2": { "trade_goods": 380, "spare_parts": 100 },
-      "3": { "trade_goods": 750, "spare_parts": 220 }
+      "1": { "spare_parts": 170, "trade_goods": 35 },
+      "2": { "spare_parts": 380, "trade_goods": 100 },
+      "3": { "spare_parts": 750, "trade_goods": 220 }
     },
     "kwh_per_day_by_level": {
       "1": 6,
@@ -183,9 +191,9 @@
 
   "weapon_chamber": {
     "upgrade_cost": {
-      "1": { "trade_goods": 180, "spare_parts": 45 },
-      "2": { "trade_goods": 420, "spare_parts": 130 },
-      "3": { "trade_goods": 850, "spare_parts": 280 }
+      "1": { "spare_parts": 180, "trade_goods": 45 },
+      "2": { "spare_parts": 420, "trade_goods": 130 },
+      "3": { "spare_parts": 850, "trade_goods": 280 }
     },
     "kwh_per_day_by_level": {
       "1": 5,
@@ -196,9 +204,9 @@
 
   "stalker_den": {
     "upgrade_cost": {
-      "1": { "trade_goods": 110, "spare_parts": 20 },
-      "2": { "trade_goods": 260, "spare_parts": 60 },
-      "3": { "trade_goods": 520, "spare_parts": 140 }
+      "1": { "spare_parts": 110, "trade_goods": 20 },
+      "2": { "spare_parts": 260, "trade_goods": 60 },
+      "3": { "spare_parts": 520, "trade_goods": 140 }
     },
     "kwh_per_day_by_level": {
       "1": 5,
@@ -209,9 +217,9 @@
 
   "station_leadership": {
     "upgrade_cost": {
-      "1": { "trade_goods": 220, "spare_parts": 50 },
-      "2": { "trade_goods": 500, "spare_parts": 150 },
-      "3": { "trade_goods": 1000, "spare_parts": 320 }
+      "1": { "spare_parts": 220, "trade_goods": 50 },
+      "2": { "spare_parts": 500, "trade_goods": 150 },
+      "3": { "spare_parts": 1000, "trade_goods": 320 }
     },
     "kwh_per_day_by_level": {
       "1": 8,

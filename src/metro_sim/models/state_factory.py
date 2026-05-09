@@ -7,75 +7,110 @@ def create_initial_station():
     initial_dict = load_initial_data()
 
     station= {
-        "name": "Paveletskaya",
+        "name": initial_dict["station"]["name"],
         "time": {
-            "day": 1,
-            "date": "01.01.2033",
-            "hour": 6,
-            "minute": 0,
-            "ticks_total": 0
+            "day": initial_dict["time"]["day"],
+            "date": initial_dict["time"]["date"],
+            "hour": initial_dict["time"]["hour"],
+            "minute": initial_dict["time"]["minute"],
+            "ticks_total": initial_dict["time"]["ticks_total"]
         },
 
         "population": {
             "total": initial_dict["population"]["total"],
-            "employed": 0,
-            "unemployed": initial_dict["population"]["unemployed"],
+            "worker_unavailable": 0,
+            "worker_available": initial_dict["population"]["unemployed"],
             "children": initial_dict["population"]["children"],
             "elderly": initial_dict["population"]["elderly"]
         },
 
         "resources": {
-            "mushrooms": initial_dict["resources"]["mushrooms"],
-            "pigs": initial_dict["resources"]["pig_meat"],
-            "water": initial_dict["resources"]["water"],
-            "medicine": initial_dict["resources"]["medicine"],
-            "power_consumption": 0,
-            "trade_goods": initial_dict["resources"]["trade_goods"],
-            "spare_parts": initial_dict["resources"]["spare_parts"],
-            "ammo": initial_dict["resources"]["ammo"]
+            # Nahrung / Versorgung
+            "food": {
+                "mushrooms": initial_dict["resources"]["mushrooms"],
+                "pigs": initial_dict["resources"]["pigs"],
+                "pig_meat": 0,
+                "soup": 0,
+                "meat_soup": 0,
+                "water": initial_dict["resources"]["water"],
+            },
+
+            "mechanical": {
+                "trade_goods": initial_dict["resources"]["trade_goods"],
+                "spare_parts": initial_dict["resources"]["spare_parts"],
+                "scrap": 0,
+                "mechanical_parts": 0,
+                "power_units": 0,
+            },
+
+            "combat": {
+                "ammo": initial_dict["resources"]["ammo"],
+                "fuel": 0,
+                "rare_loot": 0,
+                "medicine": initial_dict["resources"]["medicine"],
+                "chemicals": 0,
+            },
+            
+            "trash" : {
+                "organic_waste": 0
+            }
+        },
+
+        "power": {
+            "contract": initial_dict["stats"]["power_contract"],
+            "consumption_kwh": 0,
+            "available_kwh": 0,
+            "local_kwh": 0,
+            "contract_kwh": 0,
+            "stability": initial_dict["stats"]["power_stability"],
+            "maintenance_condition" : 100,
+            "infrastructure_status": "working"
+        },
+
+        "water_system" : {
+            "maintenance_condition" : 100,
+            "infrastructure_status": "working"
         },
 
         "stats": {
             "morale": initial_dict["stats"]["morale"],
             "comfort": initial_dict["stats"]["comfort"],
             "safety": initial_dict["stats"]["safety"],
-            "discontent" : 0,
-            "power_stability": initial_dict["stats"]["power_stability"],
-            "power_contract": initial_dict["stats"]["power_contract"]
-        },
+            "discontent": 0,
 
-        #0: broken, 1: working
-        "infrastructure_status": {
-            "water_system": 1,
-            "power_line": 1
+            # temporäre / abgeleitete Effektwerte
+            "maintenance_points": 0,
+            "combat_readiness": 0,
+            "administration_points": 0,
+            "market_value": 0,
+            "treated_patients": 0
         },
 
         "slots": {
-            "slot_1": {"building": None, "level": 0, "production_progress": 0, "employed_worker" : 0, "building_status" : 1},
-            "slot_2": {"building": None, "level": 0, "production_progress": 0, "employed_worker" : 0, "building_status" : 1},
-            "slot_3": {"building": None, "level": 0, "production_progress": 0, "employed_worker" : 0, "building_status" : 1},
-            "slot_4": {"building": None, "level": 0, "production_progress": 0, "employed_worker" : 0, "building_status" : 1},
-            "slot_5": {"building": None, "level": 0, "production_progress": 0, "employed_worker" : 0, "building_status" : 1},
-            "slot_6": {"building": None, "level": 0, "production_progress": 0, "employed_worker" : 0, "building_status" : 1},
-            "slot_7": {"building": None, "level": 0, "production_progress": 0, "employed_worker" : 0, "building_status" : 1},
-            "slot_8": {"building": None, "level": 0, "production_progress": 0, "employed_worker" : 0, "building_status" : 1},
-            "slot_9": {"building": None, "level": 0, "production_progress": 0, "employed_worker" : 0, "building_status" : 1},
-            "slot_10": {"building": None, "level": 0, "production_progress": 0, "employed_worker" : 0, "building_status" : 1},
-            "slot_11": {"building": None, "level": 0, "production_progress": 0, "employed_worker" : 0, "building_status" : 1},
-            "slot_12": {"building": None, "level": 0, "production_progress": 0, "employed_worker" : 0, "building_status" : 1},
-            "slot_13": {"building": None, "level": 0, "production_progress": 0, "employed_worker" : 0, "building_status" : 1},
-            "slot_14": {"building": None, "level": 0, "production_progress": 0, "employed_worker" : 0, "building_status" : 1},
-            "slot_15": {"building": None, "level": 0, "production_progress": 0, "employed_worker" : 0, "building_status" : 1},
-            "slot_16": {"building": None, "level": 0, "production_progress": 0, "employed_worker" : 0, "building_status" : 1},
-            "slot_17": {"building": None, "level": 0, "production_progress": 0, "employed_worker" : 0, "building_status" : 1},
-            "slot_18": {"building": None, "level": 0, "production_progress": 0, "employed_worker" : 0, "building_status" : 1},
-            "slot_19": {"building": None, "level": 0, "production_progress": 0, "employed_worker" : 0, "building_status" : 1},
-            "slot_20": {"building": None, "level": 0, "production_progress": 0, "employed_worker" : 0, "building_status" : 1},
-            "slot_21": {"building": None, "level": 0, "production_progress": 0, "employed_worker" : 0, "building_status" : 1},
+            "slot_0": {
+                "building": "tunnel_scavenging",
+                "level": 1,
+                "production_progress": 0,
+                "assigned_workers": 0,
+                "building_status": "working",
+                "maintenance_condition": 100
+            }
+        } | {
+            f"slot_{index}": create_empty_slot()
+            for index in range(1, 22)
         }
     }
 
-
-    station["resources"]["power_consumption"] = calculate_power_consumption(station)
+    station["power"]["consumption_kwh"] = calculate_power_consumption(station)
 
     return station
+
+def create_empty_slot() -> dict:
+    return {
+        "building": None,
+        "level": 0,
+        "production_progress": 0,
+        "assigned_workers": 0,
+        "building_status": "working",
+        "maintenance_condition" : 100
+    }

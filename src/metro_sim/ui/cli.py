@@ -1,5 +1,5 @@
 import os
-from metro_sim.utils.file_loader import load_balancing, load_map_data, load_buildings_data
+import metro_sim.utils.file_loader as loader
 import metro_sim.services.station_service as station_service
 import re
 
@@ -40,13 +40,14 @@ def build_station_map_lines(station: dict | None = None,
                             selected_slot : str | None = None) -> list[str]:
     result_map = []
 
-    map_data = load_map_data()
-    buildings_data = load_buildings_data()
+    map_data = loader.load_map_data()
+    buildings_data = loader.load_buildings_ascii_data()
 
     if station is None:
         station = {"slots": {}}
 
     station_slots = station.get("slots", {})
+    #station_slots.pop("slot_0", None)
     map_slots = map_data.get("slots", {})
     building_slots = buildings_data.get("buildings", {})
 
@@ -128,8 +129,8 @@ def format_resource_change(report: dict | None, resource_name: str) -> str:
     return ""
 
 def build_station_status_lines(station: dict, report: dict | None) -> list[str]:
-    balancing_dict = load_balancing()
-    power_contract = station["stats"]["power_contract"]
+    balancing_dict = loader.load_balancing()
+    power_contract = station["power"]["contract"]
     available_power = balancing_dict["power"]["contracts"][power_contract]["kwh_per_day"]
     return [
         f"Station: {station['name']}",
@@ -142,27 +143,29 @@ def build_station_status_lines(station: dict, report: dict | None) -> list[str]:
             f"Obdachlos: {max(0, station['population']['total'] - station_service.calculate_living_quarters_capacity(station))}",
         "",
         "Bevölkerung",
-            f"  Arbeitsfähig: {station['population']['employed']}",
-            f"  Unbeschäftigt: {station['population']['unemployed']}",
+            f"  Beschäftigt: {station['population']['worker_unavailable']}",
+            f"  Unbeschäftigt: {station['population']['worker_available']}",
             f"  Kinder: {station['population']['children']}",
             f"  Alte: {station['population']['elderly']}",
         "",
         "resourcen",
         f"  Nahrung:",
-        f"    Pilze: {station['resources']['mushrooms']}{format_resource_change(report, 'mushrooms')}",
-        f"    Schweine: {station['resources']['pigs']}{format_resource_change(report, 'pigs')}",
-        f"  Wasser: {station['resources']['water']}{format_resource_change(report, 'water')}",
-        f"  Munition: {station['resources']['ammo']}{format_resource_change(report, 'ammo')}",
-        f"  Medikamente: {station['resources']['medicine']}{format_resource_change(report, 'medicine')}",
-        f"  Handelsresourcen: {station['resources']['trade_goods']}{format_resource_change(report, 'trade_goods')}",
-        f"  Ersatzteile: {station['resources']['spare_parts']}{format_resource_change(report, 'spare_parts')}",
-        f"  Stromverbrauch: {station['resources']['power_consumption']} kWh / {available_power} kWh",
+        f"    Pilze: {station['resources']["food"]['mushrooms']}{format_resource_change(report, 'mushrooms')}",
+        f"    Suppe: {station['resources']["food"]['soup']}{format_resource_change(report, 'pigs')}",
+        f"    Fleisch: {station['resources']["food"]['pig_meat']}{format_resource_change(report, 'pigs')}",
+        f"    Gulasch: {station['resources']["food"]['meat_soup']}{format_resource_change(report, 'pigs')}",
+        f"  Wasser: {station['resources']["food"]['water']}{format_resource_change(report, 'water')}",
+        f"  Munition: {station['resources']["combat"]['ammo']}{format_resource_change(report, 'ammo')}",
+        f"  Medikamente: {station['resources']["combat"]['medicine']}{format_resource_change(report, 'medicine')}",
+        f"  Handelsresourcen: {station['resources']["mechanical"]['trade_goods']}{format_resource_change(report, 'trade_goods')}",
+        f"  Ersatzteile: {station['resources']["mechanical"]['spare_parts']}{format_resource_change(report, 'spare_parts')}",
         "",
         "Stationswerte",
             f"  Moral: {station['stats']['morale']}",
             f"  Komfort: {station['stats']['comfort']}",
             f"  Sicherheit: {station['stats']['safety']}",
-            f"  Stromstabilität: {station['stats']['power_stability']}",
+            f"  Stromverbrauch: {station['power']['consumption_kwh']} kWh / {available_power} kWh",
+            f"  Stromstabilität: {station['power']['stability']}",
             f"  Stromstufe: {power_contract}",
         "",
     ]

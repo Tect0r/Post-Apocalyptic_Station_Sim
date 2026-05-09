@@ -1,8 +1,13 @@
 {
   "station": {
-    "name": "Paveletskaya",
+    "name": "Paveletskaya"
+  },
+  "time": {
     "day": 1,
-    "date": "01.01.2033"
+    "date": "01.01.2033",
+    "hour": 6,
+    "minute": 0,
+    "ticks_total": 0
   },
 
   "population": {
@@ -15,7 +20,7 @@
 
   "resources": {
     "mushrooms": 500,
-    "pig_meat": 0,
+    "pigs": 0,
     "water": 500,
     "ammo": 80,
     "medicine": 0,

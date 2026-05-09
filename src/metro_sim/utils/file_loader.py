@@ -15,9 +15,9 @@ def load_map_data() -> dict:
     with open(map_path, "r", encoding="utf-8") as file:
         return json.load(file)
 
-def load_buildings_data() -> dict:
+def load_buildings_ascii_data() -> dict:
     project_root = Path(__file__).resolve().parents[3]
-    buildings_path = project_root / "data" / "buildings.json"
+    buildings_path = project_root / "data" / "buildings_ascii.json"
 
     with open(buildings_path, "r", encoding="utf-8") as file:
         return json.load(file)
@@ -39,6 +39,13 @@ def load_buildings_cost_data() -> dict:
 def load_initial_data() -> dict:
     project_root = Path(__file__).resolve().parents[3]
     buildings_path = project_root / "data" / "initial.json"
+
+    with open(buildings_path, "r", encoding="utf-8") as file:
+        return json.load(file)
+    
+def load_production_data() -> dict:
+    project_root = Path(__file__).resolve().parents[3]
+    buildings_path = project_root / "data" / "building_production.json"
 
     with open(buildings_path, "r", encoding="utf-8") as file:
         return json.load(file)

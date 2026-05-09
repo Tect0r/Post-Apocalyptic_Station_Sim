@@ -13,75 +13,74 @@ def show_employment_menu(station: dict) -> list[str]:
 def create_employment_menu(station: dict) -> tuple[list[str], dict[str, str]]:
     station_slots = station.get("slots", {})
 
-    job_order = [
-        "mushroom_production",
-        "pig_production",
-        "kitchen_work",
-        "maintenance",
-        "trade_goods_production",
-        "trading",
-        "guards",
-        "medical",
-        "machine_shop",
-        "stalker_expedition",
-        "service_work",
-    ]
-
-    building_to_job = {
-        "mushroom_farm": "mushroom_production",
-        "pig_farm": "pig_production",
-        "kitchen": "kitchen_work",
-        "maintenance": "maintenance",
-        "trading_goods": "trade_goods_production",
-        "trading_post": "trading",
-        "guard_post": "guards",
-        "medical": "medical",
-        "machine_shop": "machine_shop",
-        "stalker_den": "stalker_expedition",
-        "bar": "service_work",
-        "market": "service_work",
-    }
-
-    job_to_label = {
-        "mushroom_production": "Pilzfarm",
-        "pig_production": "Schweinefarm",
-        "kitchen_work": "Küche",
+    building_to_label = {
+        "tunnel_scavenging": "Tunnel scavenging",
+        "mushroom_farm": "Pilzfarm",
+        "pig_farm": "Schweinefarm",
+        "kitchen": "Küche",
         "maintenance": "Wartung",
-        "trade_goods_production": "Handelswarenproduktion",
-        "trading": "Handel",
-        "guards": "Wachen",
+        "trading_goods": "Handelswarenproduktion",
+        "trading_post": "Handelsposten",
+        "guard_post": "Wachposten",
         "medical": "Medizin",
         "machine_shop": "Werkstatt",
-        "stalker_expedition": "Stalker-Expedition",
-        "service_work": "Service / Bar / Markt",
+        "stalker_den": "Stalker-Quartier",
+        "bar": "Bar",
+        "market": "Markt",
+        "generator": "Generator",
+        "station_leadership": "Stationsleitung",
+        "weapon_chamber": "Waffenkammer",
+        "storage": "Lager",
+        "living_quarters": "Unterkünfte",
     }
 
-    available_jobs = set()
-
-    for slot in station_slots.values():
-        building = slot.get("building")
-        level = slot.get("level", 0)
-
-        if building is None or level <= 0:
-            continue
-
-        job = building_to_job.get(building)
-
-        if job is not None:
-            available_jobs.add(job)
-
-    ordered_jobs = [job for job in job_order if job in available_jobs]
+    worker_buildings = {
+        "tunnel_scavenging",
+        "mushroom_farm",
+        "pig_farm",
+        "kitchen",
+        "maintenance",
+        "trading_goods",
+        "trading_post",
+        "guard_post",
+        "medical",
+        "machine_shop",
+        "stalker_den",
+        "bar",
+        "market",
+        "generator",
+        "station_leadership",
+        "weapon_chamber",
+    }
 
     menu_lines = ["Bewohner zuweisen:"]
     menu_actions = {}
 
-    for index, job in enumerate(ordered_jobs, start=1):
-        key = str(index)
-        label = job_to_label.get(job, job)
+    menu_index = 0
 
-        menu_lines.append(f"{key}. {label}")
-        menu_actions[key] = job
+    for slot_id, slot in station_slots.items():
+        building = slot.get("building")
+        level = slot.get("level", 0)
+        assigned_workers = slot.get("assigned_workers", slot.get("employed_worker", 0))
 
-    menu_lines.append("0. Zurück")
+        if building is None or level <= 0:
+            continue
+
+        if building not in worker_buildings:
+            continue
+
+        label = building_to_label.get(building, building)
+
+        key = str(menu_index)
+        menu_lines.append(
+            f"[{key}]. {slot_id} - {label} L{level} - Arbeiter: {assigned_workers}"
+        )
+        menu_actions[key] = slot_id
+
+        menu_index += 1
+
+    menu_lines.append("")
+    menu_lines.append("[q] Zurück")
+
 
     return menu_lines, menu_actions

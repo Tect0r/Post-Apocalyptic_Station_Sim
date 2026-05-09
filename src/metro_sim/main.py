@@ -53,7 +53,7 @@ def main() -> None:
             user_input = menu_handler.show_pause_menu()
 
             match user_input:
-                case "":
+                case "\r":
                     paused = False
 
                 case "q":
