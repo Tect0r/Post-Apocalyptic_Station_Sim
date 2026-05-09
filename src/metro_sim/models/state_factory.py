@@ -50,7 +50,7 @@ def create_initial_station():
                 "medicine": initial_dict["resources"]["medicine"],
                 "chemicals": 0,
             },
-            
+
             "trash" : {
                 "organic_waste": 0
             }
@@ -64,11 +64,13 @@ def create_initial_station():
             "contract_kwh": 0,
             "stability": initial_dict["stats"]["power_stability"],
             "maintenance_condition" : 100,
+            #"working" | "broken"
             "infrastructure_status": "working"
         },
 
         "water_system" : {
             "maintenance_condition" : 100,
+            #"working" | "broken"
             "infrastructure_status": "working"
         },
 

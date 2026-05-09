@@ -50,6 +50,10 @@ def add_resource(station: dict, resource_name: str, amount: int | float) -> None
         station["resources"][category].get(resource_name, 0) + amount
     )
 
+def remove_resource(station: dict, resource_name: str, amount: int | float) -> None:
+    category = get_resource_category(resource_name)
+
+    station["resources"][category][resource_name] = max((station["resources"][category].get(resource_name, 0) - amount), 0)
 
 def get_resource_amount(station: dict, resource_name: str) -> int | float:
     category = get_resource_category(resource_name)
