@@ -15,7 +15,7 @@ def upgrade_building(station: dict, building: str, selected_slot: str) -> {bool,
         return {"success" : False, "msg" : "Slot ist bereits auf dem maixmalen Level."}
 
     building_costs = building_costs_data[building]["upgrade_cost"][str(new_level)]
-    player_resources = station["resources"]
+    player_resources = station["resources"]["mechanical"]
     
     can_afford_dict = can_afford(player_resources, building_costs)
     

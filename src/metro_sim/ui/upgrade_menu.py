@@ -1,4 +1,4 @@
-from metro_sim.utils.file_loader import load_buildings_cost_data, load_buildings_effects_data, load_map_data
+import metro_sim.utils.file_loader as loader
 import metro_sim.ui.cli as cli
 
 def show_upgrade_overview_menu(station: dict) -> list[str]:
@@ -27,6 +27,8 @@ def create_upgrade_menu(station: dict) -> tuple[list[str], dict[str, str]]:
     building_slots = station.get("slots")
     id = 1
     for slot in building_slots.values():
+        if slot["building"] == "tunnel_scavenging":
+            continue
         menu_lines.append(f"[{id}]. {slot.get("building")} - lvl {slot.get("level")}")
         menu_actions[id] = slot.get("building")
         id += 1
@@ -39,7 +41,7 @@ def create_upgrade_menu(station: dict) -> tuple[list[str], dict[str, str]]:
 def create_possible_buildings_menu(station: dict, selected_slot: str) -> tuple[list[str], dict[str, str]]:
     menu_lines = ["Mögliche Gebäude:"]
     menu_actions = {}
-    map_data = load_map_data()
+    map_data = loader.load_map_data()
     map_data = map_data.get("slots")
     allowed_building_types = map_data.get(selected_slot)["allowed_building_types"]
     id = 1
@@ -58,8 +60,8 @@ def create_building_upgrade_menu(station: dict, building: str, selected_slot: st
                     "",
                     "Upgradekosten:"]
 
-    building_upgrade_costs = load_buildings_cost_data()
-    building_effects_data = load_buildings_effects_data()
+    building_upgrade_costs = loader.load_buildings_cost_data()
+    production_data = loader.load_production_data()
     slots = station.get("slots")
 
     current_level = slots.get(selected_slot)["level"]
@@ -69,13 +71,13 @@ def create_building_upgrade_menu(station: dict, building: str, selected_slot: st
         menu_lines.append(f"    {resource_name}: {cost}")
     menu_lines.append("")
     menu_lines.append("Upgrade-Effekt:")
-    building_effects = building_effects_data[building]["effects_by_level"]
+    building_effects = production_data[building]["levels"]
 
     effects_current_level = {}
     if current_level > 0:
-        building_effects[str(current_level)]
+        effects_current_level = building_effects[str(current_level)]["base"]["gives"]
 
-    effects_new_level = building_effects[str(current_level+1)]
+    effects_new_level = building_effects[str(current_level+1)]["base"]["gives"]
     effect_diff = build_upgrade_diff_lines(effects_current_level, effects_new_level)
     for line in effect_diff:
         menu_lines.append(f"    {line}")

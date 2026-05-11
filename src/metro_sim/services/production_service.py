@@ -1,5 +1,6 @@
 import metro_sim.utils.file_loader as loader
 import metro_sim.services.report_service as report_service
+import metro_sim.services.water_service as water_service
 import random
 import metro_sim.utils.utility as utility
 
@@ -41,15 +42,31 @@ def calculate_production_for_tick(station: dict) -> dict:
         level_key = str(level)
         prod_per_building_level = production_data[building]["levels"][level_key]
 
+        # TODO: Boosts berechnen und anwenden
+        needs = prod_per_building_level["base"]["needs"]
         work_required = prod_per_building_level["work_required"]
         work_per_worker = prod_per_building_level["work_per_worker_per_tick"]
 
-        slot["production_progress"] += assigned_workers * work_per_worker
+        effective_work = assigned_workers * work_per_worker
+
+        previous_progress = slot["production_progress"]
+        new_progress = previous_progress + effective_work
+
+        if station["water_system"]["infrastructure_status"] == "broken":
+            water_to_consume = water_service.calculate_consumption_by_progress(
+                previous_progress=previous_progress,
+                new_progress=new_progress,
+                work_required=work_required,
+                total_needed=needs.get("water", 0)
+            )
+
+            remove_resource(station, "water", water_to_consume)
+
+        slot["production_progress"] = new_progress
 
         if slot["production_progress"] < work_required:
             continue
 
-        needs = prod_per_building_level["base"]["needs"]
         gives = prod_per_building_level["base"]["gives"]
 
         if not check_needs_for_production(station, needs):
@@ -61,6 +78,7 @@ def calculate_production_for_tick(station: dict) -> dict:
             consume_resources_for_production(station, needs, report)
 
             if building == "tunnel_scavenging":
+                #TODO: chance an sicherheit koppeln
                 if random.randint(1, 100) <= balancing_dict["tunnel_scavenging"]["chance_to_loot"]:
                     loot_chances = balancing_dict["tunnel_scavenging"]["resource_ratio"]
                     given_resource = choose_weighted_resource(loot_chances)
@@ -72,7 +90,7 @@ def calculate_production_for_tick(station: dict) -> dict:
 
             add_resources_from_production(station, gives, report)
 
-            # TODO: Boosts berechnen und anwenden
+
             # TODO: Effekte wie morale_points, comfort_points usw. getrennt behandeln
 
     return report
@@ -94,6 +112,8 @@ def check_needs_for_production(station: dict, needs_for_level: dict) -> bool:
 
 def consume_resources_for_production(station: dict, costs: dict, report: dict) -> None:
     for resource_name, amount in costs.items():
+        if resource_name == "water":
+            continue
         remove_resource(station, resource_name, amount)
         report_service.add_resource_change(report, resource_name, -amount)
 

@@ -15,16 +15,16 @@ def load_map_data() -> dict:
     with open(map_path, "r", encoding="utf-8") as file:
         return json.load(file)
 
+def load_buildings_effects_data() -> dict:
+    project_root = Path(__file__).resolve().parents[3]
+    map_path = project_root / "data" / "buildings_effects.json"
+
+    with open(map_path, "r", encoding="utf-8") as file:
+        return json.load(file)
+
 def load_buildings_ascii_data() -> dict:
     project_root = Path(__file__).resolve().parents[3]
     buildings_path = project_root / "data" / "buildings_ascii.json"
-
-    with open(buildings_path, "r", encoding="utf-8") as file:
-        return json.load(file)
-    
-def load_buildings_effects_data() -> dict:
-    project_root = Path(__file__).resolve().parents[3]
-    buildings_path = project_root / "data" / "buildings_effects.json"
 
     with open(buildings_path, "r", encoding="utf-8") as file:
         return json.load(file)

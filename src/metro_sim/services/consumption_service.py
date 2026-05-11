@@ -1,6 +1,7 @@
 import math
 import metro_sim.utils.file_loader as loader
 import metro_sim.services.report_service as report_service
+import metro_sim.services.water_service as water_service
 import metro_sim.utils.utility as utility
 
 
@@ -49,19 +50,7 @@ def consume_food_by_mix(station: dict, needed_food_units: int, food_weights: dic
         "missing_food_units": max(0, needed_food_units)
     }
 
-def calculate_water_consumption_population(station: dict) -> int:
-    # Berechnet den Wasserverbrauch basierend auf der Bevölkerung, den zugewiesenen Arbeitern und der Wasserreinigung
 
-    balancing_dict = loader.load_balancing()
-    if station['water_system']['infrastructure_status'] == "broken":
-        water_consumption = station['population']['total'] * balancing_dict["water_system"]["consumption_per_person_on_failure"]
-    else:
-        water_consumption = 0
-    return water_consumption
-
-def calculate_water_consumption_production(station: dict) -> int:
-    # calc water consumption from production each tick if water pipe is broken
-    pass
 
 def calculate_bar_consumption(station: dict) -> int:
     # Berechnet den Verbrauch von Handelsgütern basierend auf der Bevölkerung und den zugewiesenen Arbeitern
@@ -91,7 +80,7 @@ def calculate_consumption_for_tick(station: dict) -> dict:
                         balancing_dict["food"]["food_values"], 
                         report)
         
-        utility.remove_resource(station, "water", calculate_water_consumption_population(station))
+        utility.remove_resource(station, "water", water_service.calculate_water_consumption_population(station))
 
     return report
 

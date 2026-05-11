@@ -1,7 +1,6 @@
 #pytest -v <- run tests
 
-#$env:PYTHONPATH="src"
-# python -m metro_sim.main <- run the main function to see the initial state
+#cd D:\Metro_Sim\Post-Apocalyptic_Station_Sim\src\metro_sim
 
 import msvcrt
 from time import sleep

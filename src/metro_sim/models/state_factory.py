@@ -71,7 +71,7 @@ def create_initial_station():
         "water_system" : {
             "maintenance_condition" : 100,
             #"working" | "broken"
-            "infrastructure_status": "working"
+            "infrastructure_status": "broken"
         },
 
         "stats": {
