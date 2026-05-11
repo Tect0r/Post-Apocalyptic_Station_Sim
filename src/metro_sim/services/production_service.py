@@ -60,7 +60,7 @@ def calculate_production_for_tick(station: dict) -> dict:
                 total_needed=needs.get("water", 0)
             )
 
-            remove_resource(station, "water", water_to_consume)
+            remove_resource(station, "water", water_to_consume, report)
 
         slot["production_progress"] = new_progress
 
@@ -122,10 +122,14 @@ def add_resources_from_production(station: dict, gains: dict, report: dict) -> N
         utility.add_resource(station, resource_name, amount)
         report_service.add_resource_change(report, resource_name, amount)
 
-def remove_resource(station: dict, resource_name: str, amount: int | float) -> None:
+def remove_resource(station: dict, resource_name: str, amount: int | float, report: dict) -> None:
     category = utility.get_resource_category(resource_name)
 
-    station["resources"][category][resource_name] = max(
-        0,
-        station["resources"][category].get(resource_name, 0) - amount
-    )
+    if station["resources"][category][resource_name] - amount < 0:
+        removed_recoures = station["resources"][category][resource_name]
+    else:
+        removed_recoures = amount
+
+    station["resources"][category][resource_name] -= removed_recoures
+
+    report_service.add_resource_change(report, resource_name, -removed_recoures)
