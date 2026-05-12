@@ -1,26 +1,27 @@
 import metro_sim.utils.file_loader as loader
+from metro_sim.core.action_result import ActionResult
 
-def upgrade_building(station: dict, building: str, selected_slot: str) -> {bool, str}:
+def upgrade_building(station: dict, building: str, selected_slot: str) -> ActionResult:
     
     slot = station["slots"][selected_slot]
 
     if slot["building"] is not None and slot["building"] != building:
-        return {"success" : False, "msg" : "Slots ist bereits belegt."}
+        return ActionResult(False, "slot_has_different_building")
     
     building_costs_data = loader.load_buildings_cost_data()
     current_level = slot["level"]
     new_level = current_level + 1
 
     if new_level > 3:
-        return {"success" : False, "msg" : "Slot ist bereits auf dem maixmalen Level."}
+        return ActionResult(False, "slot_is_max_level")
 
     building_costs = building_costs_data[building]["upgrade_cost"][str(new_level)]
     player_resources = station["resources"]["mechanical"]
     
-    can_afford_dict = can_afford(player_resources, building_costs)
+    can_afford_ActionResult = can_afford(player_resources, building_costs)
     
-    if not can_afford_dict["success"]:
-        return {"success" : False, "msg" : can_afford_dict["msg"]}
+    if not can_afford_ActionResult.success:
+        return ActionResult(False, can_afford_ActionResult["msg"])
 
     pay_resources(player_resources, building_costs)
 
@@ -30,21 +31,21 @@ def upgrade_building(station: dict, building: str, selected_slot: str) -> {bool,
         "production_progress": 0
     }
 
-    return {"success" : True, "msg" : "Gebäude erfolgreich geupgraded."}
+    return ActionResult(True, "slot_upgraded")
 
-def demolish_building(station: dict, building: str, selected_slot: str) -> {bool, str}:
+def demolish_building(station: dict, building: str, selected_slot: str) -> ActionResult:
     #ausgewältes gebäude wird zerstört
     # ressourcen werden anteilhaft vom letzten upgrade zurück gegeben (50% oder so)
     pass
 
-def can_afford(resources: dict, costs: dict) -> {bool, str}:
+def can_afford(resources: dict, costs: dict) -> ActionResult:
     for resource_name, needed_amount in costs.items():
         available_amount = resources.get(resource_name, 0)
 
         if available_amount < needed_amount:
-            return {"success" : False, "msg" : f"Es fehlt: {resource_name}"}
+            return ActionResult(False, f"missing_{resource_name}")
 
-    return {"success" : True, "msg" : f"Alle Ressource sind vorrätig."}
+    return ActionResult(True, "can_pay_resources")
 
 
 def pay_resources(resources: dict, costs: dict) -> None:

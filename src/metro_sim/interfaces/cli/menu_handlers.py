@@ -4,16 +4,9 @@ import metro_sim.interfaces.cli.upgrade_menu as upgrade_menu
 import metro_sim.interfaces.cli.employment_menu as employment_menu
 import metro_sim.services.upgrade_service as upgrade_service
 import metro_sim.services.station_service as station_service
+import metro_sim.services.worker_assignment_service as worker_assignment_service
 import metro_sim.utils.file_loader as loader
-import msvcrt
-
-
-def read_valid_key(valid_keys: set[str]) -> str:
-    while True:
-        key = msvcrt.getwch().lower()
-
-        if key in valid_keys:
-            return key
+import metro_sim.interfaces.cli.input_reader as input_reader
 
 def show_pause_menu() -> str:
     print()
@@ -26,7 +19,7 @@ def show_pause_menu() -> str:
     print("")
     print("[q] Beenden")
 
-    return read_valid_key(["1", "2", "3", "q", "\r"])
+    return input_reader.read_valid_key(["1", "2", "3", "q", "\r"])
 
 def handle_employment_menu(station: dict) -> None:
     error_message = None
@@ -101,21 +94,13 @@ def handle_building_employment(station: dict, selected_slot_id: str) -> None:
 
         new_amount = int(amount_input)
 
-        if new_amount < 0:
-            error_message = "Ungültige Anzahl."
+        is_worker_amount_valid = worker_assignment_service.is_worker_amount_valid(station, new_amount, building_data, selected_slot)
+
+        if not is_worker_amount_valid.success:
+            error_message = f"{is_worker_amount_valid.message}"
             continue
 
-        if new_amount > building_data["max_workers"]:
-            error_message = "Zuviele Arbeiter für das Gebäude."
-            continue
-
-        worker_difference = new_amount - current_workers
-
-        if worker_difference > station["population"]["worker_available"]:
-            error_message = "Nicht genug freie Arbeiter verfügbar."
-            continue
-
-        station_service.assign_workers_to_slot(
+        worker_assignment_service.assign_workers_to_building(
             station=station,
             slot_id=selected_slot_id,
             worker_amount=new_amount
@@ -186,5 +171,5 @@ def handle_upgrade_detail_menu(station: dict, selected_building: dict, selected_
     if user_input == "q" or user_input == "n":
         return
     elif user_input == "y":
-        upgrade_action_result = upgrade_service.upgrade_building(station, selected_building, selected_slot)
+        action_result = upgrade_service.upgrade_building(station, selected_building, selected_slot)
         return

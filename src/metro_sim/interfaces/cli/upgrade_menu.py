@@ -1,5 +1,5 @@
 import metro_sim.utils.file_loader as loader
-import metro_sim.ui.cli as cli
+import metro_sim.interfaces.cli.cli as cli
 
 def show_upgrade_overview_menu(station: dict) -> list[str]:
     cli.clear_console()

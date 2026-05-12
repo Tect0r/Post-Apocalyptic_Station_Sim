@@ -1,16 +1,5 @@
 import metro_sim.utils.file_loader as loader
 
-def assign_workers_to_slot(station: dict, slot_id: str, worker_amount: int) -> None:
-    slot = station["slots"][slot_id]
-
-    current_workers = slot.get("assigned_workers", 0)
-    worker_difference = worker_amount - current_workers
-
-    station["population"]["worker_unavailable"] += worker_difference
-    station["population"]["worker_available"] -= worker_difference
-
-    slot["assigned_workers"] = worker_amount
-
 def calculate_leadership_effects(station: dict, effects: dict) -> int:
     # moral/sicherheits bonus
     # effizienz bonus auf bestimmte gebäude? oder alle? mal gucken?

@@ -1,4 +1,4 @@
-import metro_sim.ui.cli as cli
+import metro_sim.interfaces.cli.cli as cli
 
 def show_employment_menu(station: dict) -> list[str]:
     cli.clear_console()
