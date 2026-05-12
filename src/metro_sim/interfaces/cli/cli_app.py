@@ -61,4 +61,4 @@ def run_cli() -> None:
                 session.paused = True
                 continue
 
-            advance_tick(session.station)
+            advance_tick(session)

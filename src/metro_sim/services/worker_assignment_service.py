@@ -46,10 +46,11 @@ def assign_workers_to_building(
     )
 
 def is_worker_amount_valid(station: dict, new_amount: int, selected_slot_id: str) -> ActionResult:
+    selected_slot = station["slots"][selected_slot_id]
+
     building = selected_slot.get("building")
     current_level = str(selected_slot.get("level"))
     building_data = loader.load_production_data()[building]["levels"][current_level]
-    selected_slot = station["slots"][selected_slot_id]
     current_workers = selected_slot.get("assigned_workers", 0)
     
     if new_amount < 0:

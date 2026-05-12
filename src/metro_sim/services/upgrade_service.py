@@ -21,7 +21,7 @@ def upgrade_building(station: dict, building: str, selected_slot: str) -> Action
     can_afford_ActionResult = can_afford(player_resources, building_costs)
     
     if not can_afford_ActionResult.success:
-        return ActionResult(False, can_afford_ActionResult["msg"])
+        return ActionResult(False, can_afford_ActionResult.message)
 
     pay_resources(player_resources, building_costs)
 

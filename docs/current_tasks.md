@@ -1,37 +1,5 @@
 Phase 1 — CLI von Spiellogik trennen
 
-14. Tests für die erste echte Trennung schreiben
-
-Lege an:
-
-tests/test_upgrade_service.py
-
-Minimal:
-
-from metro_sim.services.upgrade_service import upgrade_building
-from metro_sim.models.state_factory import create_initial_station
-
-
-def test_upgrade_building_returns_action_result():
-    station = create_initial_station()
-
-    result = upgrade_building(
-        station=station,
-        building="mushroom_farm",
-        selected_slot="slot_1",
-    )
-
-    assert hasattr(result, "success")
-    assert hasattr(result, "message")
-
-Je nachdem, ob slot_1 bei dir passt, musst du den Slot anpassen.
-
-Akzeptanzkriterium:
-
-pytest
-
-läuft.
-
 15. Tests für Worker-Zuweisung schreiben
 
 Lege an:

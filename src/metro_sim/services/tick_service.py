@@ -6,7 +6,7 @@ import metro_sim.services.maintenance_service as maintenance_service
 import metro_sim.services.report_service as report_service
 
 
-def calculate_next_tick(station: dict, report: dict) -> dict:
+def calculate_next_tick(station: dict, report: dict) -> None:
     # Berechnet die Ereignisse des nächsten Ticks und aktualisiert den Stationsstatus entsprechend
     time_service.advance_time(station, 1)
     balancing_dict = loader.load_balancing()
