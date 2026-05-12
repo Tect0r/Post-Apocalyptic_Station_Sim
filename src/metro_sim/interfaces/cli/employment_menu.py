@@ -1,4 +1,5 @@
 import metro_sim.interfaces.cli.cli as cli
+import metro_sim.utils.file_loader as loader
 
 def show_employment_menu(station: dict) -> list[str]:
     cli.clear_console()
@@ -9,6 +10,23 @@ def show_employment_menu(station: dict) -> list[str]:
     cli.print_side_by_side(menu, station_map)
 
     return menu
+
+def create_employment_detail_menu(station: dict, selected_slot_id: str) -> str:
+    selected_slot = station["slots"][selected_slot_id]
+    building = selected_slot.get("building")
+    current_workers = selected_slot.get("assigned_workers", 0)
+    current_level = str(selected_slot.get("level"))
+    building_data = loader.load_production_data()[building]["levels"][current_level]
+    
+    return [
+        "",
+        f"Ausgewählter Slot: {selected_slot_id}",
+        f"Gebäude: {building}",
+        f"Aktuelle Arbeiter: {current_workers} / {building_data["max_workers"]}",
+        f"Verfügbare Arbeiter: {station['population']['worker_available']}",
+        "",
+        "[q] Zurück"
+    ]
 
 def create_employment_menu(station: dict) -> tuple[list[str], dict[str, str]]:
     station_slots = station.get("slots", {})

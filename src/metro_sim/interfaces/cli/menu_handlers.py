@@ -5,7 +5,6 @@ import metro_sim.interfaces.cli.employment_menu as employment_menu
 import metro_sim.services.upgrade_service as upgrade_service
 import metro_sim.services.station_service as station_service
 import metro_sim.services.worker_assignment_service as worker_assignment_service
-import metro_sim.utils.file_loader as loader
 import metro_sim.interfaces.cli.input_reader as input_reader
 
 def show_pause_menu() -> str:
@@ -58,22 +57,7 @@ def handle_building_employment(station: dict, selected_slot_id: str) -> None:
         if selected_slot_id is None:
             return
         
-        selected_slot = station["slots"][selected_slot_id]
-        building = selected_slot.get("building")
-        current_workers = selected_slot.get("assigned_workers", 0)
-        current_level = str(selected_slot.get("level"))
-
-        building_data = loader.load_production_data()[building]["levels"][current_level]
-
-        menu_lines = [
-            "",
-            f"Ausgewählter Slot: {selected_slot_id}",
-            f"Gebäude: {building}",
-            f"Aktuelle Arbeiter: {current_workers} / {building_data["max_workers"]}",
-            f"Verfügbare Arbeiter: {station['population']['worker_available']}",
-            "",
-            "[q] Zurück"
-        ]
+        menu_lines = employment_menu.create_employment_detail_menu(station, selected_slot_id)
 
         station_map = cli.build_station_map_lines(station=station)
 
@@ -94,7 +78,7 @@ def handle_building_employment(station: dict, selected_slot_id: str) -> None:
 
         new_amount = int(amount_input)
 
-        is_worker_amount_valid = worker_assignment_service.is_worker_amount_valid(station, new_amount, building_data, selected_slot)
+        is_worker_amount_valid = worker_assignment_service.is_worker_amount_valid(station, new_amount, selected_slot_id)
 
         if not is_worker_amount_valid.success:
             error_message = f"{is_worker_amount_valid.message}"
