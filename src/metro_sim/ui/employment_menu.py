@@ -82,5 +82,4 @@ def create_employment_menu(station: dict) -> tuple[list[str], dict[str, str]]:
     menu_lines.append("")
     menu_lines.append("[q] Zurück")
 
-
     return menu_lines, menu_actions

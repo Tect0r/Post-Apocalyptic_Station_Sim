@@ -55,10 +55,11 @@ def consume_food_by_mix(station: dict, needed_food_units: int, food_weights: dic
 def calculate_bar_consumption(station: dict) -> int:
     # Berechnet den Verbrauch von Handelsgütern basierend auf der Bevölkerung und den zugewiesenen Arbeitern
     balancing_dict = loader.load_balancing()
-
+    #work hours sind unterschiedlich, nach der normalen arbeit und dann bis 01:00 oder so
     # calculate food und wasser verbrauch
     # calc power usage
     # set effect status (genug essen, gutes essen, kein essen)
+    # negativer effekt, wenn die bar geschlossen wird. schwacht mit der zeit ab
 
     return 0
 

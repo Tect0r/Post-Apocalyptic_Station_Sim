@@ -968,21 +968,22 @@
           }
         },
         "boosts": {
-          "served_meals": {
+          "soup": {
             "needs": {
-              "cooked_meals": 4
+              "soup": 4
             },
             "gives_bonus": {
               "morale_points": 6,
               "comfort_points": 4
             }
           },
-          "rare_goods": {
+          "meat_soup": {
             "needs": {
-              "rare_loot": 1
+              "meat_soup": 2
             },
             "gives_bonus": {
-              "morale_points": 10
+              "morale_points": 6,
+              "comfort_points": 4
             }
           }
         }

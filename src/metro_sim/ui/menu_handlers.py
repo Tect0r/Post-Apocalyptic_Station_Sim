@@ -29,73 +29,100 @@ def show_pause_menu() -> str:
     return read_valid_key(["1", "2", "3", "q", "\r"])
 
 def handle_employment_menu(station: dict) -> None:
-    menu_lines, menu_actions = employment_menu.create_employment_menu(station)
+    error_message = None
 
-    cli.clear_console()
+    while True:
+        cli.clear_console()
 
-    station_map = cli.build_station_map_lines(station=station)
-    cli.print_side_by_side(menu_lines, station_map)
+        menu_lines, menu_actions = employment_menu.create_employment_menu(station)
 
-    user_input = input(">")
+        if error_message:
+            menu_lines.append("")
+            menu_lines.append(f"Fehler: {error_message}")
 
-    if user_input == "q":
-        return
+        station_map = cli.build_station_map_lines(station=station)
+        cli.print_side_by_side(menu_lines, station_map)
 
-    selected_slot_id = menu_actions.get(user_input)
+        user_input = input("> ")
 
-    if selected_slot_id is None:
-        print("Ungültige Eingabe")
+        if user_input == "q":
+            return
+
+        selected_slot_id = menu_actions.get(user_input)
+
+        if selected_slot_id is None:
+            error_message = "Bitte wähle einen verfügbaren Slot."
+            continue
+
+        handle_building_employment(station, selected_slot_id)
+
+def handle_building_employment(station: dict, selected_slot_id: str) -> None:
+    error_message = None
+
+    while True:
+        cli.clear_console()
+
+        if selected_slot_id is None:
+            return
+        
+        selected_slot = station["slots"][selected_slot_id]
+        building = selected_slot.get("building")
+        current_workers = selected_slot.get("assigned_workers", 0)
+        current_level = str(selected_slot.get("level"))
+
+        building_data = loader.load_production_data()[building]["levels"][current_level]
+
+        menu_lines = [
+            "",
+            f"Ausgewählter Slot: {selected_slot_id}",
+            f"Gebäude: {building}",
+            f"Aktuelle Arbeiter: {current_workers} / {building_data["max_workers"]}",
+            f"Verfügbare Arbeiter: {station['population']['worker_available']}",
+            "",
+            "[q] Zurück"
+        ]
+
+        station_map = cli.build_station_map_lines(station=station)
+
+        if error_message:
+            menu_lines.append("")
+            menu_lines.append(f"Fehler: {error_message}")
+        
+        cli.print_side_by_side(menu_lines, station_map)
+
+        amount_input = input("Wie viele Arbeiter sollen hier arbeiten? > ").strip()
+
+        if amount_input == "q":
+            return
+
+        if not amount_input.isdigit():
+            error_message = "Ungültige Zahl."
+            continue
+
+        new_amount = int(amount_input)
+
+        if new_amount < 0:
+            error_message = "Ungültige Anzahl."
+            continue
+
+        if new_amount > building_data["max_workers"]:
+            error_message = "Zuviele Arbeiter für das Gebäude."
+            continue
+
+        worker_difference = new_amount - current_workers
+
+        if worker_difference > station["population"]["worker_available"]:
+            error_message = "Nicht genug freie Arbeiter verfügbar."
+            continue
+
+        station_service.assign_workers_to_slot(
+            station=station,
+            slot_id=selected_slot_id,
+            worker_amount=new_amount
+        )
+
+        print(f"Die Anzahl der Arbeiter wurde in {selected_slot_id} auf {new_amount} gesetzt.")
         input("Enter zum Fortfahren...")
-        return
-
-    selected_slot = station["slots"][selected_slot_id]
-    building = selected_slot.get("building")
-    current_workers = selected_slot.get("assigned_workers", 0)
-    current_level = str(selected_slot.get("level"))
-
-    building_data = loader.load_production_data()[building]["levels"][current_level]
-
-    print()
-    print(f"Ausgewählter Slot: {selected_slot_id}")
-    print(f"Gebäude: {building}")
-    print(f"Aktuelle Arbeiter: {current_workers} / {building_data["max_workers"]}")
-    print(f"Verfügbare Arbeiter: {station['population']['worker_available']}")
-    print()
-
-    amount_input = input("Wie viele Arbeiter sollen hier arbeiten? > ").strip()
-
-    if not amount_input.isdigit():
-        print("Ungültige Zahl")
-        input("Enter zum Fortfahren...")
-        return
-
-    new_amount = int(amount_input)
-
-    if new_amount < 0:
-        print("Ungültige Anzahl")
-        input("Enter zum Fortfahren...")
-        return
-
-    if new_amount > building_data["max_workers"]:
-        print("Zuviele Arbeiter für das Gebäude.")
-        input("Enter zum Fortfahren...")
-        return
-
-    worker_difference = new_amount - current_workers
-
-    if worker_difference > station["population"]["worker_available"]:
-        print("Nicht genug freie Arbeiter verfügbar.")
-        input("Enter zum Fortfahren...")
-        return
-
-    station_service.assign_workers_to_slot(
-        station=station,
-        slot_id=selected_slot_id,
-        worker_amount=new_amount
-    )
-
-    print(f"Die Anzahl der Arbeiter wurde in {selected_slot_id} auf {new_amount} gesetzt.")
-    input("Enter zum Fortfahren...")
 
 def handle_upgrade_overview_menu(station: dict) -> None:
     cli.clear_console()
@@ -108,7 +135,13 @@ def handle_upgrade_overview_menu(station: dict) -> None:
 
     if user_input == "q":
         return
-
+    
+    if user_input not in str(menu_actions.keys()):
+        return
+    
+    if user_input == "":
+        return
+    
     selected_building = menu_actions.get(int(user_input))
     
     if selected_building is not None:
@@ -129,6 +162,9 @@ def handle_build_new_building_menu(station: dict, selected_slot: str) -> None:
     if user_input == "q":
         return
     
+    if user_input == "":
+        handle_build_new_building_menu(station, selected_slot)
+
     selected_building = menu_actions.get(int(user_input))
     handle_upgrade_detail_menu(station, selected_building, selected_slot)
 
@@ -142,6 +178,10 @@ def handle_upgrade_detail_menu(station: dict, selected_building: dict, selected_
     
 
     user_input = util.ask_until_valid(["q", "y", "n"] ,"Möchtest du das Gebäude upgraden?")
+  
+    if user_input == "":
+        handle_upgrade_detail_menu(station, selected_building, selected_slot)
+        return
 
     if user_input == "q" or user_input == "n":
         return
