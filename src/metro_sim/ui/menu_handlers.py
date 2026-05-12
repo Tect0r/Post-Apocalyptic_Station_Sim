@@ -4,6 +4,7 @@ import metro_sim.ui.upgrade_menu as upgrade_menu
 import metro_sim.ui.employment_menu as employment_menu
 import metro_sim.services.upgrade_service as upgrade_service
 import metro_sim.services.station_service as station_service
+import metro_sim.utils.file_loader as loader
 import msvcrt
 
 
@@ -50,11 +51,14 @@ def handle_employment_menu(station: dict) -> None:
     selected_slot = station["slots"][selected_slot_id]
     building = selected_slot.get("building")
     current_workers = selected_slot.get("assigned_workers", 0)
+    current_level = str(selected_slot.get("level"))
+
+    building_data = loader.load_production_data()[building]["levels"][current_level]
 
     print()
     print(f"Ausgewählter Slot: {selected_slot_id}")
     print(f"Gebäude: {building}")
-    print(f"Aktuelle Arbeiter: {current_workers}")
+    print(f"Aktuelle Arbeiter: {current_workers} / {building_data["max_workers"]}")
     print(f"Verfügbare Arbeiter: {station['population']['worker_available']}")
     print()
 
@@ -69,6 +73,11 @@ def handle_employment_menu(station: dict) -> None:
 
     if new_amount < 0:
         print("Ungültige Anzahl")
+        input("Enter zum Fortfahren...")
+        return
+
+    if new_amount > building_data["max_workers"]:
+        print("Zuviele Arbeiter für das Gebäude.")
         input("Enter zum Fortfahren...")
         return
 

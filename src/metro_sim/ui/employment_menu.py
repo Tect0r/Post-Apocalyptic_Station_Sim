@@ -61,7 +61,7 @@ def create_employment_menu(station: dict) -> tuple[list[str], dict[str, str]]:
     for slot_id, slot in station_slots.items():
         building = slot.get("building")
         level = slot.get("level", 0)
-        assigned_workers = slot.get("assigned_workers", slot.get("employed_worker", 0))
+        assigned_workers = slot.get("assigned_workers", 0)
 
         if building is None or level <= 0:
             continue
