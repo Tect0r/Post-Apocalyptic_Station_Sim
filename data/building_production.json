@@ -1,27 +1,54 @@
 {
-    "tunnel_scavenging":{
-        "description": "Basis-Ressourcenquelle. Bewohner suchen im Tunnel nach Nahrung, Trade Goods und Spare Parts.",
-        
-        "levels": {
-            "1": {
-                "work_required": 50,
-                "work_per_worker_per_tick": 5,
-                "max_workers": 20,
-                "base": {
-                    "needs": {},
-                    "gives":{
-                        "mushrooms" : 2,
-                        "trade_goods": 1,
-                        "spare_parts" : 1
-                    }
-                }
-            }
-        }
-    },
-
+  "tunnel_scavenging": {
+    "description": "Basis-Ressourcenquelle. Bewohner suchen im Tunnel nach Nahrung, Trade Goods und Spare Parts.",
+    "levels": {
+      "1": {
+        "work_required": 50,
+        "work_per_worker_per_tick": 5,
+        "max_workers": 20,
+        "base": {
+          "needs": {},
+          "gives": {
+            "mushrooms": 2,
+            "trade_goods": 1,
+            "spare_parts": 1
+          }
+        },
+        "boosts": {}
+      },
+      "2": {
+        "work_required": 70,
+        "work_per_worker_per_tick": 6,
+        "max_workers": 24,
+        "base": {
+          "needs": {},
+          "gives": {
+            "mushrooms": 3,
+            "trade_goods": 2,
+            "spare_parts": 2
+          }
+        },
+        "boosts": {}
+      },
+      "3": {
+        "work_required": 90,
+        "work_per_worker_per_tick": 8,
+        "max_workers": 30,
+        "base": {
+          "needs": {},
+          "gives": {
+            "mushrooms": 4,
+            "trade_goods": 3,
+            "spare_parts": 3,
+            "scrap": 2
+          }
+        },
+        "boosts": {}
+      }
+    }
+  },
   "mushroom_farm": {
     "description": "Basis-Nahrungsquelle. Arbeiter erzeugen über Zeit Pilze. Wasser und organische Abfälle verbessern den Ertrag.",
-
     "levels": {
       "1": {
         "work_required": 100,
@@ -52,7 +79,6 @@
           }
         }
       },
-
       "2": {
         "work_required": 110,
         "work_per_worker_per_tick": 7,
@@ -82,7 +108,6 @@
           }
         }
       },
-
       "3": {
         "work_required": 130,
         "work_per_worker_per_tick": 10,
@@ -108,6 +133,1514 @@
             },
             "gives_bonus": {
               "mushrooms": 45
+            }
+          }
+        }
+      }
+    }
+  },
+  "pig_farm": {
+    "description": "Züchtet Schweine als hochwertigere Nahrungsquelle. Funktioniert langsam mit einfachem Futter, wird aber durch bessere Versorgung deutlich effizienter.",
+    "levels": {
+      "1": {
+        "work_required": 120,
+        "work_per_worker_per_tick": 5,
+        "max_workers": 6,
+        "base": {
+          "needs": {
+            "mushrooms": 12,
+            "water": 10
+          },
+          "gives": {
+            "pig_meat": 8,
+            "organic_waste": 3
+          }
+        },
+        "boosts": {}
+      },
+      "2": {
+        "work_required": 145,
+        "work_per_worker_per_tick": 7,
+        "max_workers": 10,
+        "base": {
+          "needs": {
+            "mushrooms": 18,
+            "water": 15
+          },
+          "gives": {
+            "pig_meat": 14,
+            "organic_waste": 5
+          }
+        },
+        "boosts": {}
+      },
+      "3": {
+        "work_required": 175,
+        "work_per_worker_per_tick": 9,
+        "max_workers": 14,
+        "base": {
+          "needs": {
+            "mushrooms": 26,
+            "water": 22
+          },
+          "gives": {
+            "pig_meat": 22,
+            "organic_waste": 8
+          }
+        },
+        "boosts": {}
+      }
+    }
+  },
+  "kitchen": {
+    "description": "Verarbeitet einfache Nahrung zu besseren Mahlzeiten. Pilze reichen für einfache Suppe, Fleisch und sauberes Wasser erhöhen Ertrag und Qualität.",
+    "levels": {
+      "1": {
+        "work_required": 80,
+        "work_per_worker_per_tick": 5,
+        "max_workers": 6,
+        "base": {
+          "needs": {
+            "mushrooms": 18,
+            "water": 8
+          },
+          "gives": {
+            "soup": 24
+          }
+        },
+        "boosts": {
+          "pig_meat": {
+            "needs": {
+              "pig_meat": 6,
+              "water": 3
+            },
+            "gives_bonus": {
+              "meat_soup": 16
+            }
+          },
+          "extra_water": {
+            "needs": {
+              "water": 4
+            },
+            "gives_bonus": {
+              "soup": 8
+            }
+          }
+        }
+      },
+      "2": {
+        "work_required": 100,
+        "work_per_worker_per_tick": 7,
+        "max_workers": 9,
+        "base": {
+          "needs": {
+            "mushrooms": 28,
+            "water": 12
+          },
+          "gives": {
+            "soup": 40
+          }
+        },
+        "boosts": {
+          "pig_meat": {
+            "needs": {
+              "pig_meat": 10,
+              "water": 5
+            },
+            "gives_bonus": {
+              "meat_soup": 28
+            }
+          },
+          "meal_prep": {
+            "needs": {
+              "pig_meat": 6,
+              "mushrooms": 8
+            },
+            "gives_bonus": {
+              "cooked_meals": 18
+            }
+          }
+        }
+      },
+      "3": {
+        "work_required": 125,
+        "work_per_worker_per_tick": 9,
+        "max_workers": 12,
+        "base": {
+          "needs": {
+            "mushrooms": 40,
+            "water": 18
+          },
+          "gives": {
+            "soup": 60
+          }
+        },
+        "boosts": {
+          "pig_meat": {
+            "needs": {
+              "pig_meat": 16,
+              "water": 8
+            },
+            "gives_bonus": {
+              "meat_soup": 44
+            }
+          },
+          "meal_prep": {
+            "needs": {
+              "pig_meat": 10,
+              "mushrooms": 12
+            },
+            "gives_bonus": {
+              "cooked_meals": 32
+            }
+          }
+        }
+      }
+    }
+  },
+  "storage": {
+    "description": "Passives Gebäude. Erhöht Lagerkapazitäten und schützt Vorräte besser. Produziert keine Ressourcen.",
+    "levels": {
+      "1": {
+        "work_required": 40,
+        "work_per_worker_per_tick": 4,
+        "max_workers": 4,
+        "base": {
+          "needs": {},
+          "gives": {}
+        },
+        "boosts": {}
+      },
+      "2": {
+        "work_required": 60,
+        "work_per_worker_per_tick": 5,
+        "max_workers": 6,
+        "base": {
+          "needs": {},
+          "gives": {}
+        },
+        "boosts": {}
+      },
+      "3": {
+        "work_required": 80,
+        "work_per_worker_per_tick": 6,
+        "max_workers": 8,
+        "base": {
+          "needs": {},
+          "gives": {}
+        },
+        "boosts": {}
+      }
+    }
+  },
+  "trading_post": {
+    "description": "Tauscht Handelsgüter gegen benötigte Ressourcen. Bessere Waren erhöhen den Tauschwert.",
+    "levels": {
+      "1": {
+        "work_required": 90,
+        "work_per_worker_per_tick": 5,
+        "max_workers": 5,
+        "base": {
+          "needs": {
+            "trade_goods": 10
+          },
+          "gives": {
+            "ammo": 5
+          }
+        },
+        "boosts": {
+          "valuable_goods": {
+            "needs": {
+              "mechanical_parts": 1
+            },
+            "gives_bonus": {
+              "ammo": 4,
+              "spare_parts": 1
+            }
+          },
+          "medical_trade": {
+            "needs": {
+              "medicine": 1
+            },
+            "gives_bonus": {
+              "ammo": 2,
+              "trade_goods": 2
+            }
+          }
+        }
+      },
+      "2": {
+        "work_required": 115,
+        "work_per_worker_per_tick": 7,
+        "max_workers": 8,
+        "base": {
+          "needs": {
+            "trade_goods": 16
+          },
+          "gives": {
+            "ammo": 10
+          }
+        },
+        "boosts": {
+          "valuable_goods": {
+            "needs": {
+              "mechanical_parts": 2
+            },
+            "gives_bonus": {
+              "ammo": 8,
+              "spare_parts": 2
+            }
+          },
+          "medical_trade": {
+            "needs": {
+              "medicine": 2
+            },
+            "gives_bonus": {
+              "ammo": 4,
+              "trade_goods": 4
+            }
+          }
+        }
+      },
+      "3": {
+        "work_required": 145,
+        "work_per_worker_per_tick": 9,
+        "max_workers": 12,
+        "base": {
+          "needs": {
+            "trade_goods": 24
+          },
+          "gives": {
+            "ammo": 18
+          }
+        },
+        "boosts": {
+          "valuable_goods": {
+            "needs": {
+              "mechanical_parts": 3
+            },
+            "gives_bonus": {
+              "ammo": 14,
+              "spare_parts": 4
+            }
+          },
+          "medical_trade": {
+            "needs": {
+              "medicine": 3
+            },
+            "gives_bonus": {
+              "ammo": 8,
+              "trade_goods": 7
+            }
+          }
+        }
+      }
+    }
+  },
+  "trading_goods": {
+    "description": "Produziert einfache Tauschware aus Schrott und kleinen technischen Teilen. Höherwertige Inputs verbessern den Handelswert.",
+    "levels": {
+      "1": {
+        "work_required": 75,
+        "work_per_worker_per_tick": 5,
+        "max_workers": 6,
+        "base": {
+          "needs": {
+            "scrap": 12
+          },
+          "gives": {
+            "trade_goods": 18
+          }
+        },
+        "boosts": {
+          "spare_parts_bundle": {
+            "needs": {
+              "spare_parts": 2
+            },
+            "gives_bonus": {
+              "trade_goods": 8
+            }
+          },
+          "prepared_meals": {
+            "needs": {
+              "cooked_meals": 4
+            },
+            "gives_bonus": {
+              "trade_goods": 6
+            }
+          }
+        }
+      },
+      "2": {
+        "work_required": 95,
+        "work_per_worker_per_tick": 7,
+        "max_workers": 9,
+        "base": {
+          "needs": {
+            "scrap": 20
+          },
+          "gives": {
+            "trade_goods": 32
+          }
+        },
+        "boosts": {
+          "spare_parts_bundle": {
+            "needs": {
+              "spare_parts": 3
+            },
+            "gives_bonus": {
+              "trade_goods": 14
+            }
+          },
+          "prepared_meals": {
+            "needs": {
+              "cooked_meals": 6
+            },
+            "gives_bonus": {
+              "trade_goods": 10
+            }
+          }
+        }
+      },
+      "3": {
+        "work_required": 120,
+        "work_per_worker_per_tick": 9,
+        "max_workers": 12,
+        "base": {
+          "needs": {
+            "scrap": 32
+          },
+          "gives": {
+            "trade_goods": 52
+          }
+        },
+        "boosts": {
+          "spare_parts_bundle": {
+            "needs": {
+              "spare_parts": 5
+            },
+            "gives_bonus": {
+              "trade_goods": 24
+            }
+          },
+          "prepared_meals": {
+            "needs": {
+              "cooked_meals": 10
+            },
+            "gives_bonus": {
+              "trade_goods": 18
+            }
+          }
+        }
+      }
+    }
+  },
+  "machine_shop": {
+    "description": "Verarbeitet Schrott zu Ersatzteilen und technischen Komponenten. Mit besseren Werkzeugen oder Bauteilen steigt der Ertrag.",
+    "levels": {
+      "1": {
+        "work_required": 100,
+        "work_per_worker_per_tick": 5,
+        "max_workers": 6,
+        "base": {
+          "needs": {
+            "scrap": 18
+          },
+          "gives": {
+            "spare_parts": 10
+          }
+        },
+        "boosts": {
+          "power_units": {
+            "needs": {
+              "power_units": 1
+            },
+            "gives_bonus": {
+              "spare_parts": 5,
+              "mechanical_parts": 2
+            }
+          },
+          "mechanical_parts_rework": {
+            "needs": {
+              "mechanical_parts": 1
+            },
+            "gives_bonus": {
+              "spare_parts": 5
+            }
+          }
+        }
+      },
+      "2": {
+        "work_required": 130,
+        "work_per_worker_per_tick": 7,
+        "max_workers": 9,
+        "base": {
+          "needs": {
+            "scrap": 30
+          },
+          "gives": {
+            "spare_parts": 18
+          }
+        },
+        "boosts": {
+          "power_units": {
+            "needs": {
+              "power_units": 1
+            },
+            "gives_bonus": {
+              "spare_parts": 8,
+              "mechanical_parts": 3
+            }
+          },
+          "mechanical_parts_rework": {
+            "needs": {
+              "mechanical_parts": 2
+            },
+            "gives_bonus": {
+              "spare_parts": 10
+            }
+          }
+        }
+      },
+      "3": {
+        "work_required": 165,
+        "work_per_worker_per_tick": 9,
+        "max_workers": 12,
+        "base": {
+          "needs": {
+            "scrap": 46
+          },
+          "gives": {
+            "spare_parts": 30
+          }
+        },
+        "boosts": {
+          "power_units": {
+            "needs": {
+              "power_units": 2
+            },
+            "gives_bonus": {
+              "spare_parts": 16,
+              "mechanical_parts": 6
+            }
+          },
+          "mechanical_parts_rework": {
+            "needs": {
+              "mechanical_parts": 3
+            },
+            "gives_bonus": {
+              "spare_parts": 18
+            }
+          }
+        }
+      }
+    }
+  },
+  "living_quarters": {
+    "description": "Passives Gebäude. Erhöht Bevölkerungskapazität und Komfort. Produziert keine Ressourcen.",
+    "levels": {
+      "1": {
+        "work_required": 45,
+        "work_per_worker_per_tick": 4,
+        "max_workers": 4,
+        "base": {
+          "needs": {},
+          "gives": {}
+        },
+        "boosts": {}
+      },
+      "2": {
+        "work_required": 65,
+        "work_per_worker_per_tick": 5,
+        "max_workers": 6,
+        "base": {
+          "needs": {},
+          "gives": {}
+        },
+        "boosts": {}
+      },
+      "3": {
+        "work_required": 90,
+        "work_per_worker_per_tick": 6,
+        "max_workers": 8,
+        "base": {
+          "needs": {},
+          "gives": {}
+        },
+        "boosts": {}
+      }
+    }
+  },
+  "maintenance": {
+    "description": "Wartung stabilisiert Infrastruktur. Ohne Ersatzteile wird nur einfache Inspektion geleistet, mit Ersatzteilen entstehen echte Wartungspunkte.",
+    "levels": {
+      "1": {
+        "work_required": 80,
+        "work_per_worker_per_tick": 5,
+        "max_workers": 5,
+        "base": {
+          "needs": {},
+          "gives": {}
+        },
+        "boosts": {
+          "spare_parts": {
+            "needs": {
+              "spare_parts": 2
+            },
+            "gives_bonus": {}
+          },
+          "machine_support": {
+            "needs": {
+              "mechanical_parts": 1
+            },
+            "gives_bonus": {}
+          }
+        }
+      },
+      "2": {
+        "work_required": 105,
+        "work_per_worker_per_tick": 7,
+        "max_workers": 8,
+        "base": {
+          "needs": {},
+          "gives": {}
+        },
+        "boosts": {
+          "spare_parts": {
+            "needs": {
+              "spare_parts": 2
+            },
+            "gives_bonus": {}
+          },
+          "machine_support": {
+            "needs": {
+              "mechanical_parts": 1
+            },
+            "gives_bonus": {}
+          }
+        }
+      },
+      "3": {
+        "work_required": 135,
+        "work_per_worker_per_tick": 9,
+        "max_workers": 11,
+        "base": {
+          "needs": {},
+          "gives": {}
+        },
+        "boosts": {
+          "spare_parts": {
+            "needs": {
+              "spare_parts": 2
+            },
+            "gives_bonus": {}
+          },
+          "machine_support": {
+            "needs": {
+              "mechanical_parts": 1
+            },
+            "gives_bonus": {}
+          }
+        }
+      }
+    }
+  },
+  "generator": {
+    "description": "Erzeugt lokalen Strom. Funktioniert mit einfachem Treibstoff, kann durch Ersatzteile und technische Komponenten stabiler und effizienter laufen.",
+    "levels": {
+      "1": {
+        "work_required": 90,
+        "work_per_worker_per_tick": 5,
+        "max_workers": 4,
+        "base": {
+          "needs": {
+            "fuel": 4
+          },
+          "gives": {
+            "local_kwh": 40
+          }
+        },
+        "boosts": {
+          "maintenance_parts": {
+            "needs": {
+              "spare_parts": 1
+            },
+            "gives_bonus": {
+              "local_kwh": 15
+            }
+          },
+          "power_unit": {
+            "needs": {
+              "power_units": 1
+            },
+            "gives_bonus": {
+              "local_kwh": 30
+            }
+          }
+        }
+      },
+      "2": {
+        "work_required": 115,
+        "work_per_worker_per_tick": 7,
+        "max_workers": 6,
+        "base": {
+          "needs": {
+            "fuel": 7
+          },
+          "gives": {
+            "local_kwh": 75
+          }
+        },
+        "boosts": {
+          "maintenance_parts": {
+            "needs": {
+              "spare_parts": 2
+            },
+            "gives_bonus": {
+              "local_kwh": 30
+            }
+          },
+          "power_unit": {
+            "needs": {
+              "power_units": 1
+            },
+            "gives_bonus": {
+              "local_kwh": 50
+            }
+          }
+        }
+      },
+      "3": {
+        "work_required": 145,
+        "work_per_worker_per_tick": 9,
+        "max_workers": 8,
+        "base": {
+          "needs": {
+            "fuel": 11
+          },
+          "gives": {
+            "local_kwh": 125
+          }
+        },
+        "boosts": {
+          "maintenance_parts": {
+            "needs": {
+              "spare_parts": 3
+            },
+            "gives_bonus": {
+              "local_kwh": 55
+            }
+          },
+          "power_unit": {
+            "needs": {
+              "power_units": 2
+            },
+            "gives_bonus": {
+              "local_kwh": 95
+            }
+          }
+        }
+      }
+    }
+  },
+  "medical": {
+    "description": "Stellt einfache Medizin her und versorgt Verletzte. Chemikalien oder sauberes Wasser verbessern die Versorgung deutlich.",
+    "levels": {
+      "1": {
+        "work_required": 95,
+        "work_per_worker_per_tick": 5,
+        "max_workers": 5,
+        "base": {
+          "needs": {
+            "water": 8,
+            "mushrooms": 6
+          },
+          "gives": {
+            "medicine": 3,
+            "treated_patients": 3
+          }
+        },
+        "boosts": {
+          "chemicals": {
+            "needs": {
+              "chemicals": 1
+            },
+            "gives_bonus": {
+              "medicine": 5
+            }
+          },
+          "clean_supplies": {
+            "needs": {
+              "cooked_meals": 2,
+              "water": 4
+            },
+            "gives_bonus": {
+              "treated_patients": 5
+            }
+          }
+        }
+      },
+      "2": {
+        "work_required": 120,
+        "work_per_worker_per_tick": 7,
+        "max_workers": 8,
+        "base": {
+          "needs": {
+            "water": 13,
+            "mushrooms": 10
+          },
+          "gives": {
+            "medicine": 6,
+            "treated_patients": 6
+          }
+        },
+        "boosts": {
+          "chemicals": {
+            "needs": {
+              "chemicals": 2
+            },
+            "gives_bonus": {
+              "medicine": 9
+            }
+          },
+          "clean_supplies": {
+            "needs": {
+              "cooked_meals": 4,
+              "water": 7
+            },
+            "gives_bonus": {
+              "treated_patients": 9
+            }
+          }
+        }
+      },
+      "3": {
+        "work_required": 150,
+        "work_per_worker_per_tick": 9,
+        "max_workers": 11,
+        "base": {
+          "needs": {
+            "water": 20,
+            "mushrooms": 16
+          },
+          "gives": {
+            "medicine": 10,
+            "treated_patients": 10
+          }
+        },
+        "boosts": {
+          "chemicals": {
+            "needs": {
+              "chemicals": 3
+            },
+            "gives_bonus": {
+              "medicine": 16
+            }
+          },
+          "clean_supplies": {
+            "needs": {
+              "cooked_meals": 6,
+              "water": 10
+            },
+            "gives_bonus": {
+              "treated_patients": 16
+            }
+          }
+        }
+      }
+    }
+  },
+  "bar": {
+    "description": "Verbraucht Nahrung und Wasser, erzeugt dafür Moral und Komfort. Bessere Mahlzeiten oder seltene Güter erhöhen den Effekt.",
+    "levels": {
+      "1": {
+        "work_required": 70,
+        "work_per_worker_per_tick": 5,
+        "max_workers": 5,
+        "base": {
+          "needs": {
+            "water": 8,
+            "mushrooms": 8
+          },
+          "gives": {
+            "morale_points": 5,
+            "comfort_points": 2
+          }
+        },
+        "boosts": {
+          "served_meals": {
+            "needs": {
+              "cooked_meals": 4
+            },
+            "gives_bonus": {
+              "morale_points": 6,
+              "comfort_points": 4
+            }
+          },
+          "rare_goods": {
+            "needs": {
+              "rare_loot": 1
+            },
+            "gives_bonus": {
+              "morale_points": 10
+            }
+          }
+        }
+      },
+      "2": {
+        "work_required": 90,
+        "work_per_worker_per_tick": 7,
+        "max_workers": 8,
+        "base": {
+          "needs": {
+            "water": 13,
+            "mushrooms": 13
+          },
+          "gives": {
+            "morale_points": 9,
+            "comfort_points": 4
+          }
+        },
+        "boosts": {
+          "served_meals": {
+            "needs": {
+              "cooked_meals": 7
+            },
+            "gives_bonus": {
+              "morale_points": 11,
+              "comfort_points": 7
+            }
+          },
+          "rare_goods": {
+            "needs": {
+              "rare_loot": 1
+            },
+            "gives_bonus": {
+              "morale_points": 16
+            }
+          }
+        }
+      },
+      "3": {
+        "work_required": 115,
+        "work_per_worker_per_tick": 9,
+        "max_workers": 11,
+        "base": {
+          "needs": {
+            "water": 20,
+            "mushrooms": 20
+          },
+          "gives": {
+            "morale_points": 15,
+            "comfort_points": 7
+          }
+        },
+        "boosts": {
+          "served_meals": {
+            "needs": {
+              "cooked_meals": 11
+            },
+            "gives_bonus": {
+              "morale_points": 18,
+              "comfort_points": 12
+            }
+          },
+          "rare_goods": {
+            "needs": {
+              "rare_loot": 2
+            },
+            "gives_bonus": {
+              "morale_points": 30
+            }
+          }
+        }
+      }
+    }
+  },
+  "market": {
+    "description": "Verbessert Stationsleben, Versorgung und Handel. Funktioniert mit normalen Handelsgütern, profitiert aber von Nahrung, Medizin und seltenen Waren.",
+    "levels": {
+      "1": {
+        "work_required": 90,
+        "work_per_worker_per_tick": 5,
+        "max_workers": 8,
+        "base": {
+          "needs": {
+            "trade_goods": 5
+          },
+          "gives": {
+            "morale_points": 4,
+            "comfort_points": 4,
+            "market_value": 6
+          }
+        },
+        "boosts": {
+          "food_stalls": {
+            "needs": {
+              "cooked_meals": 3
+            },
+            "gives_bonus": {
+              "comfort_points": 4,
+              "market_value": 4
+            }
+          },
+          "rare_trade": {
+            "needs": {
+              "rare_loot": 1
+            },
+            "gives_bonus": {
+              "morale_points": 6,
+              "market_value": 10
+            }
+          }
+        }
+      },
+      "2": {
+        "work_required": 115,
+        "work_per_worker_per_tick": 7,
+        "max_workers": 12,
+        "base": {
+          "needs": {
+            "trade_goods": 9
+          },
+          "gives": {
+            "morale_points": 8,
+            "comfort_points": 8,
+            "market_value": 12
+          }
+        },
+        "boosts": {
+          "food_stalls": {
+            "needs": {
+              "cooked_meals": 5
+            },
+            "gives_bonus": {
+              "comfort_points": 8,
+              "market_value": 8
+            }
+          },
+          "rare_trade": {
+            "needs": {
+              "rare_loot": 1
+            },
+            "gives_bonus": {
+              "morale_points": 10,
+              "market_value": 18
+            }
+          }
+        }
+      },
+      "3": {
+        "work_required": 145,
+        "work_per_worker_per_tick": 9,
+        "max_workers": 16,
+        "base": {
+          "needs": {
+            "trade_goods": 15
+          },
+          "gives": {
+            "morale_points": 14,
+            "comfort_points": 14,
+            "market_value": 22
+          }
+        },
+        "boosts": {
+          "food_stalls": {
+            "needs": {
+              "cooked_meals": 8
+            },
+            "gives_bonus": {
+              "comfort_points": 14,
+              "market_value": 14
+            }
+          },
+          "rare_trade": {
+            "needs": {
+              "rare_loot": 2
+            },
+            "gives_bonus": {
+              "morale_points": 20,
+              "market_value": 35
+            }
+          }
+        }
+      }
+    }
+  },
+  "guard_post": {
+    "description": "Passives Verteidigungsgebäude. Erhöht Verteidigung und Sicherheit, produziert aber keine regulären Ressourcen.",
+    "levels": {
+      "1": {
+        "work_required": 60,
+        "work_per_worker_per_tick": 5,
+        "max_workers": 6,
+        "base": {
+          "needs": {},
+          "gives": {}
+        },
+        "boosts": {}
+      },
+      "2": {
+        "work_required": 85,
+        "work_per_worker_per_tick": 6,
+        "max_workers": 9,
+        "base": {
+          "needs": {},
+          "gives": {}
+        },
+        "boosts": {}
+      },
+      "3": {
+        "work_required": 115,
+        "work_per_worker_per_tick": 8,
+        "max_workers": 12,
+        "base": {
+          "needs": {},
+          "gives": {}
+        },
+        "boosts": {}
+      }
+    }
+  },
+  "weapon_chamber": {
+    "description": "Wartet Waffen und verbessert Kampfbereitschaft. Ersatzteile und Munition erhöhen die Verteidigungswirkung.",
+    "levels": {
+      "1": {
+        "work_required": 85,
+        "work_per_worker_per_tick": 5,
+        "max_workers": 4,
+        "base": {
+          "needs": {
+            "spare_parts": 1
+          },
+          "gives": {
+            "combat_readiness": 6
+          }
+        },
+        "boosts": {
+          "ammo_stock": {
+            "needs": {
+              "ammo": 3
+            },
+            "gives_bonus": {
+              "combat_readiness": 8
+            }
+          },
+          "mechanical_parts": {
+            "needs": {
+              "mechanical_parts": 1
+            },
+            "gives_bonus": {
+              "combat_readiness": 6,
+              "safety_points": 2
+            }
+          }
+        }
+      },
+      "2": {
+        "work_required": 110,
+        "work_per_worker_per_tick": 7,
+        "max_workers": 6,
+        "base": {
+          "needs": {
+            "spare_parts": 2
+          },
+          "gives": {
+            "combat_readiness": 11
+          }
+        },
+        "boosts": {
+          "ammo_stock": {
+            "needs": {
+              "ammo": 5
+            },
+            "gives_bonus": {
+              "combat_readiness": 14
+            }
+          },
+          "mechanical_parts": {
+            "needs": {
+              "mechanical_parts": 2
+            },
+            "gives_bonus": {
+              "combat_readiness": 11,
+              "safety_points": 4
+            }
+          }
+        }
+      },
+      "3": {
+        "work_required": 140,
+        "work_per_worker_per_tick": 9,
+        "max_workers": 8,
+        "base": {
+          "needs": {
+            "spare_parts": 4
+          },
+          "gives": {
+            "combat_readiness": 18
+          }
+        },
+        "boosts": {
+          "ammo_stock": {
+            "needs": {
+              "ammo": 8
+            },
+            "gives_bonus": {
+              "combat_readiness": 24
+            }
+          },
+          "mechanical_parts": {
+            "needs": {
+              "mechanical_parts": 3
+            },
+            "gives_bonus": {
+              "combat_readiness": 18,
+              "safety_points": 7
+            }
+          }
+        }
+      }
+    }
+  },
+  "stalker_den": {
+    "description": "Organisiert Expeditionen. Basisexpeditionen bringen Schrott, bessere Ausrüstung erhöht Loot-Chancen und senkt Risiko indirekt.",
+    "levels": {
+      "1": {
+        "work_required": 110,
+        "work_per_worker_per_tick": 5,
+        "max_workers": 5,
+        "base": {
+          "needs": {
+            "cooked_meals": 1
+          },
+          "gives": {
+            "scrap": 10
+          }
+        },
+        "boosts": {
+          "armed_expedition": {
+            "needs": {
+              "ammo": 5
+            },
+            "gives_bonus": {
+              "scrap": 10,
+              "rare_loot": 1
+            }
+          },
+          "medical_supplies": {
+            "needs": {
+              "medicine": 1
+            },
+            "gives_bonus": {
+              "chemicals": 2,
+              "fuel": 1
+            }
+          }
+        }
+      },
+      "2": {
+        "work_required": 140,
+        "work_per_worker_per_tick": 7,
+        "max_workers": 8,
+        "base": {
+          "needs": {
+            "cooked_meals": 2
+          },
+          "gives": {
+            "scrap": 18
+          }
+        },
+        "boosts": {
+          "armed_expedition": {
+            "needs": {
+              "ammo": 8
+            },
+            "gives_bonus": {
+              "scrap": 18,
+              "rare_loot": 2
+            }
+          },
+          "medical_supplies": {
+            "needs": {
+              "medicine": 2
+            },
+            "gives_bonus": {
+              "chemicals": 4,
+              "fuel": 2
+            }
+          }
+        }
+      },
+      "3": {
+        "work_required": 180,
+        "work_per_worker_per_tick": 9,
+        "max_workers": 11,
+        "base": {
+          "needs": {
+            "cooked_meals": 4
+          },
+          "gives": {
+            "scrap": 32
+          }
+        },
+        "boosts": {
+          "armed_expedition": {
+            "needs": {
+              "ammo": 13
+            },
+            "gives_bonus": {
+              "scrap": 32,
+              "rare_loot": 4
+            }
+          },
+          "medical_supplies": {
+            "needs": {
+              "medicine": 3
+            },
+            "gives_bonus": {
+              "chemicals": 7,
+              "fuel": 4
+            }
+          }
+        }
+      }
+    }
+  },
+  "station_leadership": {
+    "description": "Verwaltet die Station und erzeugt Organisationsvorteile. Mit Handelsgütern und Informationen wird die Koordination effektiver.",
+    "levels": {
+      "1": {
+        "work_required": 70,
+        "work_per_worker_per_tick": 5,
+        "max_workers": 4,
+        "base": {
+          "needs": {},
+          "gives": {
+            "administration_points": 5
+          }
+        },
+        "boosts": {
+          "admin_supplies": {
+            "needs": {
+              "trade_goods": 2
+            },
+            "gives_bonus": {
+              "administration_points": 7
+            }
+          },
+          "intel_reports": {
+            "needs": {
+              "rare_loot": 1
+            },
+            "gives_bonus": {
+              "administration_points": 9,
+              "safety_points": 2
+            }
+          }
+        }
+      },
+      "2": {
+        "work_required": 95,
+        "work_per_worker_per_tick": 7,
+        "max_workers": 6,
+        "base": {
+          "needs": {},
+          "gives": {
+            "administration_points": 9
+          }
+        },
+        "boosts": {
+          "admin_supplies": {
+            "needs": {
+              "trade_goods": 4
+            },
+            "gives_bonus": {
+              "administration_points": 12
+            }
+          },
+          "intel_reports": {
+            "needs": {
+              "rare_loot": 1
+            },
+            "gives_bonus": {
+              "administration_points": 15,
+              "safety_points": 4
+            }
+          }
+        }
+      },
+      "3": {
+        "work_required": 125,
+        "work_per_worker_per_tick": 9,
+        "max_workers": 8,
+        "base": {
+          "needs": {},
+          "gives": {
+            "administration_points": 15
+          }
+        },
+        "boosts": {
+          "admin_supplies": {
+            "needs": {
+              "trade_goods": 7
+            },
+            "gives_bonus": {
+              "administration_points": 22
+            }
+          },
+          "intel_reports": {
+            "needs": {
+              "rare_loot": 2
+            },
+            "gives_bonus": {
+              "administration_points": 30,
+              "safety_points": 7
+            }
+          }
+        }
+      }
+    }
+  },
+  "water_system": {
+    "description": "Füllt Wasservorräte auf, solange das System intakt ist. Ersatzteile verbessern Wartung und Durchsatz.",
+    "levels": {
+      "1": {
+        "work_required": 70,
+        "work_per_worker_per_tick": 5,
+        "max_workers": 4,
+        "base": {
+          "needs": {},
+          "gives": {
+            "water": 40
+          }
+        },
+        "boosts": {
+          "spare_parts": {
+            "needs": {
+              "spare_parts": 1
+            },
+            "gives_bonus": {
+              "water": 20,
+              "maintenance_points": 1
+            }
+          }
+        }
+      },
+      "2": {
+        "work_required": 95,
+        "work_per_worker_per_tick": 7,
+        "max_workers": 6,
+        "base": {
+          "needs": {},
+          "gives": {
+            "water": 75
+          }
+        },
+        "boosts": {
+          "spare_parts": {
+            "needs": {
+              "spare_parts": 2
+            },
+            "gives_bonus": {
+              "water": 35,
+              "maintenance_points": 2
+            }
+          }
+        }
+      },
+      "3": {
+        "work_required": 125,
+        "work_per_worker_per_tick": 9,
+        "max_workers": 8,
+        "base": {
+          "needs": {},
+          "gives": {
+            "water": 125
+          }
+        },
+        "boosts": {
+          "spare_parts": {
+            "needs": {
+              "spare_parts": 3
+            },
+            "gives_bonus": {
+              "water": 60,
+              "maintenance_points": 4
+            }
+          }
+        }
+      }
+    }
+  },
+  "power_line": {
+    "description": "Externe Stromversorgung. Handelsgüter bezahlen den Vertrag, Wartung verbessert Stabilität.",
+    "levels": {
+      "1": {
+        "work_required": 60,
+        "work_per_worker_per_tick": 5,
+        "max_workers": 3,
+        "base": {
+          "needs": {
+            "trade_goods": 6
+          },
+          "gives": {
+            "contract_kwh": 150
+          }
+        },
+        "boosts": {
+          "line_maintenance": {
+            "needs": {
+              "spare_parts": 1
+            },
+            "gives_bonus": {
+              "maintenance_points": 2
+            }
+          }
+        }
+      },
+      "2": {
+        "work_required": 85,
+        "work_per_worker_per_tick": 6,
+        "max_workers": 4,
+        "base": {
+          "needs": {
+            "trade_goods": 10
+          },
+          "gives": {
+            "contract_kwh": 240
+          }
+        },
+        "boosts": {
+          "line_maintenance": {
+            "needs": {
+              "spare_parts": 2
+            },
+            "gives_bonus": {
+              "maintenance_points": 4
+            }
+          }
+        }
+      },
+      "3": {
+        "work_required": 115,
+        "work_per_worker_per_tick": 8,
+        "max_workers": 5,
+        "base": {
+          "needs": {
+            "trade_goods": 16
+          },
+          "gives": {
+            "contract_kwh": 380
+          }
+        },
+        "boosts": {
+          "line_maintenance": {
+            "needs": {
+              "spare_parts": 3
+            },
+            "gives_bonus": {
+              "maintenance_points": 7
             }
           }
         }

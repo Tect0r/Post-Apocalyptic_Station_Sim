@@ -87,6 +87,10 @@ def create_initial_station():
             "market_value": 0,
             "treated_patients": 0
         },
+    
+        "maintenance" : {
+            "daily_targets": {}
+        },
 
         "slots": {
             "slot_0": {

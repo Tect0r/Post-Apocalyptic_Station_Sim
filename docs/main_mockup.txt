@@ -1,47 +1,70 @@
-╔══════════════════════════════════════════════════════════════════════════════════════════════╗    ╔╦═══════╗      ╔╦══════════════╦╗      ╔═══════╦╗
-║ METRO STATION: PAVELETSKAYA-SÜD              Tag 17 | 21:40 | Nachtbetrieb | Winter          ║    ║║ GLEIS ╠══════╣║ ZUGANG NORD  ║╠══════╣ GLEIS ║║
-╠══════════════════════════════════════════════════════════════════════════════════════════════╣    ║║  |=|  ║      ║║    [none]    ║║      ║  |=|  ║║
-║ STATUS: Angespannt | Gefahr: Hoch | Stromnetz: Instabil | Strom: 999 kWh / 999 kWh           ║    ║║  |=|  ║[none]║║              ║║[none]║  |=|  ║║
-╚══════════════════════════════════════════════════════════════════════════════════════════════╝    ║║  |=|  ║ _ _ _╠╩╦════    ════╦╩╣_ _ _ ║  |=|  ║║
-                                                                                                    ║║  |=|  ║      |o|            |o|      ║  |=|  ║║
-╔══════════════════════════════════════╗      ╔════════════════════════════════════════════════╗    ║║  |=|  ║      | |            | |      ║  |=|  ║║
-║ RESSOURCEN                           ║      ║ STATIONS-WERTE                                 ║    ║║  |=|  ║[none]|o|   [none]   |o|[none]║  |=|  ║║
-╠══════════════════════════════════════╣      ╠════════════════════════════════════════════════╣    ║║  |=|  ║      | |            | |      ║  |=|  ║║
-║ Nahrung                              ║      ║ Moral        42     [████████------------]     ║    ║║  |=|  ║ _ _ _|o| _ _ _ _ _ _|o|_ _ _ ║  |=|  ║║
-║  Pilze                      184 kg   ║      ║ Komfort      31     [██████--------------]     ║    ║║  |=|  ║      | |            | |      ║  |=|  ║║
-║  Fleisch                     28 kg   ║      ║ Sicherheit   58     [████████████--------]     ║    ║║  |=|  ║      |o|            |o|      ║  |=|  ║║
-║  Rationen                    63 Stk  ║      ║ Ordnung      66     [█████████████-------]     ║    ║║  |=|  ║[none]| |   [none]   | |[none]║  |=|  ║║
-║                                      ║      ║ Gesundheit   47     [█████████-----------]     ║    ║║  |=|  ║      |o|            |o|      ║  |=|  ║║
-║ Wasser                      420 L    ║      ║ Hygiene      34     [███████-------------]     ║    ║║  |=|  ║ _ _ _| | _ _ _ _ _ _| |_ _ _ ║  |=|  ║║
-║ Medizin                      19 Stk  ║      ║ Müdigkeit    71     [██████████████------]     ║    ║║  |=|  ║      |o|            |o|      ║  |=|  ║║
-║ Munition                    312 Sch. ║      ║ Unruhe       49     [██████████----------]     ║    ║║  |=|  ║      | |            | |      ║  |=|  ║║
-║ Ersatzteile                  44 Stk  ║      ║                                                ║    ║║  |=|  ║[none]|o|   [none]   |o|[none]║  |=|  ║║
-║ Treibstoff                   31 L    ║      ╠════════════════════════════════════════════════╣    ║║  |=|  ║      | |            | |      ║  |=|  ║║
-║ Handelswaren                 87 Stk  ║      ║ Lage: kritisch                                 ║    ║║  |=|  ║ _ _ _|o| _ _ _ _ _ _|o|_ _ _ ║  |=|  ║║
-║ Patronen-Währung            156 MGR  ║      ║ Risiko: Wasserfilter, Wachermüdung             ║    ║║  |=|  ║      | |            | |      ║  |=|  ║║
-╚══════════════════════════════════════╝      ╚════════════════════════════════════════════════╝    ║║  |=|  ║      |o|            |o|      ║  |=|  ║║
-                                                                                                    ║║  |=|  ║[none]| |   [none]   | |[none]║  |=|  ║║
-╔══════════════════════════════════════════════════════════════════════════════════════════════╗    ║║  |=|  ║      |o|            |o|      ║  |=|  ║║
-║ NACHRICHTEN & EREIGNISSE                                                                     ║    ║║  |=|  ║ _ _ _| | _ _ _ _ _ _| |_ _ _ ║  |=|  ║║
-╠══════════════════════════════════════════════════════════════════════════════════════════════╣    ║║  |=|  ║      |o|            |o|      ║  |=|  ║║
-║ + 24 kg Pilze produziert.                                                                    ║    ║║  |=|  ║      | |            | |      ║  |=|  ║║
-║ - 31 L Wasser verbraucht.                                                                    ║    ║║  |=|  ║[none]|o|   [none]   |o|[none]║  |=|  ║║
-║ - 8 Schuss Munition für Tunnelwachen ausgegeben.                                             ║    ║║  |=|  ║      | |            | |      ║  |=|  ║║
-║ Wasserfilter beschädigt. Techniker melden steigendes Ausfallrisiko.                          ║    ║║  |=|  ║ _ _ _|o|            |o|_ _ _ ║  |=|  ║║
-║ Wachen am Südtunnel erschöpft. Moral der Wachgruppe sinkt.                                   ║    ║║  |=|  ║      ╠╦╩════    ════╩╦╣      ║  |=|  ║║
-╚══════════════════════════════════════════════════════════════════════════════════════════════╝    ║║  |=|  ║[none]║║              ║║[none]║  |=|  ║║
-                                                                                                    ║║  |=|  ║      ║║    [none]    ║║      ║  |=|  ║║
-╔══════════════════════════════════════════════════════════════════════════════════════════════╗    ║║ GLEIS ╠══════╣║  ZUGANG SÜD  ║╠══════╣ GLEIS ║║
-║ OPTIONEN                                                                                     ║    ╚╩═══════╝      ╚╩══════════════╩╝      ╚═══════╩╝
+╔══════════════════════════════════════════════════════════════════════════════════════════════╗
+║ METRO STATION: PAVELETSKAYA-SÜD              Tag 17 | 21:40 | Nachtbetrieb | Winter          ║
+╠══════════════════════════════════════════════════════════════════════════════════════════════╣
+║ STATUS: Angespannt | Gefahr: Hoch |                                                          ║
+╠══════════════════════════════════════════════════════════════════════════════════════════════╣
+║ WARTUNG: Stabil: 14 | Abgenutzt: 14 | Beschädigt: 4 | Kritisch: 2 | Kaputt: 1                ║
+╠══════════════════════════════════════════════════════════════════════════════════════════════╣
+║ STROMNETZ: Instabil | Verbrauch: 999 kWh / 999 kWh | Instandhaltung: 64%                     ║
+╠══════════════════════════════════════════════════════════════════════════════════════════════╣
+║ WASSERLEITUNG: Stabil | Instandhaltung: 64%                                                  ║
+╚══════════════════════════════════════════════════════════════════════════════════════════════╝
+                                                                                    
+╔══════════════════════════════════════╗      ╔════════════════════════════════════════════════╗
+║ RESSOURCEN                           ║      ║ STATIONS-WERTE                                 ║
+╠══════════════════════════════════════╣      ╠════════════════════════════════════════════════╣
+║ Nahrung                              ║      ║ Moral        42     [████████------------]     ║
+║  Pilze                      184 kg   ║      ║ Komfort      31     [██████--------------]     ║
+║  Fleisch                     28 kg   ║      ║ Sicherheit   58     [████████████--------]     ║
+║  Rationen                    63 Stk  ║      ║ Ordnung      66     [█████████████-------]     ║
+║                                      ║      ║ Gesundheit   47     [█████████-----------]     ║
+║ Wasser                      420 L    ║      ║ Hygiene      34     [███████-------------]     ║
+║ Medizin                      19 Stk  ║      ║ Müdigkeit    71     [██████████████------]     ║
+║ Munition                    312 Sch. ║      ║ Unruhe       49     [██████████----------]     ║
+║ Ersatzteile                  44 Stk  ║      ║                                                ║
+║ Treibstoff                   31 L    ║      ╠════════════════════════════════════════════════╣
+║ Handelswaren                 87 Stk  ║      ║ Lage: kritisch                                 ║
+║ Patronen-Währung            156 MGR  ║      ║ Risiko: Wasserfilter, Wachermüdung             ║
+╚══════════════════════════════════════╝      ╚════════════════════════════════════════════════╝
+                                                                                    
+╔══════════════════════════════════════════════════════════════════════════════════════════════╗
+║ KRITISCHES EREIGNIS: DAS WASSER WIRD KNAPP                                                   ║
+╠══════════════════════════════════════════════════════════════════════════════════════════════╣
+║ Der Hauptfilter stottert. Rostiges Wasser sammelt sich in den Leitungen, während die         ║
+║ Techniker versuchen, den Druck zu halten. Noch ist die Versorgung nicht zusammengebrochen,   ║
+║ aber die Station spürt bereits, dass etwas kippt.                                            ║
+║                                                                                              ║
+║ Vor der Ausgabestelle stehen Bewohner und fragen, ob die Vorräte sicher sind. Die Wachen     ║
+║ halten sie zurück, aber die Unruhe wächst. Eine Entscheidung wird erwartet.                  ║
+╠══════════════════════════════════════════════════════════════════════════════════════════════╣
+║ [1] Alle verfügbaren Techniker einsetzen                                                     ║
+║     Effekt: hoher Reparaturfortschritt | Kosten: -10 Ersatzteile | Risiko: andere Anlagen    ║
+║                                                                                              ║
+║ [2] Wasser rationieren und den Filter schonen                                                ║
+║     Effekt: Verbrauch sinkt | Moral -5 | Unruhe +7                                           ║
+║                                                                                              ║
+║ [3] Die Lage herunterspielen                                                                 ║
+║     Effekt: keine Sofortkosten | Risiko: Vertrauensverlust bei Ausfall                       ║
+╠══════════════════════════════════════════════════════════════════════════════════════════════╣
+║ Verbleibende Zeit: 06:00                                                                     ║
+║ [██████████████████████████████████████████████████------------------------------] 62 %      ║
+╚══════════════════════════════════════════════════════════════════════════════════════════════╝
+                                                                                    
+╔══════════════════════════════════════════════════════════════════════════════════════════════╗
+║ OPTIONEN                                                                                     ║
 ╠══════════════════════════════════════════════════════════════════════════════════════════════╣
 ║ [1] Arbeiter zuweisen                                                                        ║
 ║ [2] Gebäude verwalten                                                                        ║
 ║ [3] Ressourcen verteilen                                                                     ║
 ║ [4] Gesetze                                                                                  ║
 ║ [5] Markt & Handel                                                                           ║
-║ [6] Sicherheitsbefehle                                                                       ║
+║ [6] Wartungsdetails anzeigen?                                                                ║
 ║ [7] Stationsbericht                                                                          ║
 ║ [8] Forschung & Ausbau                                                                       ║
-║ [9] Nächsten Tag simulieren                                                                  ║
+║ [9] ...                                                                                      ║
+║                                                                                              ║
+║ [o] Optionen                                                                                 ║
+║ [0] Spiel speichern                                                                          ║
+║ [0] Spiel laden                                                                              ║
 ║ [0] Spiel beenden                                                                            ║
 ╚══════════════════════════════════════════════════════════════════════════════════════════════╝

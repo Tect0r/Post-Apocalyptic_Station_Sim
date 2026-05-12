@@ -166,5 +166,18 @@
                 "spare_parts" : 0.3
     },
     "chance_to_loot" : 75
+  },
+
+  "maintenance" : {
+    "night_wear_per_tick": 0.002,
+    "idle_wear_per_tick" : 0.005,
+    "active_wear_base_value" : 0.08,
+    "assigned_workers_value" :  0.01,
+    "repair_per_worker_per_tick" : 0.4,
+    "max_worker_per_building" : 4,
+    "water_system_wear" : 0.03,
+    "water_system_threshold" : 75,
+    "power_line_wear" : 0.04,
+    "power_line_threshold" : 75
   }
 }

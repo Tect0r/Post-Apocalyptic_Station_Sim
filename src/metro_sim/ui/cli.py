@@ -165,7 +165,7 @@ def build_station_status_lines(station: dict, report: dict | None) -> list[str]:
             f"  Komfort: {station['stats']['comfort']}",
             f"  Sicherheit: {station['stats']['safety']}",
             f"  Stromverbrauch: {station['power']['consumption_kwh']} kWh / {available_power} kWh",
-            f"  Stromstabilität: {station['power']['stability']}",
+            f"  Stromwartung: {station['power']['maintenance_condition']}",
             f"  Stromstufe: {power_contract}",
         "",
     ]
