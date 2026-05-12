@@ -9,15 +9,17 @@ def assign_workers_to_building(
 ) -> ActionResult:
     if slot_id not in station["slots"]:
         return ActionResult(False, "slot_not_found")
-
-    if worker_amount < 0:
-        return ActionResult(False, "invalid_worker_amount")
-
+    
     slot = station["slots"][slot_id]
     building = slot.get("building")
 
     if building is None:
         return ActionResult(False, "slot_has_no_building")
+    
+    result = is_worker_amount_valid(station, worker_amount, slot_id)
+
+    if not result.success:
+        return result
 
     current_level = str(slot.get("level"))
     building_data = loader.load_production_data()[building]["levels"][current_level]
@@ -30,8 +32,7 @@ def assign_workers_to_building(
 
     worker_difference = worker_amount - current_workers
 
-    if worker_difference > station["population"]["worker_available"]:
-        return ActionResult(False, "not_enough_available_workers")
+
 
     station["population"]["worker_available"] -= worker_difference
     slot["assigned_workers"] = worker_amount
@@ -54,10 +55,10 @@ def is_worker_amount_valid(station: dict, new_amount: int, selected_slot_id: str
     current_workers = selected_slot.get("assigned_workers", 0)
     
     if new_amount < 0:
-        return ActionResult(False, "invalid_integer")
+        return ActionResult(False, "invalid_worker_amount")
 
     if new_amount > building_data["max_workers"]:
-        return ActionResult(False, "not_enough_space")
+        return ActionResult(False, "too_many_workers_for_building")
 
     worker_difference = new_amount - current_workers
 
