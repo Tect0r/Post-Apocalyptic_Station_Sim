@@ -1,0 +1,5 @@
+- aktueller Spielmodus: Singleplayer-Stationsmanagement
+- zentrale Einheit: station dict
+- UI: CLI
+- Tick: lokale Simulation
+- Daten: JSON-Dateien

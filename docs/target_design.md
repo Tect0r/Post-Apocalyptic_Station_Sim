@@ -1,0 +1,5 @@
+- Spieler verwaltet Crew
+- Stationen sind Weltobjekte
+- Welt läuft unabhängig
+- Spieleraktionen beeinflussen Stationen, Fraktionen, Märkte und Routen
+- Multiplayer wird später über API + DB + Server-Tick ermöglicht
