@@ -1,6 +1,9 @@
 from metro_sim.core.game_session import advance_tick, create_game_session
 from metro_sim.player.models.player_state import PlayerState
 from metro_sim.world.models.world_state import WorldState
+from metro_sim.player.actions.player_action_type import PlayerActionType
+from metro_sim.player.actions.start_player_action_request import StartPlayerActionRequest
+from metro_sim.player.services.player_action_service import start_player_action
 
 
 def test_create_game_session_contains_world_and_player():
@@ -34,3 +37,25 @@ def test_create_game_session_contains_initial_player():
 
     assert "player_001" in session.players
     assert session.players["player_001"].crew.members == 6
+
+def test_game_tick_completes_player_action_after_duration():
+    session = create_game_session()
+    player = session.players["player_001"]
+
+    result = start_player_action(
+        session,
+        StartPlayerActionRequest(
+            player_id="player_001",
+            action_type=PlayerActionType.SUPPORT_MILITIA,
+            target_id="paveletskaya",
+        ),
+    )
+
+    duration = result.data["duration_ticks"]
+
+    for _ in range(duration):
+        advance_tick(session)
+
+    assert len(player.active_actions) == 0
+    assert player.crew.fatigue >= 15
+    assert session.world.stations["paveletskaya"].pressure["militia_support"] == 8
