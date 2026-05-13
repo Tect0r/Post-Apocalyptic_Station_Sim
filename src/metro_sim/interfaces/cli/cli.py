@@ -1,6 +1,7 @@
 import os
 import metro_sim.utils.file_loader as loader
 import metro_sim.services.station_service as station_service
+from metro_sim.world.factories.station_factory import station_state_to_legacy_dict
 import re
 
 ANSI_PATTERN = re.compile(r"\033\[[0-9;]*m")
