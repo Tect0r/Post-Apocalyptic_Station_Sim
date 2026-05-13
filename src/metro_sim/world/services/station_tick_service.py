@@ -4,7 +4,6 @@ from metro_sim.world.factories.station_factory import station_state_to_legacy_di
 from metro_sim.world.models.station_state import StationState
 from metro_sim.world.models.tick_result import StationTickResult
 
-
 def simulate_station_tick(station: StationState) -> StationTickResult:
     station_report = create_empty_report()
 

@@ -6,8 +6,8 @@ from metro_sim.world.services.station_tick_service import simulate_station_tick
 def advance_world_tick(world: WorldState) -> WorldTickResult:
     world.current_tick += 1
 
-    station_reports = {}
-    world_events = []
+    station_reports: dict[str, dict] = {}
+    world_events: list = []
 
     for station in world.stations.values():
         station_result = simulate_station_tick(station)

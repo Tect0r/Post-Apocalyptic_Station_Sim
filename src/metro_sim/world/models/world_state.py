@@ -1,7 +1,5 @@
 from dataclasses import dataclass, field
-
 from metro_sim.world.models.station_state import StationState
-
 
 @dataclass
 class WorldState:
