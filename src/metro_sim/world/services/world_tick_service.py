@@ -1,24 +1,22 @@
-from metro_sim.services.report_service import create_empty_report
-from metro_sim.services.tick_service import calculate_next_tick
-from metro_sim.world.factories.station_factory import station_state_to_legacy_dict
+from metro_sim.world.models.tick_result import WorldTickResult
 from metro_sim.world.models.world_state import WorldState
+from metro_sim.world.services.station_tick_service import simulate_station_tick
 
 
-def advance_world_tick(world: WorldState) -> dict:
+def advance_world_tick(world: WorldState) -> WorldTickResult:
     world.current_tick += 1
 
-    world_report = {
-        "tick": world.current_tick,
-        "station_reports": {},
-        "events": [],
-    }
+    station_reports = {}
+    world_events = []
 
-    for station_id, station in world.stations.items():
-        station_report = create_empty_report()
+    for station in world.stations.values():
+        station_result = simulate_station_tick(station)
 
-        legacy_station = station_state_to_legacy_dict(station)
-        calculate_next_tick(legacy_station, station_report)
+        station_reports[station_result.station_id] = station_result.report
+        world_events.extend(station_result.events)
 
-        world_report["station_reports"][station_id] = station_report
-
-    return world_report
+    return WorldTickResult(
+        tick=world.current_tick,
+        station_reports=station_reports,
+        events=world_events,
+    )
