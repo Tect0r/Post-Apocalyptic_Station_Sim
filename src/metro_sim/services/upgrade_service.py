@@ -1,3 +1,10 @@
+
+"""
+Legacy station-management service.
+
+This module belongs to station/world simulation or legacy tests.
+It must not be used as a direct player action.
+"""
 import metro_sim.utils.file_loader as loader
 from metro_sim.core.action_result import ActionResult
 

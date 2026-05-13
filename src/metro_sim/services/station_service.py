@@ -1,3 +1,10 @@
+"""
+Legacy station-management service.
+
+This module belongs to station/world simulation or legacy tests.
+It must not be used as a direct player action.
+"""
+
 import metro_sim.utils.file_loader as loader
 
 def calculate_leadership_effects(station: dict, effects: dict) -> int:
