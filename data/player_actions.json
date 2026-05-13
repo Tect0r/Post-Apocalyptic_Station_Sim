@@ -1,0 +1,66 @@
+{
+  "support_militia": {
+    "label": "Support militia",
+    "target_type": "station",
+    "duration_ticks": 6,
+    "cost": {
+      "ammo": 10,
+      "food": 3
+    },
+    "effects": {
+      "station_pressure": {
+        "militia_support": 8
+      },
+      "player_reputation": {
+        "station": 3,
+        "bandits": -2
+      },
+      "crew": {
+        "fatigue": 5
+      }
+    }
+  },
+  "repair_water_filter": {
+    "label": "Help with waterfilter.",
+    "target_type": "station",
+    "duration_ticks": 4,
+    "cost": {
+      "medicine": 1,
+      "water": 2
+    },
+    "effects": {
+      "station_pressure": {
+        "medical_support": 3,
+        "supply_support": 5
+      },
+      "player_reputation": {
+        "station": 2
+      },
+      "crew": {
+        "fatigue": 4
+      }
+    }
+  },
+  "secure_route": {
+    "label": "Secure Trading-Route",
+    "target_type": "route",
+    "duration_ticks": 8,
+    "cost": {
+      "ammo": 8,
+      "food": 4,
+      "water": 4
+    },
+    "effects": {
+      "route_pressure": {
+        "security": 6
+      },
+      "player_reputation": {
+        "station": 2,
+        "hansa": 1
+      },
+      "crew": {
+        "fatigue": 8
+      }
+    }
+  }
+}
