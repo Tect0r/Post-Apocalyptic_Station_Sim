@@ -1,34 +1,5 @@
  
 
-Phase 3: Stationstick von Worldtick trennen
-Ziel
-
-Dein vorhandener Tick-Service soll weiter genutzt werden, aber er darf nicht mehr “das ganze Spiel” ticken. Er tickt nur noch eine Station. Dein Repo hat bereits einen tick_service.py, der zentrale Simulationsschritte ausführt.
-
-Neue Trennung
-core/services/station_tick_service.py
-world/services/world_tick_service.py
-Prinzip
-def simulate_station_tick(station: StationState) -> StationTickResult:
-    ...
-
-def simulate_world_tick(world: WorldState) -> WorldTickResult:
-    for station in world.stations.values():
-        simulate_station_tick(station)
-Warum wichtig
-
-Später brauchst du:
-
-- 1 Welt
-- viele Stationen
-- viele Spieler
-- ein globaler Server-Tick
-
-Dann darf nicht jeder Spieler seine “eigene Simulation” lokal laufen lassen.
-
-Zwischenziel
-
-Mehrere Stationen können im selben Weltzustand existieren und gemeinsam pro Tick aktualisiert werden.
 
 --------------------------------------------------------------------------------------------------------
 
