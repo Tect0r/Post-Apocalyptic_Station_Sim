@@ -49,3 +49,13 @@ def load_production_data() -> dict:
 
     with open(buildings_path, "r", encoding="utf-8") as file:
         return json.load(file)
+    
+def load_json(name: str) -> dict:
+    project_root = Path(__file__).resolve().parents[3]
+    buildings_path = project_root / "data" / name
+
+    with open(buildings_path, "r", encoding="utf-8") as file:
+        return json.load(file)
+    
+def load_player_actions_data() -> dict:
+    return load_json("player_actions.json")

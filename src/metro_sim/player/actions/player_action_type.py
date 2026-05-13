@@ -2,8 +2,6 @@ from enum import StrEnum
 
 
 class PlayerActionType(StrEnum):
-    START_EXPEDITION = "start_expedition"
+    SUPPORT_MILITIA = "support_militia"
+    REPAIR_WATER_FILTER = "repair_water_filter"
     SECURE_ROUTE = "secure_route"
-    RENT_STORAGE = "rent_storage"
-    SUPPORT_REPAIR_TEAM = "support_repair_team"
-    FUND_MILITIA = "fund_militia"
