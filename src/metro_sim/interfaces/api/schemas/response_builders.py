@@ -15,13 +15,47 @@ def build_world_response(session: GameSession) -> dict:
 
 
 def build_player_response(session: GameSession, player_id: str) -> dict:
-    summary = build_game_summary(session)
-    player = summary["player"]
-
-    if player["id"] != player_id:
+    if player_id not in session.players:
         raise KeyError(player_id)
 
-    return player
+    player = session.players[player_id]
+
+    return {
+        "id": player.id,
+        "name": player.name,
+        "crew": {
+            "members": player.crew.members,
+            "health": player.crew.health,
+            "morale": player.crew.morale,
+            "fatigue": player.crew.fatigue,
+            "specialization": player.crew.specialization,
+        },
+        "inventory": player.inventory.items,
+        "reputation": player.reputation.values,
+        "assets": [
+            {
+                "id": asset.id,
+                "name": asset.name,
+                "asset_type": asset.asset_type,
+                "location_id": asset.location_id,
+                "condition": asset.condition,
+            }
+            for asset in player.assets
+        ],
+        "active_actions": [
+            {
+                "id": action.id,
+                "action_type": action.action_type.value,
+                "target_type": action.target_type,
+                "target_id": action.target_id,
+                "started_tick": action.started_tick,
+                "duration_ticks": action.duration_ticks,
+                "completes_at_tick": action.completes_at_tick,
+                "status": action.status,
+            }
+            for action in player.active_actions
+        ],
+    }
 
 
 def build_station_response(session: GameSession, station_id: str) -> dict:

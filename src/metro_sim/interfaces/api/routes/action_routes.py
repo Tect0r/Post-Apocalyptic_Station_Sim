@@ -1,7 +1,8 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, Depends, HTTPException
 
+from metro_sim.auth.models.user_state import UserState
 from metro_sim.interfaces.api.api_state import get_game_session, save_current_game_session
-from metro_sim.interfaces.api.routes.player_routes import TEST_PLAYER_ID
+from metro_sim.interfaces.api.dependencies.auth_dependencies import get_current_user
 from metro_sim.interfaces.api.schemas.action_schema import (
     ActionResponseSchema,
     StartActionRequestSchema,
@@ -14,7 +15,10 @@ router = APIRouter(prefix="/player/me/actions", tags=["actions"])
 
 
 @router.post("", response_model=ActionResponseSchema)
-def start_action(request: StartActionRequestSchema) -> ActionResponseSchema:
+def start_action(
+    request: StartActionRequestSchema,
+    current_user: UserState = Depends(get_current_user),
+) -> ActionResponseSchema:
     session = get_game_session()
 
     try:
@@ -28,7 +32,7 @@ def start_action(request: StartActionRequestSchema) -> ActionResponseSchema:
     result = start_player_action(
         session,
         StartPlayerActionRequest(
-            player_id=TEST_PLAYER_ID,
+            player_id=current_user.player_id,
             action_type=action_type,
             target_id=request.target_id,
         ),
