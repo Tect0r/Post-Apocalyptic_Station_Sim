@@ -59,3 +59,6 @@ def load_json(name: str) -> dict:
     
 def load_player_actions_data() -> dict:
     return load_json("player_actions.json")
+
+def load_world_event_rules_data() -> dict:
+    return load_json("world_event_rules.json")

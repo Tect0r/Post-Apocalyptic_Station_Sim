@@ -1,0 +1,86 @@
+{
+  "militia_gains_control": {
+    "event_type": "militia_gains_control",
+    "station_pressure": {
+      "militia_support": {
+        "min": 20
+      }
+    },
+    "severity": 2,
+    "description_key": "event.militia_gains_control",
+    "cooldown_ticks": 12,
+    "effects": {
+      "pressure": {
+        "militia_support": -10
+      },
+      "faction_influence": {
+        "independent": 4,
+        "bandits": -3
+      }
+    }
+  },
+  "bandit_activity_rising": {
+    "event_type": "bandit_activity_rising",
+    "station_pressure": {
+      "sabotage": {
+        "min": 15
+      },
+      "smuggling": {
+        "min": 10
+      }
+    },
+    "severity": 3,
+    "description_key": "event.bandit_activity_rising",
+    "cooldown_ticks": 10,
+    "effects": {
+      "pressure": {
+        "sabotage": -5,
+        "smuggling": -5
+      },
+      "faction_influence": {
+        "bandits": 5,
+        "hansa": -2,
+        "independent": -2
+      }
+    }
+  },
+  "water_filter_damaged": {
+    "event_type": "water_filter_damaged",
+    "station_pressure": {
+      "sabotage": {
+        "min": 25
+      }
+    },
+    "severity": 4,
+    "description_key": "event.water_filter_damaged",
+    "cooldown_ticks": 16,
+    "effects": {
+      "pressure": {
+        "sabotage": -10,
+        "medical_support": -3
+      },
+      "station_stats": {
+        "morale": -3
+      }
+    }
+  },
+  "hansa_security_deployed": {
+    "event_type": "hansa_security_deployed",
+    "station_pressure": {
+      "trade_activity": {
+        "min": 18
+      }
+    },
+    "severity": 2,
+    "description_key": "event.hansa_security_deployed",
+    "cooldown_ticks": 14,
+    "effects": {
+      "pressure": {
+        "trade_activity": -8
+      },
+      "faction_influence": {
+        "hansa": 4
+      }
+    }
+  }
+}
