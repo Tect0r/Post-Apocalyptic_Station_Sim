@@ -219,6 +219,9 @@ __marimo__/
 
 #saves
 !saves/.gitkeep
+!saves/auth/
+!saves/auth/.gitkeep
+saves/auth/*.json
 saves/test_active_action
 saves/test_assets
 saves/test_events

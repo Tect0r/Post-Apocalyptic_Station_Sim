@@ -6,7 +6,7 @@ from metro_sim.player.models.reputation_state import ReputationState
 
 def create_initial_player(
     player_id: str = "player_001",
-    name: str = "Testspieler",
+    name: str = "Test Player",
 ) -> PlayerState:
     return PlayerState(
         id=player_id,
