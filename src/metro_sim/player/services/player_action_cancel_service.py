@@ -1,6 +1,7 @@
 from metro_sim.core.action_result import ActionResult
 from metro_sim.core.game_session import GameSession
 from metro_sim.player.actions.player_action_status import PlayerActionStatus
+from metro_sim.contracts.models.contract_status import ContractStatus
 
 
 def cancel_player_action(
@@ -32,6 +33,13 @@ def cancel_player_action(
         )
 
     action_to_cancel.status = PlayerActionStatus.CANCELLED
+
+    contract_id = action_to_cancel.payload.get("contract_id")
+
+    if contract_id is not None and contract_id in session.world.contracts:
+        contract = session.world.contracts[contract_id]
+        contract.status = ContractStatus.CANCELLED
+        contract.completed_tick = session.world.current_tick
 
     player.active_actions = [
         action

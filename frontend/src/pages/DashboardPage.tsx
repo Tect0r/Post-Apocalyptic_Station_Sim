@@ -1,10 +1,12 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState, } from "react";
 import {
   getPlayers,
   getPlayer,
   getWorld,
   startPlayerAction,
   cancelPlayerAction,
+  acceptContract,
+  getContracts,
 } from "../api/gameApi";
 import { ActiveActionsCard } from "../components/actions/ActiveActionsCard";
 import { StartActionPanel } from "../components/actions/StartActionPanel";
@@ -20,6 +22,7 @@ import type { Player, PublicPlayerSummary, WorldResponse } from "../types/game";
 import { logoutUser } from "../api/authApi";
 import { PlayerList } from "../components/players/PlayerList";
 import { CompletedActionsCard } from "../components/actions/CompletedActionsCard";
+import { ContractList } from "../components/contracts/ContractList";
 
 type DashboardPageProps = {
   onLogout: () => void;
@@ -31,16 +34,23 @@ export function DashboardPage({ onLogout }: DashboardPageProps) {
   const [selectedStationId, setSelectedStationId] = useState<string | null>("paveletskaya");
   const [error, setError] = useState<string | null>(null);
   const [players, setPlayers] = useState<PublicPlayerSummary[]>([]);
+  const [contracts, setContracts] = useState<Contract[]>([]);
 
   const loadData = useCallback(async () => {
     setError(null);
 
     try {
-      const [worldResponse, playerResponse, playersResponse] = await Promise.all([
+      const [worldResponse, playerResponse, playersResponse, contractsResponse] = await Promise.all([
         getWorld(),
         getPlayer(),
         getPlayers(),
+        getContracts(),
       ]);
+
+    setWorld(worldResponse);
+    setPlayer(playerResponse);
+    setPlayers(playersResponse.players);
+    setContracts(contractsResponse.contracts);
 
       setWorld(worldResponse);
       setPlayer(playerResponse);
@@ -59,6 +69,17 @@ export function DashboardPage({ onLogout }: DashboardPageProps) {
 
     try {
       await cancelPlayerAction(actionId);
+      await loadData();
+    } catch (error) {
+      setError(error instanceof Error ? error.message : "Unknown error");
+    }
+  }
+
+  async function handleAcceptContract(contractId: string) {
+    setError(null);
+
+    try {
+      await acceptContract(contractId);
       await loadData();
     } catch (error) {
       setError(error instanceof Error ? error.message : "Unknown error");
@@ -136,6 +157,10 @@ export function DashboardPage({ onLogout }: DashboardPageProps) {
         />
         <CompletedActionsCard completedActions={player.completed_actions} />
         <PlayerList players={players} />
+        <ContractList
+          contracts={contracts}
+          onAcceptContract={handleAcceptContract}
+        />
         <StartActionPanel
           stations={world.stations}
           routes={world.routes}

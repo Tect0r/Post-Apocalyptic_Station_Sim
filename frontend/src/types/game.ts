@@ -107,3 +107,24 @@ export type PublicPlayerSummary = {
   active_action_count?: number;
   asset_count?: number;
 };
+
+export type Contract = {
+  id: string;
+  title: string;
+  description_key: string;
+  issuer_type: string;
+  issuer_id: string;
+  target_type: string;
+  target_id: string;
+  action_type: string;
+  duration_ticks: number;
+  cost: Record<string, number>;
+  reward: Record<string, number>;
+  effects: Record<string, unknown>;
+  status: string;
+  accepted_by_player_id: string | null;
+  linked_action_id: string | null;
+  created_tick: number;
+  accepted_tick: number | null;
+  completed_tick: number | null;
+};

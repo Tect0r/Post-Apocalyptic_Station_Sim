@@ -8,6 +8,7 @@ import type {
   WorldEvent,
   WorldResponse,
   PublicPlayerSummary,
+  Contract,
 } from "../types/game";
 
 export function getWorld(): Promise<WorldResponse> {
@@ -44,4 +45,12 @@ export function getPlayers(): Promise<{ players: PublicPlayerSummary[] }> {
 
 export function cancelPlayerAction(actionId: string): Promise<ActionResponse> {
   return apiPost<ActionResponse>(`/player/me/actions/${actionId}/cancel`);
+}
+
+export function getContracts(): Promise<{ contracts: Contract[] }> {
+  return apiGet<{ contracts: Contract[] }>("/contracts");
+}
+
+export function acceptContract(contractId: string): Promise<ActionResponse> {
+  return apiPost<ActionResponse>(`/contracts/${contractId}/accept`);
 }

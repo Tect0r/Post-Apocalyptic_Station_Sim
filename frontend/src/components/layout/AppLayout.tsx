@@ -19,6 +19,7 @@ export function AppLayout({ children, onLogout }: AppLayoutProps) {
           <a href="#actions">Actions</a>
           <a href="#events">Events</a>
           <a href="#players">Players</a>
+          <a href="#contracts">Contracts</a>
         </nav>
 
         {onLogout && (

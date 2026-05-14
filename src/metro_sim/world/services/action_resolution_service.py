@@ -5,6 +5,7 @@ from metro_sim.player.models.player_asset import PlayerAsset
 from metro_sim.player.models.player_state import PlayerState
 from metro_sim.player.actions.player_action_status import PlayerActionStatus
 from metro_sim.world.models.world_state import WorldState
+from metro_sim.contracts.models.contract_status import ContractStatus
 from metro_sim.world.services.pressure_service import add_station_pressure
 
 
@@ -41,7 +42,9 @@ def apply_action_effects(
     player: PlayerState,
     action: PlayerAction,
 ) -> None:
-    effects = action.payload.get("definition", {}).get("effects", {})
+    definition = action.payload.get("definition", {})
+    effects = definition.get("effects", {})
+    reward = definition.get("reward", {})
 
     apply_crew_effects(player, effects.get("crew", {}))
     apply_player_reputation_effects(player, action, effects.get("player_reputation", {}))
@@ -49,6 +52,7 @@ def apply_action_effects(
     apply_route_pressure_effects(world, action, effects.get("route_pressure", {}))
     apply_inventory_effects(player, effects.get("inventory", {}))
     apply_player_asset_effects(player, action, effects.get("player_asset", {}))
+    apply_inventory_effects(player, reward)
 
 
 def apply_crew_effects(player: PlayerState, crew_effects: dict[str, int]) -> None:

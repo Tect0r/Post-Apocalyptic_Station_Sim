@@ -98,3 +98,25 @@ def build_action_response(action) -> dict:
         "completes_at_tick": action.completes_at_tick,
         "status": action.status.value if hasattr(action.status, "value") else action.status,
     }
+
+def build_contract_response(contract) -> dict:
+    return {
+        "id": contract.id,
+        "title": contract.title,
+        "description_key": contract.description_key,
+        "issuer_type": contract.issuer_type,
+        "issuer_id": contract.issuer_id,
+        "target_type": contract.target_type,
+        "target_id": contract.target_id,
+        "action_type": contract.action_type,
+        "duration_ticks": contract.duration_ticks,
+        "cost": contract.cost,
+        "reward": contract.reward,
+        "effects": contract.effects,
+        "status": contract.status.value if hasattr(contract.status, "value") else contract.status,
+        "accepted_by_player_id": contract.accepted_by_player_id,
+        "linked_action_id": contract.linked_action_id,
+        "created_tick": contract.created_tick,
+        "accepted_tick": contract.accepted_tick,
+        "completed_tick": contract.completed_tick,
+    }
