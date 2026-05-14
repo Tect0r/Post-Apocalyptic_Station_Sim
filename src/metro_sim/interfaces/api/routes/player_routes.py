@@ -34,3 +34,35 @@ def get_my_actions(current_user: UserState = Depends(get_current_user)) -> dict:
     return {
         "active_actions": player["active_actions"]
     }
+
+@router.get("/me/identity")
+def get_my_identity(current_user: UserState = Depends(get_current_user)) -> dict:
+    return {
+        "user_id": current_user.id,
+        "player_id": current_user.player_id,
+        "username": current_user.username,
+        "email": current_user.email,
+    }
+
+@router.get("")
+def get_players(_current_user: UserState = Depends(get_current_user)) -> dict:
+    session = get_game_session()
+
+    return {
+        "players": [
+            {
+                "id": player.id,
+                "name": player.name,
+                "crew": {
+                    "members": player.crew.members,
+                    "health": player.crew.health,
+                    "morale": player.crew.morale,
+                    "fatigue": player.crew.fatigue,
+                    "specialization": player.crew.specialization,
+                },
+                "active_action_count": len(player.active_actions),
+                "asset_count": len(player.assets),
+            }
+            for player in session.players.values()
+        ]
+    }

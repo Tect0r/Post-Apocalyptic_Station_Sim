@@ -28,6 +28,12 @@ def replace_game_session(session: GameSession) -> None:
 
 
 def reset_game_session() -> GameSession:
+    """
+    Development/test helper.
+
+    This resets the shared server world and must not be used in normal
+    registration, login, or player action flows.
+    """
     session = create_game_session()
     replace_game_session(session)
     return session
