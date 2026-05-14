@@ -40,6 +40,19 @@ def build_game_summary(session: GameSession) -> dict:
                     }
                     for action in player.active_actions
                 ],
+                "completed_actions": [
+                    {
+                        "id": action.id,
+                        "action_type": action.action_type.value,
+                        "target_type": action.target_type,
+                        "target_id": action.target_id,
+                        "started_tick": action.started_tick,
+                        "duration_ticks": action.duration_ticks,
+                        "completes_at_tick": action.completes_at_tick,
+                        "status": action.status.value if hasattr(action.status, "value") else action.status,
+                    }
+                    for action in player.completed_actions[-20:]
+                ],
             }
             for player_id, player in session.players.items()
         },

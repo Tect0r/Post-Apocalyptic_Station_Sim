@@ -39,4 +39,5 @@ def create_initial_player(
         ),
         assets=[],
         active_actions=[],
+        completed_actions=[],
     )

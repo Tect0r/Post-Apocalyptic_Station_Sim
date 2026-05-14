@@ -41,3 +41,7 @@ export function startPlayerAction(request: StartActionRequest): Promise<ActionRe
 export function getPlayers(): Promise<{ players: PublicPlayerSummary[] }> {
   return apiGet<{ players: PublicPlayerSummary[] }>("/player");
 }
+
+export function cancelPlayerAction(actionId: string): Promise<ActionResponse> {
+  return apiPost<ActionResponse>(`/player/me/actions/${actionId}/cancel`);
+}

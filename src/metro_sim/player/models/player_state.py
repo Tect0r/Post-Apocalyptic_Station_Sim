@@ -15,3 +15,4 @@ class PlayerState:
     reputation: ReputationState
     assets: list[PlayerAsset] = field(default_factory=list)
     active_actions: list = field(default_factory=list)
+    completed_actions: list = field(default_factory=list)

@@ -1,6 +1,7 @@
 from metro_sim.core.game_session import create_game_session
 from metro_sim.player.actions.player_action_type import PlayerActionType
 from metro_sim.player.actions.start_player_action_request import StartPlayerActionRequest
+from metro_sim.player.actions.player_action_status import PlayerActionStatus
 from metro_sim.player.services.player_action_service import start_player_action
 
 
@@ -27,7 +28,7 @@ def test_start_player_action_adds_active_action_to_player():
     assert action.action_type == PlayerActionType.SUPPORT_MILITIA
     assert action.target_type == "station"
     assert action.target_id == "paveletskaya"
-    assert action.status == "active"
+    assert action.status == PlayerActionStatus.ACTIVE
 
 def test_start_player_action_pays_action_cost():
     session = create_game_session()

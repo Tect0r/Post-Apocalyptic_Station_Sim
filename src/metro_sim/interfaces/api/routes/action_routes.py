@@ -13,6 +13,7 @@ from metro_sim.interfaces.api.schemas.action_schema import (
 from metro_sim.player.actions.player_action_type import PlayerActionType
 from metro_sim.player.actions.start_player_action_request import StartPlayerActionRequest
 from metro_sim.player.services.player_action_service import start_player_action
+from metro_sim.player.services.player_action_cancel_service import cancel_player_action
 
 router = APIRouter(prefix="/player/me/actions", tags=["actions"])
 
@@ -39,6 +40,33 @@ def start_action(
             action_type=action_type,
             target_id=request.target_id,
         ),
+    )
+
+    if not result.success:
+        raise HTTPException(
+            status_code=400,
+            detail=result.message,
+        )
+
+    save_current_game_session()
+
+    return ActionResponseSchema(
+        success=result.success,
+        message=result.message,
+        data=result.data,
+    )
+
+@router.post("/{action_id}/cancel", response_model=ActionResponseSchema)
+def cancel_action(
+    action_id: str,
+    current_user: UserState = Depends(get_current_user),
+) -> ActionResponseSchema:
+    session = get_game_session_with_processing()
+
+    result = cancel_player_action(
+        session=session,
+        player_id=current_user.player_id,
+        action_id=action_id,
     )
 
     if not result.success:

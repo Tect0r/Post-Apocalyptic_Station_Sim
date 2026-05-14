@@ -3,9 +3,14 @@ import type { ActiveAction } from "../../types/game";
 type ActiveActionsCardProps = {
   activeActions: ActiveAction[];
   currentTick: number;
+  onCancelAction: (actionId: string) => Promise<void>;
 };
 
-export function ActiveActionsCard({ activeActions, currentTick }: ActiveActionsCardProps) {
+export function ActiveActionsCard({
+  activeActions,
+  currentTick,
+  onCancelAction,
+}: ActiveActionsCardProps) {
   return (
     <section className="panel">
       <h2>Active Actions</h2>
@@ -29,7 +34,9 @@ export function ActiveActionsCard({ activeActions, currentTick }: ActiveActionsC
                     {action.completes_at_tick}
                   </p>
                 </div>
-
+                <button onClick={() => void onCancelAction(action.id)}>
+                  Cancel
+                </button>
                 <span>{remainingTicks}s remaining</span>
               </div>
             );

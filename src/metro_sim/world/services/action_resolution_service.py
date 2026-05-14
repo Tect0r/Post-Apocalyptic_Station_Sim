@@ -3,6 +3,7 @@ from uuid import uuid4
 from metro_sim.player.actions.player_action import PlayerAction
 from metro_sim.player.models.player_asset import PlayerAsset
 from metro_sim.player.models.player_state import PlayerState
+from metro_sim.player.actions.player_action_status import PlayerActionStatus
 from metro_sim.world.models.world_state import WorldState
 from metro_sim.world.services.pressure_service import add_station_pressure
 
@@ -17,7 +18,7 @@ def resolve_completed_player_actions(
         still_active_actions: list[PlayerAction] = []
 
         for action in player.active_actions:
-            if action.status != "active":
+            if action.status != PlayerActionStatus.ACTIVE:
                 still_active_actions.append(action)
                 continue
 
@@ -26,8 +27,9 @@ def resolve_completed_player_actions(
                 continue
 
             apply_action_effects(world, player, action)
-            action.status = "completed"
+            action.status = PlayerActionStatus.COMPLETED
             completed_actions.append(action)
+            player.completed_actions.append(action)
 
         player.active_actions = still_active_actions
 

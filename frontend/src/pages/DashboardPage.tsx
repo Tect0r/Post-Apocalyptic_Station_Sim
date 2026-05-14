@@ -4,6 +4,7 @@ import {
   getPlayer,
   getWorld,
   startPlayerAction,
+  cancelPlayerAction,
 } from "../api/gameApi";
 import { ActiveActionsCard } from "../components/actions/ActiveActionsCard";
 import { StartActionPanel } from "../components/actions/StartActionPanel";
@@ -18,6 +19,7 @@ import { StationList } from "../components/stations/StationList";
 import type { Player, PublicPlayerSummary, WorldResponse } from "../types/game";
 import { logoutUser } from "../api/authApi";
 import { PlayerList } from "../components/players/PlayerList";
+import { CompletedActionsCard } from "../components/actions/CompletedActionsCard";
 
 type DashboardPageProps = {
   onLogout: () => void;
@@ -51,6 +53,17 @@ export function DashboardPage({ onLogout }: DashboardPageProps) {
       setError(error instanceof Error ? error.message : "Unknown error");
     }
   }, [selectedStationId]);
+
+  async function handleCancelAction(actionId: string) {
+    setError(null);
+
+    try {
+      await cancelPlayerAction(actionId);
+      await loadData();
+    } catch (error) {
+      setError(error instanceof Error ? error.message : "Unknown error");
+    }
+  }
 
   async function handleStartAction(actionType: string, targetId: string) {
     setError(null);
@@ -119,7 +132,9 @@ export function DashboardPage({ onLogout }: DashboardPageProps) {
         <ActiveActionsCard
           activeActions={player.active_actions}
           currentTick={world.tick}
+          onCancelAction={handleCancelAction}
         />
+        <CompletedActionsCard completedActions={player.completed_actions} />
         <PlayerList players={players} />
         <StartActionPanel
           stations={world.stations}

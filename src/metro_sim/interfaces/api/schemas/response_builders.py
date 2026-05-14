@@ -44,17 +44,12 @@ def build_player_response(session: GameSession, player_id: str) -> dict:
             for asset in player.assets
         ],
         "active_actions": [
-            {
-                "id": action.id,
-                "action_type": action.action_type.value,
-                "target_type": action.target_type,
-                "target_id": action.target_id,
-                "started_tick": action.started_tick,
-                "duration_ticks": action.duration_ticks,
-                "completes_at_tick": action.completes_at_tick,
-                "status": action.status,
-            }
+            build_action_response(action)
             for action in player.active_actions
+        ],
+        "completed_actions": [
+            build_action_response(action)
+            for action in player.completed_actions[-20:]
         ],
     }
 
@@ -90,4 +85,16 @@ def build_public_player_summary(player) -> dict:
         },
         "active_action_count": len(player.active_actions),
         "asset_count": len(player.assets),
+    }
+
+def build_action_response(action) -> dict:
+    return {
+        "id": action.id,
+        "action_type": action.action_type.value,
+        "target_type": action.target_type,
+        "target_id": action.target_id,
+        "started_tick": action.started_tick,
+        "duration_ticks": action.duration_ticks,
+        "completes_at_tick": action.completes_at_tick,
+        "status": action.status.value if hasattr(action.status, "value") else action.status,
     }

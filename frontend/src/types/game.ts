@@ -33,6 +33,7 @@ export type Player = {
   reputation: Record<string, number>;
   assets: PlayerAsset[];
   active_actions: ActiveAction[];
+  completed_actions: ActiveAction[];
 };
 
 export type Station = {
@@ -102,6 +103,7 @@ export type PublicPlayerSummary = {
   reputation?: Record<string, number>;
   assets?: PlayerAsset[];
   active_actions?: ActiveAction[];
+  completed_actions: ActiveAction[];
   active_action_count?: number;
   asset_count?: number;
 };

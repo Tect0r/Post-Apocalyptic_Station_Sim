@@ -1,6 +1,7 @@
 from metro_sim.core.game_session import create_game_session
 from metro_sim.player.actions.player_action_type import PlayerActionType
 from metro_sim.player.actions.start_player_action_request import StartPlayerActionRequest
+from metro_sim.player.actions.player_action_status import PlayerActionStatus
 from metro_sim.player.services.player_action_service import start_player_action
 from metro_sim.world.services.action_resolution_service import resolve_completed_player_actions
 
@@ -26,7 +27,7 @@ def test_action_resolution_keeps_action_active_before_completion_tick():
 
     assert completed_actions == []
     assert len(player.active_actions) == 1
-    assert player.active_actions[0].status == "active"
+    assert player.active_actions[0].status == PlayerActionStatus.ACTIVE
 
 def test_action_resolution_completes_action_and_applies_effects():
     session = create_game_session()
@@ -56,7 +57,7 @@ def test_action_resolution_completes_action_and_applies_effects():
     )
 
     assert len(completed_actions) == 1
-    assert completed_actions[0].status == "completed"
+    assert completed_actions[0].status == PlayerActionStatus.COMPLETED
     assert len(player.active_actions) == 0
 
     assert player.crew.fatigue == fatigue_before + 5

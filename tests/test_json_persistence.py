@@ -4,6 +4,8 @@ from metro_sim.persistence.save_game_service import save_game_session
 from metro_sim.player.actions.player_action_type import PlayerActionType
 from metro_sim.player.actions.start_player_action_request import StartPlayerActionRequest
 from metro_sim.player.services.player_action_service import start_player_action
+from metro_sim.player.actions.player_action_status import PlayerActionStatus
+from metro_sim.player.services.player_action_cancel_service import cancel_player_action
 
 
 def test_save_and_load_game_session_roundtrip():
@@ -84,3 +86,30 @@ def test_save_and_load_preserves_player_assets():
     assert len(loaded_player.assets) == 1
     assert loaded_player.assets[0].asset_type == "storage_room"
     assert loaded_player.assets[0].location_id == "paveletskaya"
+
+
+def test_save_and_load_preserves_completed_actions():
+    session = create_game_session()
+
+    start_result = start_player_action(
+        session,
+        StartPlayerActionRequest(
+            player_id="player_001",
+            action_type=PlayerActionType.SUPPORT_MILITIA,
+            target_id="paveletskaya",
+        ),
+    )
+
+    cancel_player_action(
+        session=session,
+        player_id="player_001",
+        action_id=start_result.data["action_id"],
+    )
+
+    save_game_session(session, "test_completed_actions")
+    loaded_session = load_game_session("test_completed_actions")
+
+    loaded_player = loaded_session.players["player_001"]
+
+    assert len(loaded_player.completed_actions) == 1
+    assert loaded_player.completed_actions[0].status == PlayerActionStatus.CANCELLED

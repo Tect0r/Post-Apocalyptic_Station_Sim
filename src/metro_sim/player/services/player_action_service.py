@@ -4,6 +4,7 @@ from metro_sim.core.action_result import ActionResult
 from metro_sim.core.game_session import GameSession
 from metro_sim.player.actions.player_action import PlayerAction
 from metro_sim.player.actions.start_player_action_request import StartPlayerActionRequest
+from metro_sim.player.actions.player_action_status import PlayerActionStatus
 from metro_sim.player.services.inventory_service import can_afford, pay_cost
 from metro_sim.utils.file_loader import load_player_actions_data
 
@@ -68,7 +69,7 @@ def start_player_action(
         target_id=target_id,
         started_tick=session.world.current_tick,
         duration_ticks=action_definition["duration_ticks"],
-        status="active",
+        status=PlayerActionStatus.ACTIVE,
         payload={
             "definition": action_definition,
         },

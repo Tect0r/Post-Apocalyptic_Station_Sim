@@ -2,6 +2,7 @@ from dataclasses import dataclass, field
 from typing import Any
 
 from metro_sim.player.actions.player_action_type import PlayerActionType
+from metro_sim.player.actions.player_action_status import PlayerActionStatus
 
 
 @dataclass
@@ -13,7 +14,7 @@ class PlayerAction:
     target_id: str
     started_tick: int
     duration_ticks: int
-    status: str = "active"
+    status: PlayerActionStatus = PlayerActionStatus.ACTIVE
     payload: dict[str, Any] = field(default_factory=dict)
 
     @property

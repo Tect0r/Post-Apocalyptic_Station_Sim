@@ -1,0 +1,69 @@
+{
+  "player_001": {
+    "id": "player_001",
+    "name": "Test Player",
+    "crew": {
+      "members": 6,
+      "health": 80,
+      "morale": 55,
+      "fatigue": 10,
+      "specialization": "stalker"
+    },
+    "inventory": {
+      "items": {
+        "ammo": 70,
+        "food": 37,
+        "water": 40,
+        "medicine": 8,
+        "parts": 10
+      }
+    },
+    "reputation": {
+      "values": {
+        "paveletskaya": 0,
+        "polis": 0,
+        "hansa_ring": 0,
+        "hansa": 0,
+        "bandits": 0,
+        "independent": 0
+      }
+    },
+    "assets": [],
+    "active_actions": [],
+    "completed_actions": [
+      {
+        "id": "4656a55a-40ad-4dd7-99bb-ac3a23e9eb2a",
+        "player_id": "player_001",
+        "action_type": "support_militia",
+        "target_type": "station",
+        "target_id": "paveletskaya",
+        "started_tick": 0,
+        "duration_ticks": 6,
+        "status": "cancelled",
+        "payload": {
+          "definition": {
+            "label": "Support Militia",
+            "target_type": "station",
+            "duration_ticks": 6,
+            "cost": {
+              "ammo": 10,
+              "food": 3
+            },
+            "effects": {
+              "station_pressure": {
+                "militia_support": 8
+              },
+              "player_reputation": {
+                "station": 3,
+                "bandits": -2
+              },
+              "crew": {
+                "fatigue": 5
+              }
+            }
+          }
+        }
+      }
+    ]
+  }
+}
