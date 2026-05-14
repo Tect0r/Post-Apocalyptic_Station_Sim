@@ -1,9 +1,8 @@
-from metro_sim.world.factories.world_factory import create_initial_world
+from metro_sim.world.factories.world_factory import create_world
 from metro_sim.world.services.world_tick_service import advance_world_tick
-from metro_sim.world.factories.station_factory import create_initial_station_state
 
 def test_advance_world_tick_increases_current_tick():
-    world = create_initial_world()
+    world = create_world()
 
     result = advance_world_tick(world)
 
@@ -12,7 +11,7 @@ def test_advance_world_tick_increases_current_tick():
 
 
 def test_advance_world_tick_returns_station_report():
-    world = create_initial_world()
+    world = create_world()
 
     result = advance_world_tick(world)
 
@@ -20,10 +19,7 @@ def test_advance_world_tick_returns_station_report():
     assert isinstance(result.station_reports["paveletskaya"], dict)
 
 def test_advance_world_tick_ticks_multiple_stations():
-    world = create_initial_world()
-
-    second_station = create_initial_station_state("polis")
-    world.stations["polis"] = second_station
+    world = create_world()
 
     result = advance_world_tick(world)
 

@@ -1,4 +1,4 @@
-from metro_sim.world.factories.station_factory import create_initial_station_state
+from metro_sim.world.factories.world_factory import create_world
 from metro_sim.world.services.pressure_service import (
     add_station_pressure,
     decay_station_pressure,
@@ -7,7 +7,8 @@ from metro_sim.world.services.pressure_service import (
 
 
 def test_add_station_pressure_increases_value():
-    station = create_initial_station_state()
+    world = create_world()
+    station = world.stations["paveletskaya"]
 
     add_station_pressure(station, "militia_support", 8)
 
@@ -15,7 +16,8 @@ def test_add_station_pressure_increases_value():
 
 
 def test_station_pressure_is_capped_at_100():
-    station = create_initial_station_state()
+    world = create_world()
+    station = world.stations["paveletskaya"]
 
     add_station_pressure(station, "sabotage", 150)
 
@@ -23,7 +25,8 @@ def test_station_pressure_is_capped_at_100():
 
 
 def test_reduce_station_pressure_does_not_go_below_zero():
-    station = create_initial_station_state()
+    world = create_world()
+    station = world.stations["paveletskaya"]
 
     reduce_station_pressure(station, "smuggling", 10)
 
@@ -31,7 +34,9 @@ def test_reduce_station_pressure_does_not_go_below_zero():
 
 
 def test_decay_station_pressure_reduces_all_values():
-    station = create_initial_station_state()
+    world = create_world()
+    station = world.stations["paveletskaya"]
+
     station.pressure["militia_support"] = 8
     station.pressure["medical_support"] = 3
 

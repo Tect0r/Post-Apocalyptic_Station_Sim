@@ -1,9 +1,11 @@
-from metro_sim.world.factories.station_factory import create_initial_station_state
 from metro_sim.world.services.event_effect_service import apply_world_event_effects
+from metro_sim.world.factories.world_factory import create_world
 
 
 def test_world_event_effects_modify_pressure_and_influence():
-    station = create_initial_station_state()
+    world = create_world()
+    station = world.stations["paveletskaya"]
+
     station.pressure["militia_support"] = 25
     independent_before = station.faction_influence["independent"]
 

@@ -16,10 +16,10 @@ def test_create_initial_player_has_inventory():
     player = create_initial_player()
 
     assert isinstance(player.inventory, InventoryState)
-    assert player.inventory.items["ammo"] == 40
-    assert player.inventory.items["food"] == 12
-    assert player.inventory.items["water"] == 18
-    assert player.inventory.items["medicine"] == 2
+    assert player.inventory.items["ammo"] == 80
+    assert player.inventory.items["food"] == 40
+    assert player.inventory.items["water"] == 40
+    assert player.inventory.items["medicine"] == 8
 
 
 def test_create_initial_player_has_reputation():

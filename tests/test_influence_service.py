@@ -1,4 +1,4 @@
-from metro_sim.world.factories.station_factory import create_initial_station_state
+from metro_sim.world.factories.world_factory import create_world
 from metro_sim.world.services.influence_service import (
     add_faction_influence,
     reduce_faction_influence,
@@ -6,18 +6,20 @@ from metro_sim.world.services.influence_service import (
 
 
 def test_add_faction_influence_keeps_total_at_100():
-    station = create_initial_station_state()
+    world = create_world()
+    station = world.stations["paveletskaya"]
 
-    add_faction_influence(station, "hansa", 20)
+    add_faction_influence(station, "hansa", 48)
 
     assert sum(station.faction_influence.values()) == 100
     assert station.faction_influence["hansa"] > 48
 
 
 def test_reduce_faction_influence_keeps_total_at_100():
-    station = create_initial_station_state()
+    world = create_world()
+    station = world.stations["paveletskaya"]
 
-    reduce_faction_influence(station, "hansa", 20)
+    reduce_faction_influence(station, "hansa", 48)
 
     assert sum(station.faction_influence.values()) == 100
     assert station.faction_influence["hansa"] < 48

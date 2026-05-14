@@ -1,8 +1,8 @@
-from metro_sim.world.factories.world_factory import create_initial_world
+from metro_sim.world.factories.world_factory import create_world
 
 
 def test_create_initial_world_contains_paveletskaya():
-    world = create_initial_world()
+    world = create_world()
 
     assert world.current_tick == 0
     assert "paveletskaya" in world.stations

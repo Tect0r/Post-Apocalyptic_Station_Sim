@@ -1,9 +1,11 @@
-from metro_sim.world.factories.station_factory import create_initial_station_state
+from metro_sim.world.factories.world_factory import create_world
 from metro_sim.world.services.event_rule_service import station_matches_event_rule
 
 
 def test_station_matches_event_rule_when_pressure_threshold_is_met():
-    station = create_initial_station_state()
+    world = create_world()
+    station = world.stations["paveletskaya"]
+
     station.pressure["militia_support"] = 25
 
     rule = {
@@ -18,7 +20,9 @@ def test_station_matches_event_rule_when_pressure_threshold_is_met():
 
 
 def test_station_does_not_match_event_rule_when_pressure_is_too_low():
-    station = create_initial_station_state()
+    world = create_world()
+    station = world.stations["paveletskaya"]
+
     station.pressure["militia_support"] = 10
 
     rule = {

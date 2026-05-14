@@ -1,9 +1,9 @@
-from metro_sim.world.factories.world_factory import create_initial_world
+from metro_sim.world.factories.world_factory import create_world
 from metro_sim.world.services.world_tick_service import advance_world_tick
 
 
 def test_world_tick_generates_events_from_pressure():
-    world = create_initial_world()
+    world = create_world()
     station = world.stations["paveletskaya"]
     station.pressure["militia_support"] = 25
 
