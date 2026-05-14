@@ -74,3 +74,19 @@ def build_route_response(session: GameSession, route_id: str) -> dict:
         raise KeyError(route_id)
 
     return summary["routes"][route_id]
+
+
+def build_public_player_summary(player) -> dict:
+    return {
+        "id": player.id,
+        "name": player.name,
+        "crew": {
+            "members": player.crew.members,
+            "health": player.crew.health,
+            "morale": player.crew.morale,
+            "fatigue": player.crew.fatigue,
+            "specialization": player.crew.specialization,
+        },
+        "active_action_count": len(player.active_actions),
+        "asset_count": len(player.assets),
+    }

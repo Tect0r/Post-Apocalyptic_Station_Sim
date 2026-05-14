@@ -3,10 +3,10 @@ from fastapi import APIRouter, Depends, HTTPException
 from metro_sim.auth.models.user_state import UserState
 from metro_sim.interfaces.api.api_state import get_game_session
 from metro_sim.interfaces.api.dependencies.auth_dependencies import get_current_user
-from metro_sim.interfaces.api.schemas.response_builders import build_player_response
+from metro_sim.interfaces.api.schemas.response_builders import build_player_response, build_public_player_summary
+
 
 router = APIRouter(prefix="/player", tags=["player"])
-
 
 @router.get("/me")
 def get_me(current_user: UserState = Depends(get_current_user)) -> dict:
@@ -63,6 +63,17 @@ def get_players(_current_user: UserState = Depends(get_current_user)) -> dict:
                 "active_action_count": len(player.active_actions),
                 "asset_count": len(player.assets),
             }
+            for player in session.players.values()
+        ]
+    }
+
+@router.get("")
+def get_players(_current_user: UserState = Depends(get_current_user)) -> dict:
+    session = get_game_session()
+
+    return {
+        "players": [
+            build_public_player_summary(player)
             for player in session.players.values()
         ]
     }
