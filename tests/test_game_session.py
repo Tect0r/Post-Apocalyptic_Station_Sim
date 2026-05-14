@@ -51,9 +51,10 @@ def test_game_tick_completes_player_action_after_duration():
         ),
     )
 
-    duration = result.data["duration_ticks"]
+    player = session.players["player_001"]
+    action = player.active_actions[0]
 
-    for _ in range(duration):
+    while session.world.current_tick < action.completes_at_tick:
         advance_tick(session)
 
     assert len(player.active_actions) == 0

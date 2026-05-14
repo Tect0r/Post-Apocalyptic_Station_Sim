@@ -1,7 +1,10 @@
 from fastapi import APIRouter, Depends, HTTPException
 
 from metro_sim.auth.models.user_state import UserState
-from metro_sim.interfaces.api.api_state import get_game_session, save_current_game_session
+from metro_sim.interfaces.api.api_state import (
+    get_game_session_with_processing,
+    save_current_game_session,
+)
 from metro_sim.interfaces.api.dependencies.auth_dependencies import get_current_user
 from metro_sim.interfaces.api.schemas.action_schema import (
     ActionResponseSchema,
@@ -19,7 +22,7 @@ def start_action(
     request: StartActionRequestSchema,
     current_user: UserState = Depends(get_current_user),
 ) -> ActionResponseSchema:
-    session = get_game_session()
+    session = get_game_session_with_processing()
 
     try:
         action_type = PlayerActionType(request.action_type)

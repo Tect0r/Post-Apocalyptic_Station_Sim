@@ -46,8 +46,9 @@ def test_action_resolution_completes_action_and_applies_effects():
         ),
     )
 
-    duration = start_result.data["duration_ticks"]
-    session.world.current_tick += duration
+    player = session.players["player_001"]
+    action = player.active_actions[0]
+    session.world.current_tick = action.completes_at_tick
 
     completed_actions = resolve_completed_player_actions(
         session.world,

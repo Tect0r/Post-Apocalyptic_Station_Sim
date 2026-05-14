@@ -23,6 +23,7 @@ def tick_world(ticks: int = 1) -> dict:
 
     return {
         "success": True,
+        "mode": "manual_debug_tick",
         "tick": session.world.current_tick,
         "ticks_advanced": ticks,
     }

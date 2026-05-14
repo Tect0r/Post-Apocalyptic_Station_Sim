@@ -19,6 +19,7 @@ def save_game_session(session: GameSession, save_name: str) -> None:
         "save_version": SAVE_VERSION,
         "save_name": save_name,
         "saved_at": datetime.now(timezone.utc).isoformat(),
+        "last_processed_at": session.last_processed_at,
     }
 
     write_json_file(

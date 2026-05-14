@@ -24,7 +24,8 @@ def test_player_can_complete_station_action():
 
     assert result.success is True
 
-    complete_action(session, result.data["duration_ticks"])
+    action = player.active_actions[0]
+    complete_action(session, action.duration_ticks)
 
     assert len(player.active_actions) == 0
     assert player.crew.fatigue > 10
@@ -46,7 +47,8 @@ def test_player_can_complete_route_action():
 
     assert result.success is True
 
-    complete_action(session, result.data["duration_ticks"])
+    action = player.active_actions[0]
+    complete_action(session, action.duration_ticks)
 
     route = session.world.routes["route_paveletskaya_hansa_ring"]
 
@@ -69,7 +71,8 @@ def test_player_can_gain_asset_from_action():
 
     assert result.success is True
 
-    complete_action(session, result.data["duration_ticks"])
+    action = player.active_actions[0]
+    complete_action(session, action.duration_ticks)
 
     assert len(player.assets) == 1
     assert player.assets[0].asset_type == "storage_room"
@@ -93,6 +96,7 @@ def test_player_can_gain_inventory_from_action():
 
     assert result.success is True
 
-    complete_action(session, result.data["duration_ticks"])
+    action = player.active_actions[0]
+    complete_action(session, action.duration_ticks)
 
     assert player.inventory.items["parts"] > parts_before

@@ -2,6 +2,7 @@ from metro_sim.core.game_session import GameSession, create_game_session
 from metro_sim.persistence.load_game_service import load_game_session
 from metro_sim.persistence.save_game_service import save_game_session
 from metro_sim.player.factories.player_factory import create_initial_player
+from metro_sim.core.server_clock_service import process_elapsed_ticks
 
 
 DEFAULT_SAVE_NAME = "api_dev_save"
@@ -58,3 +59,12 @@ def ensure_player_exists(player_id: str, name: str) -> None:
             name=name,
         )
         save_current_game_session()
+
+def get_game_session_with_processing() -> GameSession:
+    session = get_game_session()
+    processed_ticks = process_elapsed_ticks(session)
+
+    if processed_ticks > 0:
+        save_current_game_session()
+
+    return session

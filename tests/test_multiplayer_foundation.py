@@ -1,8 +1,12 @@
 from fastapi.testclient import TestClient
+from datetime import datetime, timedelta, timezone
 
 from metro_sim.interfaces.api.api_state import reset_game_session
 from metro_sim.interfaces.api.app import app
 from tests.api_test_helpers import authenticated_test_user
+from metro_sim.core.tick_config import SECONDS_PER_TICK
+from metro_sim.interfaces.api.api_state import get_game_session
+
 
 client = TestClient(app)
 
@@ -58,17 +62,26 @@ def test_two_players_influence_same_station_pressure():
             duration_b = action_b.json()["data"]["duration_ticks"]
             ticks_to_advance = max(duration_a, duration_b)
 
-            tick_response = client.post(
-                f"/admin/tick?ticks={ticks_to_advance}",
+            session = get_game_session()
+
+            session.last_processed_at = (
+                datetime.now(timezone.utc)
+                - timedelta(seconds=SECONDS_PER_TICK * ticks_to_advance)
+            ).isoformat()
+
+            world_response = client.get(
+                "/world",
                 headers=user_a["headers"],
             )
 
-            assert tick_response.status_code == 200
+            assert world_response.status_code == 200
 
             station_response = client.get(
                 "/stations/paveletskaya",
                 headers=user_a["headers"],
             )
+
+            assert station_response.status_code == 200
 
             station = station_response.json()
 

@@ -18,7 +18,10 @@ def test_completed_player_action_adds_station_pressure():
         ),
     )
 
-    session.world.current_tick += start_result.data["duration_ticks"]
+    player = session.players["player_001"]
+    action = player.active_actions[0]
+
+    session.world.current_tick = action.completes_at_tick
 
     resolve_completed_player_actions(session.world, session.players)
 

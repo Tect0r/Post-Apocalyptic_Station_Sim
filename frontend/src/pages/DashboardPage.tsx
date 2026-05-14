@@ -1,10 +1,9 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import {
-  advanceWorldTick,
+  getPlayers,
   getPlayer,
   getWorld,
   startPlayerAction,
-  getPlayers
 } from "../api/gameApi";
 import { ActiveActionsCard } from "../components/actions/ActiveActionsCard";
 import { StartActionPanel } from "../components/actions/StartActionPanel";
@@ -16,7 +15,7 @@ import { AppLayout } from "../components/layout/AppLayout";
 import { RouteList } from "../components/routes/RouteList";
 import { StationDetail } from "../components/stations/StationDetail";
 import { StationList } from "../components/stations/StationList";
-import type { Player, WorldResponse, PublicPlayerSummary } from "../types/game";
+import type { Player, PublicPlayerSummary, WorldResponse } from "../types/game";
 import { logoutUser } from "../api/authApi";
 import { PlayerList } from "../components/players/PlayerList";
 
@@ -31,7 +30,7 @@ export function DashboardPage({ onLogout }: DashboardPageProps) {
   const [error, setError] = useState<string | null>(null);
   const [players, setPlayers] = useState<PublicPlayerSummary[]>([]);
 
-  async function loadData() {
+  const loadData = useCallback(async () => {
     setError(null);
 
     try {
@@ -51,18 +50,7 @@ export function DashboardPage({ onLogout }: DashboardPageProps) {
     } catch (error) {
       setError(error instanceof Error ? error.message : "Unknown error");
     }
-  }
-
-  async function handleAdvanceTick() {
-    setError(null);
-
-    try {
-      await advanceWorldTick(1);
-      await loadData();
-    } catch (error) {
-      setError(error instanceof Error ? error.message : "Unknown error");
-    }
-  }
+  }, [selectedStationId]);
 
   async function handleStartAction(actionType: string, targetId: string) {
     setError(null);
@@ -84,9 +72,18 @@ export function DashboardPage({ onLogout }: DashboardPageProps) {
     onLogout();
     }
 
+
   useEffect(() => {
     void loadData();
-  }, []);
+  }, [loadData]);
+
+  useEffect(() => {
+  const intervalId = window.setInterval(() => {
+    void loadData();
+  }, 1000);
+
+  return () => window.clearInterval(intervalId);
+}, [loadData]);
 
   const selectedStation = useMemo(() => {
     if (!world || !selectedStationId) {
@@ -112,7 +109,6 @@ export function DashboardPage({ onLogout }: DashboardPageProps) {
         <DashboardHeader
         tick={world.tick}
         onRefresh={loadData}
-        onAdvanceTick={handleAdvanceTick}
         />
 
       {error && <div className="error-banner">{error}</div>}
@@ -120,7 +116,10 @@ export function DashboardPage({ onLogout }: DashboardPageProps) {
       <div className="dashboard-grid">
         <CrewStatusCard player={player} />
         <InventoryCard inventory={player.inventory} />
-        <ActiveActionsCard activeActions={player.active_actions} />
+        <ActiveActionsCard
+          activeActions={player.active_actions}
+          currentTick={world.tick}
+        />
         <PlayerList players={players} />
         <StartActionPanel
           stations={world.stations}

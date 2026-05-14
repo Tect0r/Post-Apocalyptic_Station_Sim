@@ -5,7 +5,7 @@ from metro_sim.interfaces.api.app import app
 client = TestClient(app)
 
 
-def test_admin_tick_advances_world():
+def test_admin_tick_advances_world_in_debug_mode():
     world_before = client.get("/world").json()
     tick_before = world_before["tick"]
 
@@ -13,6 +13,7 @@ def test_admin_tick_advances_world():
 
     assert response.status_code == 200
     assert response.json()["success"] is True
+    assert response.json()["mode"] == "manual_debug_tick"
     assert response.json()["tick"] == tick_before + 1
 
 
