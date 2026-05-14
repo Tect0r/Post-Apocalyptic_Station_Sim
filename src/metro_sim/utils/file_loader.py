@@ -62,3 +62,6 @@ def load_player_actions_data() -> dict:
 
 def load_world_event_rules_data() -> dict:
     return load_json("world_event_rules.json")
+
+def load_world_data() -> dict:
+    return load_json("world.json")

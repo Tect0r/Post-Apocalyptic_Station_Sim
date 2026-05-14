@@ -7,6 +7,7 @@ from metro_sim.world.models.tick_result import WorldTickResult
 from metro_sim.world.models.world_state import WorldState
 from metro_sim.world.services.world_tick_service import advance_world_tick
 from metro_sim.world.services.action_resolution_service import resolve_completed_player_actions
+from metro_sim.world.factories.world_factory import create_world
 
 
 @dataclass
@@ -47,3 +48,11 @@ def advance_tick(session: GameSession) -> None:
             }
             for action in completed_actions
         )
+
+def create_game_session() -> GameSession:
+    player = create_initial_player()
+
+    return GameSession(
+        world=create_world(),
+        players={player.id: player},
+    )

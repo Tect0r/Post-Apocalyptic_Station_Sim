@@ -1,36 +1,19 @@
-from metro_sim.models.state_factory import create_initial_station
 from metro_sim.world.models.station_state import StationState
-from metro_sim.world.factories.influence_factory import create_default_station_influence
-from metro_sim.world.factories.pressure_factory import create_default_station_pressure
 
 
-def create_initial_station_state(station_id: str = "paveletskaya") -> StationState:
-    station_dict = create_initial_station()
-
+def create_station_state(
+    station_id: str,
+    station_data: dict,
+) -> StationState:
     return StationState(
         id=station_id,
-        name=station_dict["name"],
-        resources=station_dict["resources"],
-        population=station_dict["population"],
-        stats=station_dict["stats"],
-        buildings=station_dict["slots"],
-        time=station_dict["time"],
-        power=station_dict["power"],
-        water_system=station_dict["water_system"],
-        maintenance=station_dict["maintenance"],
-        pressure=create_default_station_pressure(),
-        faction_influence=create_default_station_influence(),
+        name=station_data["name"],
+        station_type=station_data["type"],
+        description_key=station_data["description_key"],
+        resources=station_data.get("resources", {}),
+        population=station_data.get("population", {}),
+        stats=station_data.get("stats", {}),
+        pressure=station_data.get("pressure", {}),
+        faction_influence=station_data.get("faction_influence", {}),
+        buildings=station_data.get("buildings", {}),
     )
-
-def station_state_to_legacy_dict(station: StationState) -> dict:
-    return {
-        "name": station.name,
-        "time": station.time,
-        "population": station.population,
-        "resources": station.resources,
-        "power": station.power,
-        "water_system": station.water_system,
-        "stats": station.stats,
-        "maintenance": station.maintenance,
-        "slots": station.buildings,
-    }

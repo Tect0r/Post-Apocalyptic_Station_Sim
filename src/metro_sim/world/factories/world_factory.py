@@ -1,16 +1,36 @@
-from metro_sim.world.factories.station_factory import create_initial_station_state
+from metro_sim.utils.file_loader import load_world_data
+from metro_sim.world.factories.faction_factory import create_faction_state
+from metro_sim.world.factories.route_factory import create_route_state
+from metro_sim.world.factories.station_factory import create_station_state
 from metro_sim.world.models.world_state import WorldState
 
 
-def create_initial_world() -> WorldState:
-    station = create_initial_station_state("paveletskaya")
+def create_world() -> WorldState:
+    world_data = load_world_data()
+
+    stations = {
+        station_id: create_station_state(station_id, station_data)
+        for station_id, station_data in world_data["stations"].items()
+    }
+
+    routes = {
+        route_id: create_route_state(route_id, route_data)
+        for route_id, route_data in world_data["routes"].items()
+    }
+
+    factions = {
+        faction_id: create_faction_state(faction_id, faction_data)
+        for faction_id, faction_data in world_data["factions"].items()
+    }
 
     return WorldState(
         current_tick=0,
-        stations={
-            station.id: station,
-        },
-        factions={},
-        routes={},
+        stations=stations,
+        factions=factions,
+        routes=routes,
         events=[],
     )
+
+
+def create_initial_world() -> WorldState:
+    return create_world()

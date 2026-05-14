@@ -5,6 +5,6 @@ from dataclasses import dataclass, field
 class FactionState:
     id: str
     name: str
-    resources: dict = field(default_factory=dict)
-    relations: dict = field(default_factory=dict)
+    resources: dict[str, int] = field(default_factory=dict)
+    relations: dict[str, int] = field(default_factory=dict)
     controlled_stations: list[str] = field(default_factory=list)
