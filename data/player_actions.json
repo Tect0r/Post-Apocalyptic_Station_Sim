@@ -1,6 +1,48 @@
 {
+  "scout_tunnel": {
+    "label": "Scout Tunnel",
+    "target_type": "route",
+    "duration_ticks": 4,
+    "cost": {
+      "food": 2,
+      "water": 2
+    },
+    "effects": {
+      "route_pressure": {
+        "security": 2
+      },
+      "player_reputation": {
+        "station": 1
+      },
+      "crew": {
+        "fatigue": 4
+      }
+    }
+  },
+  "secure_route": {
+    "label": "Secure Route",
+    "target_type": "route",
+    "duration_ticks": 6,
+    "cost": {
+      "ammo": 8,
+      "food": 3,
+      "water": 3
+    },
+    "effects": {
+      "route_pressure": {
+        "security": 6
+      },
+      "player_reputation": {
+        "station": 2,
+        "hansa": 1
+      },
+      "crew": {
+        "fatigue": 7
+      }
+    }
+  },
   "support_militia": {
-    "label": "Support militia",
+    "label": "Support Militia",
     "target_type": "station",
     "duration_ticks": 6,
     "cost": {
@@ -21,12 +63,13 @@
     }
   },
   "repair_water_filter": {
-    "label": "Help with waterfilter.",
+    "label": "Repair Water Filter",
     "target_type": "station",
     "duration_ticks": 4,
     "cost": {
       "medicine": 1,
-      "water": 2
+      "water": 2,
+      "parts": 2
     },
     "effects": {
       "station_pressure": {
@@ -41,25 +84,127 @@
       }
     }
   },
-  "secure_route": {
-    "label": "Secure Trading-Route",
-    "target_type": "route",
-    "duration_ticks": 8,
+  "hide_contraband": {
+    "label": "Hide Contraband",
+    "target_type": "station",
+    "duration_ticks": 5,
     "cost": {
-      "ammo": 8,
-      "food": 4,
-      "water": 4
+      "ammo": 4
     },
     "effects": {
-      "route_pressure": {
-        "security": 6
+      "station_pressure": {
+        "smuggling": 8
+      },
+      "player_reputation": {
+        "bandits": 3,
+        "hansa": -2
+      },
+      "crew": {
+        "fatigue": 3
+      }
+    }
+  },
+  "run_market_stall": {
+    "label": "Run Market Stall",
+    "target_type": "station",
+    "duration_ticks": 5,
+    "cost": {
+      "food": 4,
+      "water": 2
+    },
+    "effects": {
+      "station_pressure": {
+        "trade_activity": 7
       },
       "player_reputation": {
         "station": 2,
         "hansa": 1
       },
       "crew": {
-        "fatigue": 8
+        "fatigue": 3
+      }
+    }
+  },
+  "rent_storage": {
+    "label": "Rent Storage",
+    "target_type": "station",
+    "duration_ticks": 3,
+    "cost": {
+      "ammo": 5
+    },
+    "effects": {
+      "player_asset": {
+        "asset_type": "storage_room",
+        "condition": 100
+      },
+      "player_reputation": {
+        "station": 1
+      },
+      "crew": {
+        "fatigue": 1
+      }
+    }
+  },
+  "start_stalker_expedition": {
+    "label": "Start Stalker Expedition",
+    "target_type": "station",
+    "duration_ticks": 8,
+    "cost": {
+      "ammo": 12,
+      "food": 5,
+      "water": 5,
+      "medicine": 1
+    },
+    "effects": {
+      "inventory": {
+        "parts": 5,
+        "medicine": 1
+      },
+      "player_reputation": {
+        "station": 2
+      },
+      "crew": {
+        "fatigue": 12,
+        "health": -4
+      }
+    }
+  },
+  "treat_wounded": {
+    "label": "Treat Wounded",
+    "target_type": "station",
+    "duration_ticks": 4,
+    "cost": {
+      "medicine": 2,
+      "water": 2
+    },
+    "effects": {
+      "station_pressure": {
+        "medical_support": 8
+      },
+      "player_reputation": {
+        "station": 3,
+        "polis": 1
+      },
+      "crew": {
+        "fatigue": 4
+      }
+    }
+  },
+  "maintain_faction_contact": {
+    "label": "Maintain Faction Contact",
+    "target_type": "station",
+    "duration_ticks": 5,
+    "cost": {
+      "ammo": 3,
+      "food": 2
+    },
+    "effects": {
+      "player_reputation": {
+        "hansa": 2,
+        "independent": 2
+      },
+      "crew": {
+        "fatigue": 2
       }
     }
   }

@@ -1,0 +1,255 @@
+{
+  "stations": {
+    "paveletskaya": {
+      "name": "Paveletskaya",
+      "type": "independent_station",
+      "description_key": "station.paveletskaya.description",
+      "resources": {
+        "ammo": 120,
+        "food": 260,
+        "water": 340,
+        "medicine": 32,
+        "parts": 80
+      },
+      "population": {
+        "total": 420,
+        "guards": 38,
+        "workers": 120,
+        "civilians": 230,
+        "technicians": 18,
+        "sick": 14
+      },
+      "stats": {
+        "morale": 48,
+        "security": 42,
+        "comfort": 34,
+        "health": 45,
+        "order": 50
+      },
+      "pressure": {
+        "sabotage": 0,
+        "supply_support": 0,
+        "militia_support": 0,
+        "smuggling": 2,
+        "medical_support": 0,
+        "trade_activity": 4
+      },
+      "faction_influence": {
+        "hansa": 25,
+        "independent": 55,
+        "bandits": 10,
+        "red_line": 5,
+        "polis": 5
+      }
+    },
+    "polis": {
+      "name": "Polis",
+      "type": "major_station",
+      "description_key": "station.polis.description",
+      "resources": {
+        "ammo": 300,
+        "food": 500,
+        "water": 520,
+        "medicine": 90,
+        "parts": 180
+      },
+      "population": {
+        "total": 900,
+        "guards": 120,
+        "workers": 260,
+        "civilians": 440,
+        "technicians": 60,
+        "sick": 20
+      },
+      "stats": {
+        "morale": 68,
+        "security": 75,
+        "comfort": 58,
+        "health": 70,
+        "order": 78
+      },
+      "pressure": {
+        "sabotage": 0,
+        "supply_support": 6,
+        "militia_support": 4,
+        "smuggling": 0,
+        "medical_support": 5,
+        "trade_activity": 5
+      },
+      "faction_influence": {
+        "hansa": 10,
+        "independent": 20,
+        "bandits": 0,
+        "red_line": 0,
+        "polis": 70
+      }
+    },
+    "hansa_ring": {
+      "name": "Hansa Ring Station",
+      "type": "hansa_station",
+      "description_key": "station.hansa_ring.description",
+      "resources": {
+        "ammo": 420,
+        "food": 620,
+        "water": 700,
+        "medicine": 70,
+        "parts": 220
+      },
+      "population": {
+        "total": 760,
+        "guards": 140,
+        "workers": 240,
+        "civilians": 320,
+        "technicians": 45,
+        "sick": 15
+      },
+      "stats": {
+        "morale": 60,
+        "security": 82,
+        "comfort": 54,
+        "health": 62,
+        "order": 86
+      },
+      "pressure": {
+        "sabotage": 1,
+        "supply_support": 4,
+        "militia_support": 6,
+        "smuggling": 1,
+        "medical_support": 2,
+        "trade_activity": 8
+      },
+      "faction_influence": {
+        "hansa": 75,
+        "independent": 15,
+        "bandits": 4,
+        "red_line": 3,
+        "polis": 3
+      }
+    }
+  },
+  "routes": {
+    "route_paveletskaya_polis": {
+      "from_station_id": "paveletskaya",
+      "to_station_id": "polis",
+      "distance": 4,
+      "danger_level": 3,
+      "status": "open",
+      "modifiers": {
+        "trade_value": 6,
+        "mutant_activity": 3,
+        "bandit_activity": 2,
+        "pressure": {
+          "security": 0,
+          "traffic": 0,
+          "ambush_risk": 0
+        }
+      }
+    },
+    "route_paveletskaya_hansa_ring": {
+      "from_station_id": "paveletskaya",
+      "to_station_id": "hansa_ring",
+      "distance": 2,
+      "danger_level": 2,
+      "status": "open",
+      "modifiers": {
+        "trade_value": 8,
+        "mutant_activity": 1,
+        "bandit_activity": 1,
+        "pressure": {
+          "security": 0,
+          "traffic": 0,
+          "ambush_risk": 0
+        }
+      }
+    },
+    "route_hansa_ring_polis": {
+      "from_station_id": "hansa_ring",
+      "to_station_id": "polis",
+      "distance": 5,
+      "danger_level": 4,
+      "status": "open",
+      "modifiers": {
+        "trade_value": 7,
+        "mutant_activity": 4,
+        "bandit_activity": 2,
+        "pressure": {
+          "security": 0,
+          "traffic": 0,
+          "ambush_risk": 0
+        }
+      }
+    }
+  },
+  "factions": {
+    "hansa": {
+      "name": "Hansa",
+      "resources": {
+        "ammo": 900,
+        "food": 1200,
+        "water": 1000,
+        "medicine": 160,
+        "parts": 420
+      },
+      "relations": {
+        "independent": 10,
+        "bandits": -70,
+        "polis": 20
+      },
+      "controlled_stations": [
+        "hansa_ring"
+      ]
+    },
+    "independent": {
+      "name": "Independent Stations",
+      "resources": {
+        "ammo": 300,
+        "food": 500,
+        "water": 450,
+        "medicine": 60,
+        "parts": 120
+      },
+      "relations": {
+        "hansa": 10,
+        "bandits": -50,
+        "polis": 15
+      },
+      "controlled_stations": [
+        "paveletskaya"
+      ]
+    },
+    "bandits": {
+      "name": "Bandits",
+      "resources": {
+        "ammo": 260,
+        "food": 180,
+        "water": 160,
+        "medicine": 25,
+        "parts": 80
+      },
+      "relations": {
+        "hansa": -70,
+        "independent": -50,
+        "polis": -60
+      },
+      "controlled_stations": []
+    },
+    "polis": {
+      "name": "Polis",
+      "resources": {
+        "ammo": 600,
+        "food": 850,
+        "water": 900,
+        "medicine": 240,
+        "parts": 360
+      },
+      "relations": {
+        "hansa": 20,
+        "independent": 15,
+        "bandits": -60
+      },
+      "controlled_stations": [
+        "polis"
+      ]
+    }
+  }
+}
