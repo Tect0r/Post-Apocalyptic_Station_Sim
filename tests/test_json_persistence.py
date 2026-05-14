@@ -6,6 +6,8 @@ from metro_sim.player.actions.start_player_action_request import StartPlayerActi
 from metro_sim.player.services.player_action_service import start_player_action
 from metro_sim.player.actions.player_action_status import PlayerActionStatus
 from metro_sim.player.services.player_action_cancel_service import cancel_player_action
+from metro_sim.contracts.models.contract_status import ContractStatus
+from metro_sim.contracts.services.contract_acceptance_service import accept_contract
 
 
 def test_save_and_load_game_session_roundtrip():
@@ -113,3 +115,21 @@ def test_save_and_load_preserves_completed_actions():
 
     assert len(loaded_player.completed_actions) == 1
     assert loaded_player.completed_actions[0].status == PlayerActionStatus.CANCELLED
+
+def test_save_and_load_preserves_contract_state():
+    session = create_game_session()
+
+    accept_contract(
+        session=session,
+        player_id="player_001",
+        contract_id="contract_support_paveletskaya_militia",
+    )
+
+    save_game_session(session, "test_contract_state")
+    loaded_session = load_game_session("test_contract_state")
+
+    contract = loaded_session.world.contracts["contract_support_paveletskaya_militia"]
+
+    assert contract.status == ContractStatus.ACCEPTED
+    assert contract.accepted_by_player_id == "player_001"
+    assert contract.linked_action_id is not None

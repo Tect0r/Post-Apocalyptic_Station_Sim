@@ -1,0 +1,76 @@
+from metro_sim.contracts.models.contract_status import ContractStatus
+from metro_sim.contracts.services.contract_acceptance_service import accept_contract
+from metro_sim.core.game_session import create_game_session, advance_tick
+
+
+def test_accept_contract_starts_player_action():
+    session = create_game_session()
+
+    result = accept_contract(
+        session=session,
+        player_id="player_001",
+        contract_id="contract_support_paveletskaya_militia",
+    )
+
+    player = session.players["player_001"]
+    contract = session.world.contracts["contract_support_paveletskaya_militia"]
+
+    assert result.success is True
+    assert result.message == "contract_accepted"
+    assert len(player.active_actions) == 1
+    assert contract.status == ContractStatus.ACCEPTED
+    assert contract.accepted_by_player_id == "player_001"
+    assert contract.linked_action_id == player.active_actions[0].id
+
+
+def test_accept_contract_fails_when_contract_not_available():
+    session = create_game_session()
+
+    accept_contract(
+        session=session,
+        player_id="player_001",
+        contract_id="contract_support_paveletskaya_militia",
+    )
+
+    result = accept_contract(
+        session=session,
+        player_id="player_001",
+        contract_id="contract_support_paveletskaya_militia",
+    )
+
+    assert result.success is False
+    assert result.message == "contract_not_available"
+
+
+def test_accept_contract_fails_for_missing_contract():
+    session = create_game_session()
+
+    result = accept_contract(
+        session=session,
+        player_id="player_001",
+        contract_id="missing_contract",
+    )
+
+    assert result.success is False
+    assert result.message == "contract_not_found"
+
+def test_contract_reward_is_applied_on_completion():
+    session = create_game_session()
+    player = session.players["player_001"]
+
+    ammo_before = player.inventory.items.get("ammo", 0)
+    parts_before = player.inventory.items.get("parts", 0)
+
+    accept_contract(
+        session=session,
+        player_id="player_001",
+        contract_id="contract_support_paveletskaya_militia",
+    )
+
+    action = player.active_actions[0]
+
+    while session.world.current_tick < action.completes_at_tick:
+        advance_tick(session)
+
+    assert player.inventory.items.get("ammo", 0) >= ammo_before - 10 + 4
+    assert player.inventory.items.get("parts", 0) >= parts_before + 2
