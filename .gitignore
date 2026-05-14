@@ -219,3 +219,8 @@ __marimo__/
 
 #saves
 !saves/.gitkeep
+saves/test_active_action
+saves/test_assets
+saves/test_events
+saves/test_roundtrip
+saves/test_index
