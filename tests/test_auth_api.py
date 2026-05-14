@@ -2,7 +2,10 @@ from uuid import uuid4
 
 from fastapi.testclient import TestClient
 
+from metro_sim.auth.repositories.user_repository import delete_user_by_id
 from metro_sim.interfaces.api.app import app
+from tests.api_test_helpers import authenticated_test_user
+
 
 client = TestClient(app)
 
@@ -12,32 +15,41 @@ def test_register_and_login_user():
     email = f"user_{unique_id}@example.com"
     username = f"user_{unique_id[:8]}"
     password = "password123"
+    user_id = None
 
-    register_response = client.post(
-        "/auth/register",
-        json={
-            "email": email,
-            "username": username,
-            "password": password,
-        },
-    )
+    try:
+        register_response = client.post(
+            "/auth/register",
+            json={
+                "email": email,
+                "username": username,
+                "password": password,
+            },
+        )
 
-    assert register_response.status_code == 200
-    assert register_response.json()["success"] is True
+        assert register_response.status_code == 200
+        assert register_response.json()["success"] is True
 
-    login_response = client.post(
-        "/auth/login",
-        json={
-            "email": email,
-            "password": password,
-        },
-    )
+        user_id = register_response.json()["data"]["user_id"]
 
-    assert login_response.status_code == 200
-    data = login_response.json()
+        login_response = client.post(
+            "/auth/login",
+            json={
+                "email": email,
+                "password": password,
+            },
+        )
 
-    assert data["success"] is True
-    assert "access_token" in data["data"]
+        assert login_response.status_code == 200
+        data = login_response.json()
+
+        assert data["success"] is True
+        assert "access_token" in data["data"]
+
+    finally:
+        if user_id is not None:
+            delete_user_by_id(user_id)
+
 
 def test_player_me_requires_authentication():
     response = client.get("/player/me")
@@ -46,36 +58,11 @@ def test_player_me_requires_authentication():
 
 
 def test_player_me_returns_authenticated_player():
-    unique_id = uuid4().hex
-    email = f"player_{unique_id}@example.com"
-    username = f"player_{unique_id[:8]}"
-    password = "password123"
+    with authenticated_test_user(client) as auth:
+        response = client.get(
+            "/player/me",
+            headers=auth["headers"],
+        )
 
-    client.post(
-        "/auth/register",
-        json={
-            "email": email,
-            "username": username,
-            "password": password,
-        },
-    )
-
-    login_response = client.post(
-        "/auth/login",
-        json={
-            "email": email,
-            "password": password,
-        },
-    )
-
-    token = login_response.json()["data"]["access_token"]
-
-    response = client.get(
-        "/player/me",
-        headers={
-            "Authorization": f"Bearer {token}",
-        },
-    )
-
-    assert response.status_code == 200
-    assert response.json()["name"] == username
+        assert response.status_code == 200
+        assert response.json()["name"] == auth["username"]

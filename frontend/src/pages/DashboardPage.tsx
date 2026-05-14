@@ -4,6 +4,7 @@ import {
   getPlayer,
   getWorld,
   startPlayerAction,
+  getPlayers
 } from "../api/gameApi";
 import { ActiveActionsCard } from "../components/actions/ActiveActionsCard";
 import { StartActionPanel } from "../components/actions/StartActionPanel";
@@ -15,8 +16,9 @@ import { AppLayout } from "../components/layout/AppLayout";
 import { RouteList } from "../components/routes/RouteList";
 import { StationDetail } from "../components/stations/StationDetail";
 import { StationList } from "../components/stations/StationList";
-import type { Player, WorldResponse } from "../types/game";
+import type { Player, WorldResponse, PublicPlayerSummary } from "../types/game";
 import { logoutUser } from "../api/authApi";
+import { PlayerList } from "../components/players/PlayerList";
 
 type DashboardPageProps = {
   onLogout: () => void;
@@ -27,18 +29,21 @@ export function DashboardPage({ onLogout }: DashboardPageProps) {
   const [player, setPlayer] = useState<Player | null>(null);
   const [selectedStationId, setSelectedStationId] = useState<string | null>("paveletskaya");
   const [error, setError] = useState<string | null>(null);
+  const [players, setPlayers] = useState<PublicPlayerSummary[]>([]);
 
   async function loadData() {
     setError(null);
 
     try {
-      const [worldResponse, playerResponse] = await Promise.all([
+      const [worldResponse, playerResponse, playersResponse] = await Promise.all([
         getWorld(),
         getPlayer(),
+        getPlayers(),
       ]);
 
       setWorld(worldResponse);
       setPlayer(playerResponse);
+      setPlayers(playersResponse.players);
 
       if (!selectedStationId && Object.keys(worldResponse.stations).length > 0) {
         setSelectedStationId(Object.keys(worldResponse.stations)[0]);
@@ -116,6 +121,7 @@ export function DashboardPage({ onLogout }: DashboardPageProps) {
         <CrewStatusCard player={player} />
         <InventoryCard inventory={player.inventory} />
         <ActiveActionsCard activeActions={player.active_actions} />
+        <PlayerList players={players} />
         <StartActionPanel
           stations={world.stations}
           routes={world.routes}

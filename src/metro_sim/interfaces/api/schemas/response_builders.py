@@ -11,6 +11,7 @@ def build_world_response(session: GameSession) -> dict:
         "routes": summary["routes"],
         "factions": summary["factions"],
         "events": summary["events"],
+        "players": summary["players"],
     }
 
 

@@ -51,3 +51,23 @@ POST /player/me/actions
 Use:
 
 Authorization: Bearer <access_token>
+
+## Multiplayer Foundation
+
+The API uses one shared game session.
+
+Users do not create separate worlds. Each registered user receives a PlayerState inside the shared world.
+
+Relevant endpoints:
+
+```text
+GET /player
+GET /player/me
+GET /world
+POST /player/me/actions
+
+Current limitation:
+
+No PvP rules yet.
+No roles/admin authorization yet.
+No background server tick yet.

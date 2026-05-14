@@ -80,6 +80,7 @@ export type WorldResponse = {
   routes: Record<string, Route>;
   factions: Record<string, Faction>;
   events: WorldEvent[];
+  players?: Record<string, PublicPlayerSummary>;
 };
 
 export type StartActionRequest = {
@@ -91,4 +92,16 @@ export type ActionResponse = {
   success: boolean;
   message: string;
   data: Record<string, unknown> | null;
+};
+
+export type PublicPlayerSummary = {
+  id: string;
+  name: string;
+  crew: Crew;
+  inventory?: Record<string, number>;
+  reputation?: Record<string, number>;
+  assets?: PlayerAsset[];
+  active_actions?: ActiveAction[];
+  active_action_count?: number;
+  asset_count?: number;
 };

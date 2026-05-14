@@ -8,7 +8,7 @@ def test_game_summary_contains_core_sections():
     summary = build_game_summary(session)
 
     assert "tick" in summary
-    assert "player" in summary
+    assert "players" in summary
     assert "stations" in summary
     assert "routes" in summary
     assert "factions" in summary

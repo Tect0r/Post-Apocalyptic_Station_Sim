@@ -7,6 +7,7 @@ import type {
   Station,
   WorldEvent,
   WorldResponse,
+  PublicPlayerSummary,
 } from "../types/game";
 
 export function getWorld(): Promise<WorldResponse> {
@@ -39,4 +40,8 @@ export function startPlayerAction(request: StartActionRequest): Promise<ActionRe
 
 export function advanceWorldTick(ticks = 1): Promise<{ success: boolean; tick: number; ticks_advanced: number }> {
   return apiPost(`/admin/tick?ticks=${ticks}`);
+}
+
+export function getPlayers(): Promise<{ players: PublicPlayerSummary[] }> {
+  return apiGet<{ players: PublicPlayerSummary[] }>("/player");
 }
