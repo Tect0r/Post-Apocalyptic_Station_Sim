@@ -3,12 +3,15 @@ from metro_sim.services.tick_service import calculate_next_tick
 from metro_sim.world.factories.station_factory import station_state_to_legacy_dict
 from metro_sim.world.models.station_state import StationState
 from metro_sim.world.models.tick_result import StationTickResult
+from metro_sim.world.services.pressure_service import decay_station_pressure
+
 
 def simulate_station_tick(station: StationState) -> StationTickResult:
     station_report = create_empty_report()
 
     legacy_station = station_state_to_legacy_dict(station)
     calculate_next_tick(legacy_station, station_report)
+    decay_station_pressure(station, decay_amount=1)
 
     return StationTickResult(
         station_id=station.id,

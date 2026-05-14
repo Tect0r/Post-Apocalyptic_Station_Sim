@@ -1,6 +1,7 @@
 from metro_sim.player.actions.player_action import PlayerAction
 from metro_sim.player.models.player_state import PlayerState
 from metro_sim.world.models.world_state import WorldState
+from metro_sim.world.services.pressure_service import add_station_pressure
 
 
 def resolve_completed_player_actions(
@@ -78,5 +79,4 @@ def _apply_station_pressure_effects(
     station = world.stations[action.target_id]
 
     for pressure_key, delta in pressure_effects.items():
-        current_value = station.pressure.get(pressure_key, 0)
-        station.pressure[pressure_key] = current_value + delta
+        add_station_pressure(station, pressure_key, delta)
