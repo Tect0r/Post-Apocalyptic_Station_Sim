@@ -1,0 +1,34 @@
+{
+  "player_001": {
+    "id": "player_001",
+    "name": "Testspieler",
+    "crew": {
+      "members": 6,
+      "health": 80,
+      "morale": 55,
+      "fatigue": 10,
+      "specialization": "stalker"
+    },
+    "inventory": {
+      "items": {
+        "ammo": 80,
+        "food": 40,
+        "water": 40,
+        "medicine": 8,
+        "parts": 10
+      }
+    },
+    "reputation": {
+      "values": {
+        "paveletskaya": 0,
+        "polis": 0,
+        "hansa_ring": 0,
+        "hansa": 0,
+        "bandits": 0,
+        "independent": 0
+      }
+    },
+    "assets": [],
+    "active_actions": []
+  }
+}
