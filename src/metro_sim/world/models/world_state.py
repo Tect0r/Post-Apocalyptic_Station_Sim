@@ -8,3 +8,4 @@ class WorldState:
     factions: dict = field(default_factory=dict)
     routes: dict = field(default_factory=dict)
     events: list = field(default_factory=list)
+    contracts: dict = field(default_factory=dict)

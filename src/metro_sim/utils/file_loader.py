@@ -16,3 +16,6 @@ def load_world_event_rules_data() -> dict:
 
 def load_world_data() -> dict:
     return load_json("world.json")
+
+def load_contracts_data() -> dict:
+    return load_json("contracts.json")
