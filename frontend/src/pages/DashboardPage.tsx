@@ -16,8 +16,13 @@ import { RouteList } from "../components/routes/RouteList";
 import { StationDetail } from "../components/stations/StationDetail";
 import { StationList } from "../components/stations/StationList";
 import type { Player, WorldResponse } from "../types/game";
+import { logoutUser } from "../api/authApi";
 
-export function DashboardPage() {
+type DashboardPageProps = {
+  onLogout: () => void;
+};
+
+export function DashboardPage({ onLogout }: DashboardPageProps) {
   const [world, setWorld] = useState<WorldResponse | null>(null);
   const [player, setPlayer] = useState<Player | null>(null);
   const [selectedStationId, setSelectedStationId] = useState<string | null>("paveletskaya");
@@ -69,6 +74,11 @@ export function DashboardPage() {
     }
   }
 
+  function handleLogout() {
+    logoutUser();
+    onLogout();
+    }
+
   useEffect(() => {
     void loadData();
   }, []);
@@ -83,22 +93,22 @@ export function DashboardPage() {
 
   if (!world || !player) {
     return (
-      <AppLayout>
-        <section className="panel">
-          <h1>Loading...</h1>
-          {error && <p className="error">{error}</p>}
-        </section>
-      </AppLayout>
+        <AppLayout onLogout={handleLogout}>
+            <section className="panel">
+            <h1>Loading...</h1>
+            {error && <p className="error">{error}</p>}
+            </section>
+        </AppLayout>
     );
   }
 
-  return (
-    <AppLayout>
-      <DashboardHeader
+    return (
+    <AppLayout onLogout={handleLogout}>
+        <DashboardHeader
         tick={world.tick}
         onRefresh={loadData}
         onAdvanceTick={handleAdvanceTick}
-      />
+        />
 
       {error && <div className="error-banner">{error}</div>}
 

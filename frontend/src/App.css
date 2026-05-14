@@ -220,3 +220,35 @@ label {
     grid-template-columns: 1fr;
   }
 }
+
+.logout-button {
+  width: 100%;
+  margin-top: 2rem;
+}
+
+input {
+  width: 100%;
+  border: 1px solid #4b5563;
+  background: #111827;
+  color: #f9fafb;
+  border-radius: 8px;
+  padding: 0.65rem;
+  margin-top: 0.35rem;
+  box-sizing: border-box;
+}
+
+.auth-page {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+.auth-panel {
+  width: min(420px, 100%);
+}
+
+.auth-panel h1 {
+  margin-top: 0;
+}
