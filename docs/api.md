@@ -30,3 +30,24 @@ Authentication is not implemented yet.
 All player endpoints use the fixed development player:
 
 player_001
+
+Auth-Endpunkte:
+
+## Auth Endpoints
+
+```text
+POST /auth/register
+POST /auth/login
+POST /auth/logout
+Protected Endpoints
+
+These endpoints require a Bearer token:
+
+GET  /player/me
+GET  /player/me/crew
+GET  /player/me/actions
+POST /player/me/actions
+
+Use:
+
+Authorization: Bearer <access_token>

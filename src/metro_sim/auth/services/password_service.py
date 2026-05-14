@@ -2,7 +2,7 @@ from passlib.context import CryptContext
 
 
 _password_context = CryptContext(
-    schemes=["bcrypt"],
+    schemes=["bcrypt_sha256"],
     deprecated="auto",
 )
 

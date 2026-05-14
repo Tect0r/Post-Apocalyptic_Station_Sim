@@ -7,7 +7,7 @@ def test_create_initial_player_has_crew():
     player = create_initial_player()
 
     assert player.id == "player_001"
-    assert player.name == "Testspieler"
+    assert player.name == "Test Player"
     assert player.crew.members == 6
     assert player.crew.specialization == "stalker"
 

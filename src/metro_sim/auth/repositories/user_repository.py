@@ -61,3 +61,27 @@ def add_user(user: UserState) -> None:
     users = load_users()
     users[user.id] = user
     save_users(users)
+
+
+def delete_user_by_id(user_id: str) -> None:
+    users = load_users()
+
+    if user_id in users:
+        del users[user_id]
+        save_users(users)
+
+
+def delete_user_by_email(email: str) -> None:
+    normalized_email = email.lower().strip()
+    users = load_users()
+
+    user_id_to_delete = None
+
+    for user_id, user in users.items():
+        if user.email.lower() == normalized_email:
+            user_id_to_delete = user_id
+            break
+
+    if user_id_to_delete is not None:
+        del users[user_id_to_delete]
+        save_users(users)

@@ -2,6 +2,7 @@ from fastapi import APIRouter, HTTPException
 
 from metro_sim.auth.services.login_service import login_user
 from metro_sim.auth.services.registration_service import register_user
+from metro_sim.interfaces.api.api_state import ensure_player_exists
 from metro_sim.interfaces.api.schemas.auth_schema import (
     AuthResponseSchema,
     LoginRequestSchema,
@@ -21,6 +22,11 @@ def register(request: RegisterRequestSchema) -> AuthResponseSchema:
 
     if not result.success:
         raise HTTPException(status_code=400, detail=result.message)
+
+    ensure_player_exists(
+        player_id=result.data["player_id"],
+        name=result.data["username"],
+    )
 
     return AuthResponseSchema(
         success=True,

@@ -9,12 +9,6 @@ from metro_sim.auth.repositories.user_repository import (
 )
 from metro_sim.auth.services.password_service import hash_password
 from metro_sim.core.action_result import ActionResult
-from metro_sim.player.factories.player_factory import create_initial_player
-from metro_sim.persistence.load_game_service import load_game_session
-from metro_sim.persistence.save_game_service import save_game_session
-
-
-DEFAULT_SAVE_NAME = "api_dev_save"
 
 
 def register_user(
@@ -44,7 +38,6 @@ def register_user(
     )
 
     add_user(user)
-    _add_player_to_game_session(player_id, username)
 
     return ActionResult(
         True,
@@ -56,20 +49,3 @@ def register_user(
             "email": user.email,
         },
     )
-
-
-def _add_player_to_game_session(player_id: str, username: str) -> None:
-    try:
-        session = load_game_session(DEFAULT_SAVE_NAME)
-    except FileNotFoundError:
-        from metro_sim.core.game_session import create_game_session
-
-        session = create_game_session()
-
-    player = create_initial_player(
-        player_id=player_id,
-        name=username,
-    )
-
-    session.players[player.id] = player
-    save_game_session(session, DEFAULT_SAVE_NAME)

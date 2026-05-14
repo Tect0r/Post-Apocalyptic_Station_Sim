@@ -1,6 +1,7 @@
 from metro_sim.core.game_session import GameSession, create_game_session
 from metro_sim.persistence.load_game_service import load_game_session
 from metro_sim.persistence.save_game_service import save_game_session
+from metro_sim.player.factories.player_factory import create_initial_player
 
 
 DEFAULT_SAVE_NAME = "api_dev_save"
@@ -26,6 +27,12 @@ def replace_game_session(session: GameSession) -> None:
     _game_session = session
 
 
+def reset_game_session() -> GameSession:
+    session = create_game_session()
+    replace_game_session(session)
+    return session
+
+
 def save_current_game_session(save_name: str = DEFAULT_SAVE_NAME) -> None:
     save_game_session(get_game_session(), save_name)
 
@@ -36,7 +43,12 @@ def load_game_session_into_memory(save_name: str = DEFAULT_SAVE_NAME) -> GameSes
     return session
 
 
-def reset_game_session() -> GameSession:
-    session = create_game_session()
-    replace_game_session(session)
-    return session
+def ensure_player_exists(player_id: str, name: str) -> None:
+    session = get_game_session()
+
+    if player_id not in session.players:
+        session.players[player_id] = create_initial_player(
+            player_id=player_id,
+            name=name,
+        )
+        save_current_game_session()
