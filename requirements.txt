@@ -5,3 +5,7 @@ ruff==0.8.4
 fastapi
 uvicorn[standard]
 httpx
+passlib[bcrypt]
+python-jose[cryptography]
+python-multipart
+email-validator
