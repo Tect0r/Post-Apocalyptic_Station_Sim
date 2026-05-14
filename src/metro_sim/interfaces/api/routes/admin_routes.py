@@ -5,6 +5,7 @@ from metro_sim.interfaces.api.api_state import (
     get_game_session,
     load_game_session_into_memory,
     save_current_game_session,
+    reset_game_session
 )
 from metro_sim.persistence.save_index_service import list_save_games
 
@@ -52,4 +53,14 @@ def load_game(save_name: str = "api_dev_save") -> dict:
 def get_saves() -> dict:
     return {
         "saves": list_save_games()
+    }
+
+@router.post("/reset")
+def reset_game() -> dict:
+    session = reset_game_session()
+    save_current_game_session()
+
+    return {
+        "success": True,
+        "tick": session.world.current_tick,
     }

@@ -34,3 +34,9 @@ def load_game_session_into_memory(save_name: str = DEFAULT_SAVE_NAME) -> GameSes
     session = load_game_session(save_name)
     replace_game_session(session)
     return session
+
+
+def reset_game_session() -> GameSession:
+    session = create_game_session()
+    replace_game_session(session)
+    return session
