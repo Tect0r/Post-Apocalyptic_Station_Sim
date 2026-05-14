@@ -5,7 +5,6 @@ from metro_sim.contracts.services.contract_acceptance_service import accept_cont
 from metro_sim.contracts.services.contract_query_service import get_available_contracts, get_contract_by_id
 from metro_sim.interfaces.api.api_state import (
     get_game_session,
-    get_game_session_with_processing,
     save_current_game_session,
 )
 from metro_sim.interfaces.api.dependencies.auth_dependencies import get_current_user
@@ -19,7 +18,7 @@ router = APIRouter(prefix="/contracts", tags=["contracts"])
 def get_contracts(
     current_user: UserState = Depends(get_current_user),
 ) -> dict:
-    session = get_game_session_with_processing()
+    session = get_game_session()
 
     return {
         "contracts": [
@@ -34,7 +33,7 @@ def get_contract(
     contract_id: str,
     current_user: UserState = Depends(get_current_user),
 ) -> dict:
-    session = get_game_session_with_processing()
+    session = get_game_session()
     contract = get_contract_by_id(session, contract_id)
 
     if contract is None:
@@ -51,7 +50,7 @@ def accept_contract_route(
     contract_id: str,
     current_user: UserState = Depends(get_current_user),
 ) -> ActionResponseSchema:
-    session = get_game_session_with_processing()
+    session = get_game_session()
 
     result = accept_contract(
         session=session,

@@ -28,6 +28,8 @@ def resolve_completed_player_actions(
                 continue
 
             apply_action_effects(world, player, action)
+            update_linked_contract_on_completion(world, action)
+
             action.status = PlayerActionStatus.COMPLETED
             completed_actions.append(action)
             player.completed_actions.append(action)
@@ -135,3 +137,16 @@ def apply_player_asset_effects(
     )
 
     player.assets.append(asset)
+
+def update_linked_contract_on_completion(world: WorldState, action: PlayerAction) -> None:
+    contract_id = action.payload.get("contract_id")
+
+    if contract_id is None:
+        return
+
+    if contract_id not in world.contracts:
+        return
+
+    contract = world.contracts[contract_id]
+    contract.status = ContractStatus.COMPLETED
+    contract.completed_tick = world.current_tick

@@ -298,11 +298,11 @@
           "fatigue": 5
         }
       },
-      "status": "available",
-      "accepted_by_player_id": null,
-      "linked_action_id": null,
+      "status": "accepted",
+      "accepted_by_player_id": "player_001",
+      "linked_action_id": "c9706972-6279-41e0-a285-1c2b29c3b980",
       "created_tick": 0,
-      "accepted_tick": null,
+      "accepted_tick": 0,
       "completed_tick": null
     },
     "contract_repair_paveletskaya_filter": {

@@ -18,7 +18,7 @@ import { AppLayout } from "../components/layout/AppLayout";
 import { RouteList } from "../components/routes/RouteList";
 import { StationDetail } from "../components/stations/StationDetail";
 import { StationList } from "../components/stations/StationList";
-import type { Player, PublicPlayerSummary, WorldResponse } from "../types/game";
+import type { Player, PublicPlayerSummary, WorldResponse, Contract, } from "../types/game";
 import { logoutUser } from "../api/authApi";
 import { PlayerList } from "../components/players/PlayerList";
 import { CompletedActionsCard } from "../components/actions/CompletedActionsCard";

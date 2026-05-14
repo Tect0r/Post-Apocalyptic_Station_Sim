@@ -29,26 +29,19 @@
       }
     },
     "assets": [],
-    "active_actions": [],
-    "completed_actions": [
+    "active_actions": [
       {
-        "id": "610fc9e4-3917-419d-8217-c9c1c31b4586",
+        "id": "c9706972-6279-41e0-a285-1c2b29c3b980",
         "player_id": "player_001",
         "action_type": "support_militia",
         "target_type": "station",
         "target_id": "paveletskaya",
         "started_tick": 0,
-        "duration_ticks": 6,
-        "status": "cancelled",
+        "duration_ticks": 30,
+        "status": "active",
         "payload": {
+          "contract_id": "contract_support_paveletskaya_militia",
           "definition": {
-            "label": "Support Militia",
-            "target_type": "station",
-            "duration_ticks": 6,
-            "cost": {
-              "ammo": 10,
-              "food": 3
-            },
             "effects": {
               "station_pressure": {
                 "militia_support": 8
@@ -60,10 +53,15 @@
               "crew": {
                 "fatigue": 5
               }
+            },
+            "reward": {
+              "ammo": 4,
+              "parts": 2
             }
           }
         }
       }
-    ]
+    ],
+    "completed_actions": []
   }
 }
