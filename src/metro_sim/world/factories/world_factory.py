@@ -30,7 +30,3 @@ def create_world() -> WorldState:
         routes=routes,
         events=[],
     )
-
-
-def create_initial_world() -> WorldState:
-    return create_world()

@@ -20,17 +20,21 @@ def create_initial_player(
         ),
         inventory=InventoryState(
             items={
-                "ammo": 40,
-                "food": 12,
-                "water": 18,
-                "medicine": 2,
+                "ammo": 80,
+                "food": 40,
+                "water": 40,
+                "medicine": 8,
+                "parts": 10,
             }
         ),
         reputation=ReputationState(
             values={
                 "paveletskaya": 0,
+                "polis": 0,
+                "hansa_ring": 0,
                 "hansa": 0,
                 "bandits": 0,
+                "independent": 0,
             }
         ),
         assets=[],
