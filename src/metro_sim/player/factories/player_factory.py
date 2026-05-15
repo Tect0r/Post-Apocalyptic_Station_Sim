@@ -17,6 +17,9 @@ def create_initial_player(
             morale=55,
             fatigue=10,
             specialization="stalker",
+            current_location_id="paveletskaya",
+            destination_location_id=None,
+            is_traveling=False
         ),
         inventory=InventoryState(
             items={

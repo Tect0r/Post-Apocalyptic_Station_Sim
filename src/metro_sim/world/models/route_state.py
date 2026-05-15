@@ -8,5 +8,7 @@ class RouteState:
     to_station_id: str
     distance: int
     danger_level: int
+    travel_time_ticks: int
     status: str = "open"
+    control: dict[str, int] = field(default_factory=dict)
     modifiers: dict = field(default_factory=dict)
