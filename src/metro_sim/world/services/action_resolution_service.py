@@ -10,6 +10,7 @@ from metro_sim.world.services.pressure_service import add_station_pressure
 from metro_sim.player.services.crew_assignment_service import release_crew_members_from_action
 from metro_sim.player.actions.player_action_type import PlayerActionType
 from metro_sim.player.models.crew_member_status import CrewMemberStatus
+from metro_sim.player.services.player_asset_service import add_player_asset_to_player
 
 
 def resolve_completed_player_actions(
@@ -58,8 +59,8 @@ def apply_action_effects(
     apply_station_pressure_effects(world, action, effects.get("station_pressure", {}))
     apply_route_pressure_effects(world, action, effects.get("route_pressure", {}))
     apply_inventory_effects(player, effects.get("inventory", {}))
-    apply_player_asset_effects(player, action, effects.get("player_asset", {}))
     apply_inventory_effects(player, reward)
+    apply_player_asset_effects(world, player, action, effects.get("player_asset", {}))
 
 
 def apply_crew_effects(player: PlayerState, crew_effects: dict[str, int]) -> None:
@@ -123,6 +124,7 @@ def apply_inventory_effects(player: PlayerState, inventory_effects: dict[str, in
 
 
 def apply_player_asset_effects(
+    world: WorldState,
     player: PlayerState,
     action: PlayerAction,
     asset_effects: dict,
@@ -130,18 +132,21 @@ def apply_player_asset_effects(
     if not asset_effects:
         return
 
-    asset = PlayerAsset(
-        id=str(uuid4()),
-        name=asset_effects.get("name", asset_effects["asset_type"]),
-        asset_type=asset_effects["asset_type"],
-        location_id=action.target_id,
-        condition=asset_effects.get("condition", 100),
+    asset_type = asset_effects["asset_type"]
+
+    station_id = action.target_id if action.target_type == "station" else None
+    route_id = action.target_id if action.target_type == "route" else None
+
+    add_player_asset_to_player(
+        world=world,
+        player=player,
+        asset_type=asset_type,
+        station_id=station_id,
+        route_id=route_id,
         metadata={
             "created_by_action": action.action_type.value,
         },
     )
-
-    player.assets.append(asset)
 
 def update_linked_contract_on_completion(world: WorldState, action: PlayerAction) -> None:
     contract_id = action.payload.get("contract_id")
@@ -175,3 +180,28 @@ def apply_movement_completion(player: PlayerState, action: PlayerAction) -> None
             member.current_location_id = destination_id
             member.status = CrewMemberStatus.AVAILABLE
             member.assigned_action_id = None
+
+def apply_player_asset_effects(
+    world: WorldState,
+    player: PlayerState,
+    action: PlayerAction,
+    asset_effects: dict,
+) -> None:
+    if not asset_effects:
+        return
+
+    asset_type = asset_effects["asset_type"]
+
+    station_id = action.target_id if action.target_type == "station" else None
+    route_id = action.target_id if action.target_type == "route" else None
+
+    add_player_asset_to_player(
+        world=world,
+        player=player,
+        asset_type=asset_type,
+        station_id=station_id,
+        route_id=route_id,
+        metadata={
+            "created_by_action": action.action_type.value,
+        },
+    )

@@ -19,3 +19,6 @@ def load_world_data() -> dict:
 
 def load_contracts_data() -> dict:
     return load_json("contracts.json")
+
+def load_player_assets_data() -> dict:
+    return load_json("player_assets.json")

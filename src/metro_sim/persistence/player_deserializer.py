@@ -8,6 +8,7 @@ from metro_sim.player.models.player_state import PlayerState
 from metro_sim.player.models.reputation_state import ReputationState
 from metro_sim.player.models.crew_member_state import CrewMemberState
 from metro_sim.player.models.crew_member_status import CrewMemberStatus
+from metro_sim.player.models.player_asset_status import PlayerAssetStatus
 
 
 def deserialize_player_action(action_data: dict) -> PlayerAction:
@@ -48,7 +49,7 @@ def deserialize_player_state(data: dict) -> PlayerState:
         inventory=InventoryState(**data["inventory"]),
         reputation=ReputationState(**data["reputation"]),
         assets=[
-            PlayerAsset(**asset_data)
+            deserialize_player_asset(asset_data)
             for asset_data in data.get("assets", [])
         ],
         active_actions=[
@@ -81,4 +82,19 @@ def deserialize_crew_member(member_data: dict) -> CrewMemberState:
         status=CrewMemberStatus(member_data.get("status", "available")),
         current_location_id=member_data.get("current_location_id", "paveletskaya"),
         assigned_action_id=member_data.get("assigned_action_id"),
+    )
+
+def deserialize_player_asset(asset_data: dict) -> PlayerAsset:
+    return PlayerAsset(
+        id=asset_data["id"],
+        owner_player_id=asset_data["owner_player_id"],
+        name=asset_data["name"],
+        asset_type=asset_data["asset_type"],
+        station_id=asset_data.get("station_id"),
+        route_id=asset_data.get("route_id"),
+        level=asset_data.get("level", 1),
+        condition=asset_data.get("condition", 100),
+        status=PlayerAssetStatus(asset_data.get("status", "active")),
+        effects=asset_data.get("effects", {}),
+        metadata=asset_data.get("metadata", {}),
     )

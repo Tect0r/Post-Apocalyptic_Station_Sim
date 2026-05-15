@@ -1,0 +1,214 @@
+{
+  "storage_room": {
+    "label": "Storage Room",
+    "target_type": "station",
+    "max_level": 3,
+    "base_condition": 100,
+    "effects_by_level": {
+      "1": {
+        "storage_bonus": 25
+      },
+      "2": {
+        "storage_bonus": 60
+      },
+      "3": {
+        "storage_bonus": 120
+      }
+    },
+    "upgrade_cost_by_level": {
+      "2": {
+        "parts": 8,
+        "ammo": 5
+      },
+      "3": {
+        "parts": 18,
+        "ammo": 12
+      }
+    },
+    "repair_cost_per_10_condition": {
+      "parts": 2
+    }
+  },
+  "market_stall": {
+    "label": "Market Stall",
+    "target_type": "station",
+    "max_level": 3,
+    "base_condition": 100,
+    "effects_by_level": {
+      "1": {
+        "trade_bonus": 5
+      },
+      "2": {
+        "trade_bonus": 12
+      },
+      "3": {
+        "trade_bonus": 25
+      }
+    },
+    "upgrade_cost_by_level": {
+      "2": {
+        "parts": 10,
+        "food": 8
+      },
+      "3": {
+        "parts": 24,
+        "food": 16
+      }
+    },
+    "repair_cost_per_10_condition": {
+      "parts": 2
+    }
+  },
+  "workbench": {
+    "label": "Workbench",
+    "target_type": "station",
+    "max_level": 3,
+    "base_condition": 100,
+    "effects_by_level": {
+      "1": {
+        "technical_bonus": 5
+      },
+      "2": {
+        "technical_bonus": 12
+      },
+      "3": {
+        "technical_bonus": 25
+      }
+    },
+    "upgrade_cost_by_level": {
+      "2": {
+        "parts": 12
+      },
+      "3": {
+        "parts": 30,
+        "ammo": 5
+      }
+    },
+    "repair_cost_per_10_condition": {
+      "parts": 3
+    }
+  },
+  "sleeping_quarters": {
+    "label": "Sleeping Quarters",
+    "target_type": "station",
+    "max_level": 3,
+    "base_condition": 100,
+    "effects_by_level": {
+      "1": {
+        "fatigue_recovery_bonus": 5
+      },
+      "2": {
+        "fatigue_recovery_bonus": 12
+      },
+      "3": {
+        "fatigue_recovery_bonus": 25
+      }
+    },
+    "upgrade_cost_by_level": {
+      "2": {
+        "parts": 10,
+        "water": 4
+      },
+      "3": {
+        "parts": 22,
+        "water": 10
+      }
+    },
+    "repair_cost_per_10_condition": {
+      "parts": 2
+    }
+  },
+  "smuggler_cache": {
+    "label": "Smuggler Cache",
+    "target_type": "station",
+    "max_level": 3,
+    "base_condition": 100,
+    "effects_by_level": {
+      "1": {
+        "smuggling_bonus": 8,
+        "detection_risk": 4
+      },
+      "2": {
+        "smuggling_bonus": 18,
+        "detection_risk": 7
+      },
+      "3": {
+        "smuggling_bonus": 35,
+        "detection_risk": 12
+      }
+    },
+    "upgrade_cost_by_level": {
+      "2": {
+        "parts": 10,
+        "ammo": 8
+      },
+      "3": {
+        "parts": 25,
+        "ammo": 18
+      }
+    },
+    "repair_cost_per_10_condition": {
+      "parts": 3
+    }
+  },
+  "contact_person": {
+    "label": "Contact Person",
+    "target_type": "station",
+    "max_level": 3,
+    "base_condition": 100,
+    "effects_by_level": {
+      "1": {
+        "contract_quality_bonus": 5
+      },
+      "2": {
+        "contract_quality_bonus": 12
+      },
+      "3": {
+        "contract_quality_bonus": 25
+      }
+    },
+    "upgrade_cost_by_level": {
+      "2": {
+        "food": 8,
+        "medicine": 1
+      },
+      "3": {
+        "food": 16,
+        "medicine": 3
+      }
+    },
+    "repair_cost_per_10_condition": {
+      "food": 2
+    }
+  },
+  "trade_route_access": {
+    "label": "Trade Route Access",
+    "target_type": "route",
+    "max_level": 3,
+    "base_condition": 100,
+    "effects_by_level": {
+      "1": {
+        "route_trade_bonus": 6
+      },
+      "2": {
+        "route_trade_bonus": 15
+      },
+      "3": {
+        "route_trade_bonus": 30
+      }
+    },
+    "upgrade_cost_by_level": {
+      "2": {
+        "parts": 12,
+        "ammo": 8
+      },
+      "3": {
+        "parts": 28,
+        "ammo": 20
+      }
+    },
+    "repair_cost_per_10_condition": {
+      "parts": 3
+    }
+  }
+}

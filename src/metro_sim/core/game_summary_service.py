@@ -39,10 +39,16 @@ def build_game_summary(session: GameSession) -> dict:
                 "assets": [
                     {
                         "id": asset.id,
+                        "owner_player_id": asset.owner_player_id,
                         "name": asset.name,
                         "asset_type": asset.asset_type,
-                        "location_id": asset.location_id,
+                        "station_id": asset.station_id,
+                        "route_id": asset.route_id,
+                        "level": asset.level,
                         "condition": asset.condition,
+                        "status": asset.status.value if hasattr(asset.status, "value") else asset.status,
+                        "effects": asset.effects,
+                        "metadata": asset.metadata,
                     }
                     for asset in player.assets
                 ],

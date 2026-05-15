@@ -148,5 +148,30 @@
         "fatigue": 4
       }
     }
+  },
+  "contract_rent_paveletskaya_storage": {
+    "title": "Rent Storage Room in Paveletskaya",
+    "description_key": "contract.rent_paveletskaya_storage.description",
+    "issuer_type": "station",
+    "issuer_id": "paveletskaya",
+    "target_type": "station",
+    "target_id": "paveletskaya",
+    "action_type": "rent_storage",
+    "duration_ticks": 15,
+    "cost": {
+      "ammo": 5
+    },
+    "reward": {},
+    "effects": {
+      "player_asset": {
+        "asset_type": "storage_room"
+      },
+      "player_reputation": {
+        "station": 1
+      },
+      "crew": {
+        "fatigue": 1
+      }
+    }
   }
 }

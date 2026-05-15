@@ -41,13 +41,7 @@ def build_player_response(session: GameSession, player_id: str) -> dict:
         "inventory": player.inventory.items,
         "reputation": player.reputation.values,
         "assets": [
-            {
-                "id": asset.id,
-                "name": asset.name,
-                "asset_type": asset.asset_type,
-                "location_id": asset.location_id,
-                "condition": asset.condition,
-            }
+            build_player_asset_response(asset)
             for asset in player.assets
         ],
         "active_actions": [
@@ -144,4 +138,19 @@ def build_crew_member_response(member) -> dict:
         "status": member.status.value if hasattr(member.status, "value") else member.status,
         "current_location_id": member.current_location_id,
         "assigned_action_id": member.assigned_action_id,
+    }
+
+def build_player_asset_response(asset) -> dict:
+    return {
+        "id": asset.id,
+        "owner_player_id": asset.owner_player_id,
+        "name": asset.name,
+        "asset_type": asset.asset_type,
+        "station_id": asset.station_id,
+        "route_id": asset.route_id,
+        "level": asset.level,
+        "condition": asset.condition,
+        "status": asset.status.value if hasattr(asset.status, "value") else asset.status,
+        "effects": asset.effects,
+        "metadata": asset.metadata,
     }
