@@ -1,6 +1,7 @@
 from metro_sim.core.game_session import advance_tick, create_game_session
 from metro_sim.player.actions.player_action_type import PlayerActionType
 from metro_sim.player.services.crew_movement_service import start_crew_movement
+from metro_sim.player.models.crew_member_status import CrewMemberStatus
 
 
 def test_start_crew_movement_creates_movement_action():
@@ -53,3 +54,34 @@ def test_start_crew_movement_fails_if_route_not_connected():
 
     assert result.success is False
     assert result.message == "route_not_connected_to_current_location"
+
+def test_crew_members_travel_with_crew_movement():
+    session = create_game_session()
+
+    start_crew_movement(
+        session=session,
+        player_id="player_001",
+        route_id="route_paveletskaya_hansa_ring",
+    )
+
+    player = session.players["player_001"]
+
+    assert all(
+        member.status == CrewMemberStatus.TRAVELING
+        for member in player.crew.crew_members
+    )
+
+    action = player.active_actions[0]
+
+    while session.world.current_tick < action.completes_at_tick:
+        advance_tick(session)
+
+    assert all(
+        member.current_location_id == "hansa_ring"
+        for member in player.crew.crew_members
+    )
+
+    assert all(
+        member.status == CrewMemberStatus.AVAILABLE
+        for member in player.crew.crew_members
+    )

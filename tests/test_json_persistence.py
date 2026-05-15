@@ -153,3 +153,15 @@ def test_save_and_load_preserves_crew_movement_state():
     assert loaded_player.crew.destination_location_id == "hansa_ring"
     assert loaded_player.crew.is_traveling is True
     assert len(loaded_player.active_actions) == 1
+
+def test_save_and_load_preserves_crew_members():
+    session = create_game_session()
+    player = session.players["player_001"]
+
+    save_game_session(session, "test_crew_members")
+    loaded_session = load_game_session("test_crew_members")
+    loaded_player = loaded_session.players["player_001"]
+
+    assert len(loaded_player.crew.crew_members) == len(player.crew.crew_members)
+    assert loaded_player.crew.crew_members[0].id == player.crew.crew_members[0].id
+    assert loaded_player.crew.crew_members[0].skills == player.crew.crew_members[0].skills
