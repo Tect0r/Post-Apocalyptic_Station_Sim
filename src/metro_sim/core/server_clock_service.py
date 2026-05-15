@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta, timezone
 
-from metro_sim.core.game_session import GameSession, advance_tick
+from metro_sim.core.game_session import GameSession
+from metro_sim.core.simulation_tick_service import process_simulation_tick
 from metro_sim.core.tick_config import (
     MAX_CATCHUP_TICKS_PER_REQUEST,
     SECONDS_PER_TICK,
@@ -42,11 +43,17 @@ def process_elapsed_ticks(session: GameSession) -> int:
 
     last_processed_at = datetime.fromisoformat(session.last_processed_at)
 
+    processed_ticks = 0
+
     for _ in range(ticks_to_process):
-        advance_tick(session)
+        if session.paused or not session.running:
+            break
+
+        process_simulation_tick(session)
+        processed_ticks += 1
 
     session.last_processed_at = (
-        last_processed_at + timedelta(seconds=ticks_to_process * SECONDS_PER_TICK)
+        last_processed_at + timedelta(seconds=processed_ticks * SECONDS_PER_TICK)
     ).isoformat()
 
-    return ticks_to_process
+    return processed_ticks

@@ -1,0 +1,71 @@
+from metro_sim.world.models.tick_result import WorldTickResult
+from metro_sim.world.models.world_state import WorldState
+from metro_sim.world.simulation.effect_system import apply_world_effects
+from metro_sim.world.simulation.event_system import process_world_events
+from metro_sim.world.simulation.log_system import append_world_logs
+from metro_sim.world.simulation.station_system import process_station_tick
+
+
+def process_world_tick(world: WorldState) -> WorldTickResult:
+    world.current_tick += 1
+
+    station_reports: dict[str, dict] = {}
+    all_effects = []
+    all_logs = []
+
+    for station_id, station in world.stations.items():
+        # Important: dict key is authoritative.
+        # Loaded StationState.id may be wrong/stale.
+        station.id = station_id
+
+        station_result = process_station_tick(
+            station=station,
+            current_tick=world.current_tick,
+        )
+
+        report = station_result.report
+        report["station_id"] = station_id
+
+        # Important: do NOT use station.id or station_result.station_id here.
+        station_reports[station_id] = report
+
+        all_effects.extend(station_result.effects)
+        all_logs.extend(station_result.logs)
+
+    generated_events, event_effects, event_logs = process_world_events(world)
+
+    all_effects.extend(event_effects)
+    all_logs.extend(event_logs)
+
+    effect_logs = apply_world_effects(
+        world=world,
+        effects=all_effects,
+    )
+
+    all_logs.extend(effect_logs)
+
+    append_world_logs(
+        world=world,
+        logs=all_logs,
+    )
+
+    return WorldTickResult(
+        tick=world.current_tick,
+        station_reports=station_reports,
+        effects=all_effects,
+        logs=all_logs,
+        events=generated_events,
+    )
+
+
+def process_world_ticks(
+    *,
+    world: WorldState,
+    amount: int,
+) -> WorldTickResult | None:
+    last_result: WorldTickResult | None = None
+
+    for _ in range(amount):
+        last_result = process_world_tick(world)
+
+    return last_result

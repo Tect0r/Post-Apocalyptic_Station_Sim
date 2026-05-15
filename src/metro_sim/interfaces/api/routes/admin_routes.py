@@ -1,6 +1,8 @@
+from datetime import datetime, timezone
+
 from fastapi import APIRouter
 
-from metro_sim.core.game_session import advance_tick
+from metro_sim.core.simulation_tick_service import process_simulation_tick
 from metro_sim.interfaces.api.api_state import (
     get_game_session,
     load_game_session_into_memory,
@@ -16,8 +18,16 @@ router = APIRouter(prefix="/admin", tags=["admin"])
 def tick_world(ticks: int = 1) -> dict:
     session = get_game_session()
 
+    processed_ticks = 0
+
     for _ in range(ticks):
-        advance_tick(session)
+        if session.paused or not session.running:
+            break
+
+        process_simulation_tick(session)
+        processed_ticks += 1
+
+    session.last_processed_at = datetime.now(timezone.utc).isoformat()
 
     save_current_game_session()
 
@@ -25,7 +35,7 @@ def tick_world(ticks: int = 1) -> dict:
         "success": True,
         "mode": "manual_debug_tick",
         "tick": session.world.current_tick,
-        "ticks_advanced": ticks,
+        "ticks_advanced": processed_ticks,
     }
 
 
