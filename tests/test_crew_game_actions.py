@@ -76,7 +76,7 @@ def test_player_can_gain_asset_from_action():
 
     assert len(player.assets) == 1
     assert player.assets[0].asset_type == "storage_room"
-    assert player.assets[0].location_id == "paveletskaya"
+    assert player.assets[0].station_id == "paveletskaya"
 
 
 def test_player_can_gain_inventory_from_action():

@@ -9,6 +9,7 @@ from metro_sim.player.services.player_action_cancel_service import cancel_player
 from metro_sim.contracts.models.contract_status import ContractStatus
 from metro_sim.contracts.services.contract_acceptance_service import accept_contract
 from metro_sim.player.services.crew_movement_service import start_crew_movement
+from metro_sim.player.services.player_asset_service import add_player_asset
 
 
 def test_save_and_load_game_session_roundtrip():
@@ -88,7 +89,7 @@ def test_save_and_load_preserves_player_assets():
 
     assert len(loaded_player.assets) == 1
     assert loaded_player.assets[0].asset_type == "storage_room"
-    assert loaded_player.assets[0].location_id == "paveletskaya"
+    assert loaded_player.assets[0].station_id == "paveletskaya"
 
 
 def test_save_and_load_preserves_completed_actions():
@@ -165,3 +166,27 @@ def test_save_and_load_preserves_crew_members():
     assert len(loaded_player.crew.crew_members) == len(player.crew.crew_members)
     assert loaded_player.crew.crew_members[0].id == player.crew.crew_members[0].id
     assert loaded_player.crew.crew_members[0].skills == player.crew.crew_members[0].skills
+
+
+def test_save_and_load_preserves_expanded_player_assets():
+    session = create_game_session()
+
+    add_player_asset(
+        session=session,
+        player_id="player_001",
+        asset_type="storage_room",
+        station_id="paveletskaya",
+    )
+
+    save_game_session(session, "test_expanded_assets")
+    loaded_session = load_game_session("test_expanded_assets")
+
+    loaded_player = loaded_session.players["player_001"]
+    asset = loaded_player.assets[0]
+
+    assert asset.owner_player_id == "player_001"
+    assert asset.asset_type == "storage_room"
+    assert asset.station_id == "paveletskaya"
+    assert asset.route_id is None
+    assert asset.level == 1
+    assert asset.condition == 100
