@@ -11,7 +11,8 @@ import type {
   Contract,
   PlayerAsset,
   MarketResponse,
-  MarketTradeRequest
+  MarketTradeRequest,
+  PvpImpact
 } from "../types/game";
 
 export function getWorld(): Promise<WorldResponse> {
@@ -86,4 +87,16 @@ export function buyMarketItem(request: MarketTradeRequest): Promise<ActionRespon
 
 export function sellMarketItem(request: MarketTradeRequest): Promise<ActionResponse> {
   return apiPost<ActionResponse, MarketTradeRequest>("/market/sell", request);
+}
+
+export function getPvpImpacts(): Promise<{ impacts: PvpImpact[] }> {
+  return apiGet<{ impacts: PvpImpact[] }>("/pvp/impacts");
+}
+
+export function influenceStationPressure(request: {
+  station_id: string;
+  pressure_key: string;
+  amount: number;
+}): Promise<ActionResponse> {
+  return apiPost<ActionResponse, typeof request>("/pvp/station-pressure", request);
 }

@@ -13,7 +13,16 @@ import {
   buyMarketItem,
   getCurrentMarket,
   sellMarketItem,
+  getPvpImpacts,
 } from "../api/gameApi";
+import type { 
+  Player, 
+  PublicPlayerSummary, 
+  WorldResponse, 
+  Contract,
+  MarketResponse,
+  PvpImpact,
+ } from "../types/game";
 import { ActiveActionsCard } from "../components/actions/ActiveActionsCard";
 import { StartActionPanel } from "../components/actions/StartActionPanel";
 import { CrewStatusCard } from "../components/crew/CrewStatusCard";
@@ -24,13 +33,6 @@ import { AppLayout } from "../components/layout/AppLayout";
 import { RouteList } from "../components/routes/RouteList";
 import { StationDetail } from "../components/stations/StationDetail";
 import { StationList } from "../components/stations/StationList";
-import type { 
-  Player, 
-  PublicPlayerSummary, 
-  WorldResponse, 
-  Contract,
-  MarketResponse,
- } from "../types/game";
 import { logoutUser } from "../api/authApi";
 import { PlayerList } from "../components/players/PlayerList";
 import { CompletedActionsCard } from "../components/actions/CompletedActionsCard";
@@ -38,6 +40,7 @@ import { ContractList } from "../components/contracts/ContractList";
 import { CrewMemberList } from "../components/crew/CrewMemberList";
 import { AssetList } from "../components/assets/AssetList";
 import { MarketPanel } from "../components/market/MarketPanel";
+import { PvpImpactList } from "../components/pvp/PvpImpactList";
 
 type DashboardPageProps = {
   onLogout: () => void;
@@ -51,17 +54,19 @@ export function DashboardPage({ onLogout }: DashboardPageProps) {
   const [players, setPlayers] = useState<PublicPlayerSummary[]>([]);
   const [contracts, setContracts] = useState<Contract[]>([]);
   const [market, setMarket] = useState<MarketResponse | null>(null);
+  const [pvpImpacts, setPvpImpacts] = useState<PvpImpact[]>([]);
 
   const loadData = useCallback(async () => {
     setError(null);
 
     try {
-      const [worldResponse, playerResponse, playersResponse, contractsResponse, marketResponse,] = await Promise.all([
+      const [worldResponse, playerResponse, playersResponse, contractsResponse, marketResponse, pvpResponse] = await Promise.all([
         getWorld(),
         getPlayer(),
         getPlayers(),
         getContracts(),
         getCurrentMarket(),
+        getPvpImpacts(),
       ]);
 
       setWorld(worldResponse);
@@ -69,6 +74,7 @@ export function DashboardPage({ onLogout }: DashboardPageProps) {
       setPlayers(playersResponse.players);
       setContracts(contractsResponse.contracts);
       setMarket(marketResponse);
+      setPvpImpacts(pvpResponse.impacts);
 
       if (!selectedStationId && Object.keys(worldResponse.stations).length > 0) {
         setSelectedStationId(Object.keys(worldResponse.stations)[0]);
@@ -177,7 +183,6 @@ export function DashboardPage({ onLogout }: DashboardPageProps) {
     onLogout();
     }
 
-
   useEffect(() => {
     void loadData();
   }, [loadData]);
@@ -254,6 +259,7 @@ export function DashboardPage({ onLogout }: DashboardPageProps) {
           onBuyItem={handleBuyItem}
           onSellItem={handleSellItem}
         />
+        <PvpImpactList impacts={pvpImpacts} />
         <RouteList
           routes={world.routes}
           currentLocationId={player.crew.current_location_id}

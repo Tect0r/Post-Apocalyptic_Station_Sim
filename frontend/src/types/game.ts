@@ -32,6 +32,19 @@ export type MarketPrice = {
   stock: number;
 };
 
+export type PvpImpact = {
+  id: string;
+  source_player_id: string;
+  target_player_id: string | null;
+  action_type: string;
+  target_type: string;
+  target_id: string;
+  created_tick: number;
+  effects: Record<string, unknown>;
+  detected: boolean;
+  reputation_cost: Record<string, number>;
+};
+
 export type MarketResponse = {
   station_id: string;
   prices: Record<string, MarketPrice>;
