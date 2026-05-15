@@ -5,6 +5,7 @@ from metro_sim.core.game_session import GameSession
 from metro_sim.player.actions.player_action import PlayerAction
 from metro_sim.player.actions.player_action_status import PlayerActionStatus
 from metro_sim.player.actions.player_action_type import PlayerActionType
+from metro_sim.player.models.crew_member_status import CrewMemberStatus
 
 
 def start_crew_movement(
@@ -69,6 +70,11 @@ def start_crew_movement(
         started_tick=session.world.current_tick,
         duration_ticks=route.travel_time_ticks,
         status=PlayerActionStatus.ACTIVE,
+        assigned_crew_member_ids=[
+            member.id
+            for member in crew.crew_members
+            if member.current_location_id == crew.current_location_id
+        ],
         payload={
             "movement": {
                 "from_station_id": crew.current_location_id,
@@ -82,6 +88,11 @@ def start_crew_movement(
 
     crew.is_traveling = True
     crew.destination_location_id = destination_id
+
+    for member in crew.crew_members:
+        if member.current_location_id == crew.current_location_id:
+            member.status = CrewMemberStatus.TRAVELING
+            member.assigned_action_id = action.id
 
     return ActionResult(
         success=True,

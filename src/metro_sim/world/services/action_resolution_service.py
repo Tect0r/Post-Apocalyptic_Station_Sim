@@ -9,6 +9,7 @@ from metro_sim.contracts.models.contract_status import ContractStatus
 from metro_sim.world.services.pressure_service import add_station_pressure
 from metro_sim.player.services.crew_assignment_service import release_crew_members_from_action
 from metro_sim.player.actions.player_action_type import PlayerActionType
+from metro_sim.player.models.crew_member_status import CrewMemberStatus
 
 
 def resolve_completed_player_actions(
@@ -168,3 +169,9 @@ def apply_movement_completion(player: PlayerState, action: PlayerAction) -> None
     player.crew.current_location_id = destination_id
     player.crew.destination_location_id = None
     player.crew.is_traveling = False
+
+    for member in player.crew.crew_members:
+        if member.id in action.assigned_crew_member_ids:
+            member.current_location_id = destination_id
+            member.status = CrewMemberStatus.AVAILABLE
+            member.assigned_action_id = None

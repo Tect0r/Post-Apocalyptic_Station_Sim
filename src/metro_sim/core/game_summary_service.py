@@ -14,6 +14,25 @@ def build_game_summary(session: GameSession) -> dict:
                     "morale": player.crew.morale,
                     "fatigue": player.crew.fatigue,
                     "specialization": player.crew.specialization,
+                    "current_location_id": player.crew.current_location_id,
+                    "destination_location_id": player.crew.destination_location_id,
+                    "is_traveling": player.crew.is_traveling,
+                    "crew_members": [
+                        {
+                            "id": member.id,
+                            "name": member.name,
+                            "role": member.role,
+                            "health": member.health,
+                            "morale": member.morale,
+                            "fatigue": member.fatigue,
+                            "skills": member.skills,
+                            "traits": member.traits,
+                            "status": member.status.value if hasattr(member.status, "value") else member.status,
+                            "current_location_id": member.current_location_id,
+                            "assigned_action_id": member.assigned_action_id,
+                        }
+                        for member in player.crew.crew_members
+                    ],
                 },
                 "inventory": player.inventory.items,
                 "reputation": player.reputation.values,

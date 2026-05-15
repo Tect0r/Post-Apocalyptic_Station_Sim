@@ -33,6 +33,10 @@ def build_player_response(session: GameSession, player_id: str) -> dict:
             "current_location_id": player.crew.current_location_id,
             "destination_location_id": player.crew.destination_location_id,
             "is_traveling": player.crew.is_traveling,
+            "crew_members": [
+                build_crew_member_response(member)
+                for member in player.crew.crew_members
+            ],
         },
         "inventory": player.inventory.items,
         "reputation": player.reputation.values,
@@ -125,4 +129,19 @@ def build_contract_response(contract) -> dict:
         "created_tick": contract.created_tick,
         "accepted_tick": contract.accepted_tick,
         "completed_tick": contract.completed_tick,
+    }
+
+def build_crew_member_response(member) -> dict:
+    return {
+        "id": member.id,
+        "name": member.name,
+        "role": member.role,
+        "health": member.health,
+        "morale": member.morale,
+        "fatigue": member.fatigue,
+        "skills": member.skills,
+        "traits": member.traits,
+        "status": member.status.value if hasattr(member.status, "value") else member.status,
+        "current_location_id": member.current_location_id,
+        "assigned_action_id": member.assigned_action_id,
     }
