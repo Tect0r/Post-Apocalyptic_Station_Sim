@@ -1,5 +1,7 @@
 from metro_sim.world.factories.world_factory import create_world
 from metro_sim.world.simulation.tick_orchestrator import process_world_tick
+from metro_sim.world.factories.world_factory import create_world
+from metro_sim.world.simulation.tick_orchestrator import process_world_tick
 
 
 def test_process_world_tick_advances_current_tick_by_one():
@@ -40,3 +42,19 @@ def test_process_world_tick_applies_effects():
     process_world_tick(world)
 
     assert station.stats["security"] < 50
+
+
+def test_world_tick_runs_event_system_and_applies_event_effects():
+    world = create_world()
+    station = world.stations["paveletskaya"]
+    station.pressure["militia_support"] = 25
+    start_order = station.stats["order"]
+
+    result = process_world_tick(world)
+
+    assert len(result.events) == 1
+    assert result.events[0].event_type == "militia_gains_control"
+
+    assert len(world.events) == 1
+    assert station.pressure["militia_support"] == 0
+    assert station.stats["order"] > start_order
