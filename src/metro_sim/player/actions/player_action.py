@@ -15,6 +15,7 @@ class PlayerAction:
     started_tick: int
     duration_ticks: int
     status: PlayerActionStatus = PlayerActionStatus.ACTIVE
+    assigned_crew_member_ids: list[str] = field(default_factory=list)
     payload: dict[str, Any] = field(default_factory=dict)
 
     @property

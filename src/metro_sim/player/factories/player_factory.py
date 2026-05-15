@@ -2,6 +2,7 @@ from metro_sim.player.models.crew_state import CrewState
 from metro_sim.player.models.inventory_state import InventoryState
 from metro_sim.player.models.player_state import PlayerState
 from metro_sim.player.models.reputation_state import ReputationState
+from metro_sim.player.factories.crew_member_factory import create_initial_crew_members
 
 
 def create_initial_player(
@@ -17,6 +18,10 @@ def create_initial_player(
             morale=55,
             fatigue=10,
             specialization="stalker",
+            current_location_id="paveletskaya",
+            destination_location_id=None,
+            is_traveling=False,
+            crew_members=create_initial_crew_members("paveletskaya"),
         ),
         inventory=InventoryState(
             items={

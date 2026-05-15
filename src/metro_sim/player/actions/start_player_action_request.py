@@ -8,3 +8,4 @@ class StartPlayerActionRequest:
     player_id: str
     action_type: PlayerActionType
     target_id: str
+    assigned_crew_member_ids: list[str] | None = None

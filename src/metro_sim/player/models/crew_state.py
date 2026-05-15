@@ -1,4 +1,6 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+
+from metro_sim.player.models.crew_member_state import CrewMemberState
 
 
 @dataclass
@@ -8,3 +10,7 @@ class CrewState:
     morale: int
     fatigue: int
     specialization: str
+    current_location_id: str = "paveletskaya"
+    destination_location_id: str | None = None
+    is_traveling: bool = False
+    crew_members: list[CrewMemberState] = field(default_factory=list)
