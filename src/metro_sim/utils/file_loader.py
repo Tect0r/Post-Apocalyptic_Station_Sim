@@ -25,3 +25,6 @@ def load_player_assets_data() -> dict:
 
 def load_market_items_data() -> dict:
     return load_json("market_items.json")
+
+def load_pvp_rules_data() -> dict:
+    return load_json("pvp_rules.json")

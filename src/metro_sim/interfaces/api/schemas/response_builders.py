@@ -54,6 +54,19 @@ def build_player_response(session: GameSession, player_id: str) -> dict:
         ],
     }
 
+def build_pvp_impact_response(impact) -> dict:
+    return {
+        "id": impact.id,
+        "source_player_id": impact.source_player_id,
+        "target_player_id": impact.target_player_id,
+        "action_type": impact.action_type.value if hasattr(impact.action_type, "value") else impact.action_type,
+        "target_type": impact.target_type,
+        "target_id": impact.target_id,
+        "created_tick": impact.created_tick,
+        "effects": impact.effects,
+        "detected": impact.detected,
+        "reputation_cost": impact.reputation_cost,
+    }
 
 def build_station_response(session: GameSession, station_id: str) -> dict:
     summary = build_game_summary(session)

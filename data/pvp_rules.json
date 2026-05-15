@@ -1,0 +1,35 @@
+{
+  "pressure_station": {
+    "cooldown_ticks": 60,
+    "max_pressure_change": 8,
+    "reputation_cost": {
+      "station": -2
+    },
+    "detection_chance": 25
+  },
+  "influence_faction": {
+    "cooldown_ticks": 90,
+    "max_influence_change": 4,
+    "reputation_cost": {
+      "opposing_faction": -2
+    },
+    "detection_chance": 20
+  },
+  "manipulate_market": {
+    "cooldown_ticks": 120,
+    "max_market_pressure": 6,
+    "reputation_cost": {
+      "station": -1
+    },
+    "detection_chance": 30
+  },
+  "damage_asset": {
+    "cooldown_ticks": 180,
+    "max_condition_damage": 20,
+    "reputation_cost": {
+      "station": -5
+    },
+    "detection_chance": 45,
+    "can_destroy_asset": false
+  }
+}
