@@ -10,6 +10,7 @@ from metro_sim.contracts.models.contract_status import ContractStatus
 from metro_sim.contracts.services.contract_acceptance_service import accept_contract
 from metro_sim.player.services.crew_movement_service import start_crew_movement
 from metro_sim.player.services.player_asset_service import add_player_asset
+from metro_sim.market.services.market_trade_service import buy_market_item
 
 
 def test_save_and_load_game_session_roundtrip():
@@ -190,3 +191,23 @@ def test_save_and_load_preserves_expanded_player_assets():
     assert asset.route_id is None
     assert asset.level == 1
     assert asset.condition == 100
+
+def test_save_and_load_preserves_market_stock_after_trade():
+    session = create_game_session()
+    station = session.world.stations["paveletskaya"]
+
+    stock_before = station.market["stock"]["food"]
+
+    buy_market_item(
+        session=session,
+        player_id="player_001",
+        item_id="food",
+        amount=2,
+    )
+
+    save_game_session(session, "test_market_stock")
+    loaded_session = load_game_session("test_market_stock")
+
+    loaded_station = loaded_session.world.stations["paveletskaya"]
+
+    assert loaded_station.market["stock"]["food"] == stock_before - 2
