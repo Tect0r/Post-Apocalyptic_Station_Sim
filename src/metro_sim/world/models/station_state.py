@@ -13,3 +13,4 @@ class StationState:
     pressure: dict[str, int] = field(default_factory=dict)
     faction_influence: dict[str, int] = field(default_factory=dict)
     buildings: dict = field(default_factory=dict)
+    market: dict = field(default_factory=dict)

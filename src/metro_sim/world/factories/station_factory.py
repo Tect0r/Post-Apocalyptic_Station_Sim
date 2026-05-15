@@ -16,4 +16,5 @@ def create_station_state(
         pressure=station_data.get("pressure", {}),
         faction_influence=station_data.get("faction_influence", {}),
         buildings=station_data.get("buildings", {}),
+        market=station_data.get("market", {}),
     )
