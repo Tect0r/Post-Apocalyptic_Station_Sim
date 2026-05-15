@@ -7,6 +7,7 @@ from metro_sim.player.actions.player_action_status import PlayerActionStatus
 from metro_sim.world.models.world_state import WorldState
 from metro_sim.contracts.models.contract_status import ContractStatus
 from metro_sim.world.services.pressure_service import add_station_pressure
+from metro_sim.player.services.crew_assignment_service import release_crew_members_from_action
 
 
 def resolve_completed_player_actions(
@@ -33,6 +34,7 @@ def resolve_completed_player_actions(
             action.status = PlayerActionStatus.COMPLETED
             completed_actions.append(action)
             player.completed_actions.append(action)
+            release_crew_members_from_action(player, action.id)
 
         player.active_actions = still_active_actions
 
