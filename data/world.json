@@ -19,6 +19,22 @@
         "technicians": 18,
         "sick": 14
       },
+      "market": {
+        "price_modifiers": {
+          "ammo": 1.0,
+          "food": 1.15,
+          "water": 1.2,
+          "medicine": 1.3,
+          "parts": 1.1
+        },
+        "stock": {
+          "ammo": 80,
+          "food": 120,
+          "water": 160,
+          "medicine": 12,
+          "parts": 30
+        }
+      },
       "stats": {
         "morale": 48,
         "security": 42,
@@ -61,6 +77,22 @@
         "technicians": 60,
         "sick": 20
       },
+      "market": {
+        "price_modifiers": {
+          "ammo": 0.95,
+          "food": 0.9,
+          "water": 0.9,
+          "medicine": 0.8,
+          "parts": 0.95
+        },
+        "stock": {
+          "ammo": 200,
+          "food": 240,
+          "water": 260,
+          "medicine": 80,
+          "parts": 120
+        }
+      },
       "stats": {
         "morale": 68,
         "security": 75,
@@ -102,6 +134,22 @@
         "civilians": 320,
         "technicians": 45,
         "sick": 15
+      },
+      "market": {
+        "price_modifiers": {
+          "ammo": 1.0,
+          "food": 0.95,
+          "water": 0.95,
+          "medicine": 1.05,
+          "parts": 0.9
+        },
+        "stock": {
+          "ammo": 300,
+          "food": 320,
+          "water": 350,
+          "medicine": 50,
+          "parts": 180
+        }
       },
       "stats": {
         "morale": 60,
