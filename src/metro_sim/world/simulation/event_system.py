@@ -45,6 +45,7 @@ def process_station_event_triggers(
         build_sabotage_incident_event,
         build_medical_campaign_success_event,
         build_black_market_expands_event,
+        build_mutant_attack_event,
         build_mutant_sighting_event,
         build_supply_shortage_event,
         build_checkpoint_incident_event,
@@ -345,7 +346,9 @@ def build_mutant_sighting_event(
     station = world.stations[station_id]
     danger = station.pressure.get("danger", 0)
 
-    if danger < 20:
+    danger = station.pressure.get("danger", 0)
+
+    if danger < 20 or danger >= 50:
         return None, [], []
 
     event = create_world_event(
@@ -526,6 +529,53 @@ def build_checkpoint_incident_event(
             world=world,
             event=event,
             message=f"A checkpoint incident increased tension in {station_id}.",
+        )
+    ]
+
+    return event, effects, logs
+
+def build_mutant_attack_event(
+    *,
+    world: WorldState,
+    station_id: str,
+) -> tuple[WorldEvent | None, list[WorldEffect], list[WorldLogEntry]]:
+    station = world.stations[station_id]
+    danger = station.pressure.get("danger", 0)
+
+    if danger < 50:
+        return None, [], []
+
+    event = create_world_event(
+        event_type="mutant_attack",
+        target_type="station",
+        target_id=station_id,
+        started_at_tick=world.current_tick,
+        status="running",
+        duration_ticks=30,
+        current_phase="approaching",
+        severity=2,
+        causes=["critical_route_danger_pressure"],
+        data={"danger": danger},
+    )
+
+    effects = [
+        WorldEffect(
+            target_type="station",
+            target_id=station_id,
+            field_path=["pressure", "danger"],
+            operation="set",
+            value=0,
+            reason="mutant_attack_started",
+            source="event_system",
+            importance="debug",
+        )
+    ]
+
+    logs = [
+        create_event_log(
+            world=world,
+            event=event,
+            message=f"A mutant attack started at {station_id}.",
         )
     ]
 

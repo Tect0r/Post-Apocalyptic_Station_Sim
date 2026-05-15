@@ -15,6 +15,10 @@ class WorldEvent:
     causes: list[str] = field(default_factory=list)
     data: dict[str, Any] = field(default_factory=dict)
 
+    duration_ticks: int = 0
+    ends_at_tick: int | None = None
+    current_phase: str | None = None
+
 
 def create_world_event(
     *,
@@ -26,7 +30,14 @@ def create_world_event(
     causes: list[str] | None = None,
     data: dict[str, Any] | None = None,
     status: str = "completed",
+    duration_ticks: int = 0,
+    current_phase: str | None = None,
 ) -> WorldEvent:
+    ends_at_tick = None
+
+    if duration_ticks > 0:
+        ends_at_tick = started_at_tick + duration_ticks
+
     return WorldEvent(
         id=str(uuid4()),
         event_type=event_type,
@@ -37,4 +48,7 @@ def create_world_event(
         severity=severity,
         causes=causes or [],
         data=data or {},
+        duration_ticks=duration_ticks,
+        ends_at_tick=ends_at_tick,
+        current_phase=current_phase,
     )

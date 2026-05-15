@@ -5,6 +5,7 @@ from metro_sim.world.simulation.event_system import process_world_events
 from metro_sim.world.simulation.log_system import append_world_logs
 from metro_sim.world.simulation.route_system import process_routes_tick
 from metro_sim.world.simulation.station_system import process_station_tick
+from metro_sim.world.simulation.active_event_system import process_active_events
 
 
 def process_world_tick(world: WorldState) -> WorldTickResult:
@@ -41,6 +42,17 @@ def process_world_tick(world: WorldState) -> WorldTickResult:
         effects=all_effects,
     )
     all_logs.extend(pre_event_effect_logs)
+
+    active_event_effects, active_event_logs = process_active_events(world)
+
+    all_effects.extend(active_event_effects)
+    all_logs.extend(active_event_logs)
+
+    active_event_effect_logs = apply_world_effects(
+        world=world,
+        effects=active_event_effects,
+    )
+    all_logs.extend(active_event_effect_logs)
 
     # 4. Generate events based on updated world state.
     generated_events, event_effects, event_logs = process_world_events(world)

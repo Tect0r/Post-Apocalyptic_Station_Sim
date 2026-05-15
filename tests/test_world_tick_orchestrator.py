@@ -1,5 +1,6 @@
 from metro_sim.world.factories.world_factory import create_world
 from metro_sim.world.simulation.tick_orchestrator import process_world_tick
+from metro_sim.world.models.world_event import create_world_event
 
 
 def test_world_tick_turns_route_danger_into_station_event():
@@ -99,3 +100,39 @@ def test_world_tick_runs_event_system_and_applies_event_effects():
     assert len(world.events) == 1
     assert station.pressure["militia_support"] == 0
     assert station.stats["order"] > start_order
+
+def test_world_tick_starts_mutant_attack_from_high_danger_pressure():
+    world = create_world()
+    station = world.stations["paveletskaya"]
+    station.pressure["danger"] = 50
+
+    result = process_world_tick(world)
+
+    event_types = [event.event_type for event in result.events]
+
+    assert "mutant_attack" in event_types
+    assert any(event.status == "running" for event in result.events)
+
+
+def test_world_tick_processes_running_events():
+    world = create_world()
+    station = world.stations["paveletskaya"]
+    station.stats["morale"] = 50
+
+    event = create_world_event(
+        event_type="mutant_attack",
+        target_type="station",
+        target_id="paveletskaya",
+        started_at_tick=0,
+        status="running",
+        duration_ticks=1,
+        current_phase="approaching",
+    )
+
+    world.events.append(event)
+    world.current_tick = 0
+
+    process_world_tick(world)
+
+    assert event.status == "completed"
+    assert station.stats["morale"] < 50
