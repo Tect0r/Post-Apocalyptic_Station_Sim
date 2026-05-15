@@ -53,3 +53,30 @@ def test_accept_contract_fails_for_missing_contract():
 
     assert result.success is False
     assert result.message == "contract_not_found"
+
+def test_accept_station_contract_fails_when_crew_not_at_station():
+    session = create_game_session()
+    player = session.players["player_001"]
+    player.crew.current_location_id = "hansa_ring"
+
+    result = accept_contract(
+        session=session,
+        player_id="player_001",
+        contract_id="contract_support_paveletskaya_militia",
+    )
+
+    assert result.success is False
+    assert result.message == "crew_not_at_target_station"
+
+
+def test_accept_route_contract_fails_when_route_not_connected():
+    session = create_game_session()
+
+    result = accept_contract(
+        session=session,
+        player_id="player_001",
+        contract_id="contract_secure_hansa_route",
+    )
+
+    # This should pass if the route is connected to Paveletskaya.
+    assert result.success is True

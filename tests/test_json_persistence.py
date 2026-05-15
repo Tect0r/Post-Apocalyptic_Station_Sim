@@ -8,6 +8,7 @@ from metro_sim.player.actions.player_action_status import PlayerActionStatus
 from metro_sim.player.services.player_action_cancel_service import cancel_player_action
 from metro_sim.contracts.models.contract_status import ContractStatus
 from metro_sim.contracts.services.contract_acceptance_service import accept_contract
+from metro_sim.player.services.crew_movement_service import start_crew_movement
 
 
 def test_save_and_load_game_session_roundtrip():
@@ -133,3 +134,22 @@ def test_save_and_load_preserves_contract_state():
     assert contract.status == ContractStatus.ACCEPTED
     assert contract.accepted_by_player_id == "player_001"
     assert contract.linked_action_id is not None
+
+def test_save_and_load_preserves_crew_movement_state():
+    session = create_game_session()
+
+    start_crew_movement(
+        session=session,
+        player_id="player_001",
+        route_id="route_paveletskaya_hansa_ring",
+    )
+
+    save_game_session(session, "test_crew_movement")
+    loaded_session = load_game_session("test_crew_movement")
+
+    loaded_player = loaded_session.players["player_001"]
+
+    assert loaded_player.crew.current_location_id == "paveletskaya"
+    assert loaded_player.crew.destination_location_id == "hansa_ring"
+    assert loaded_player.crew.is_traveling is True
+    assert len(loaded_player.active_actions) == 1
