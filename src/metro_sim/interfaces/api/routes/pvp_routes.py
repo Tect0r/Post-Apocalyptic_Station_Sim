@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 
 from metro_sim.auth.models.user_state import UserState
-from metro_sim.interfaces.api.api_state import get_game_session_with_processing, save_current_game_session
+from metro_sim.interfaces.api.api_state import get_game_session, save_current_game_session
 from metro_sim.interfaces.api.dependencies.auth_dependencies import get_current_user
 from metro_sim.interfaces.api.schemas.pvp_schema import (
     AssetDamagePvpRequestSchema,
@@ -19,7 +19,7 @@ router = APIRouter(prefix="/pvp", tags=["pvp"])
 def get_pvp_impacts(
     current_user: UserState = Depends(get_current_user),
 ) -> dict:
-    session = get_game_session_with_processing()
+    session = get_game_session()
 
     return {
         "impacts": [
@@ -34,7 +34,7 @@ def influence_station_pressure_route(
     request: StationPressurePvpRequestSchema,
     current_user: UserState = Depends(get_current_user),
 ) -> PvpActionResponseSchema:
-    session = get_game_session_with_processing()
+    session = get_game_session()
 
     result = influence_station_pressure(
         session=session,
@@ -61,7 +61,7 @@ def damage_asset_route(
     request: AssetDamagePvpRequestSchema,
     current_user: UserState = Depends(get_current_user),
 ) -> PvpActionResponseSchema:
-    session = get_game_session_with_processing()
+    session = get_game_session()
 
     result = damage_player_asset_indirectly(
         session=session,

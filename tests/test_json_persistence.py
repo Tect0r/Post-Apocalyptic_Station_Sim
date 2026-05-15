@@ -11,7 +11,26 @@ from metro_sim.contracts.services.contract_acceptance_service import accept_cont
 from metro_sim.player.services.crew_movement_service import start_crew_movement
 from metro_sim.player.services.player_asset_service import add_player_asset
 from metro_sim.market.services.market_trade_service import buy_market_item
+from metro_sim.pvp.services.station_pressure_pvp_service import influence_station_pressure
 
+
+def test_save_and_load_preserves_pvp_impacts():
+    session = create_game_session()
+
+    influence_station_pressure(
+        session=session,
+        source_player_id="player_001",
+        station_id="paveletskaya",
+        pressure_key="sabotage",
+        amount=5,
+    )
+
+    save_game_session(session, "test_pvp_impacts")
+    loaded_session = load_game_session("test_pvp_impacts")
+
+    assert len(loaded_session.world.pvp_impacts) == 1
+    assert loaded_session.world.pvp_impacts[0].source_player_id == "player_001"
+    assert loaded_session.world.pvp_impacts[0].target_id == "paveletskaya"
 
 def test_save_and_load_game_session_roundtrip():
     session = create_game_session()
