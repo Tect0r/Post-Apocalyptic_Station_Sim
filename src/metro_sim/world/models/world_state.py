@@ -9,3 +9,4 @@ class WorldState:
     routes: dict = field(default_factory=dict)
     events: list = field(default_factory=list)
     contracts: dict = field(default_factory=dict)
+    pvp_impacts: list = field(default_factory=list)
