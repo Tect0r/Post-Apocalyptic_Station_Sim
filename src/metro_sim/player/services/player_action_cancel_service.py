@@ -2,6 +2,7 @@ from metro_sim.core.action_result import ActionResult
 from metro_sim.core.game_session import GameSession
 from metro_sim.player.actions.player_action_status import PlayerActionStatus
 from metro_sim.contracts.models.contract_status import ContractStatus
+from metro_sim.player.actions.player_action_type import PlayerActionType
 
 
 def cancel_player_action(
@@ -33,6 +34,10 @@ def cancel_player_action(
         )
 
     action_to_cancel.status = PlayerActionStatus.CANCELLED
+
+    if action_to_cancel.action_type == PlayerActionType.MOVE_CREW:
+        player.crew.destination_location_id = None
+        player.crew.is_traveling = False
 
     contract_id = action_to_cancel.payload.get("contract_id")
 

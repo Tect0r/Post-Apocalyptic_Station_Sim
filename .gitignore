@@ -229,3 +229,5 @@ saves/test_roundtrip
 saves/test_index
 saves/api_dev_save
 saves/test_api_save
+saves/test_completed_actions
+saves/test_contract_state
