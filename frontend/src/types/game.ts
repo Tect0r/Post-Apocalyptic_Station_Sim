@@ -1,10 +1,4 @@
-export type Crew = {
-  members: number;
-  health: number;
-  morale: number;
-  fatigue: number;
-  specialization: string;
-};
+//TODO: Sortieren
 
 export type PlayerAsset = {
   id: string;
@@ -54,7 +48,9 @@ export type Route = {
   to_station_id: string;
   distance: number;
   danger_level: number;
+  travel_time_ticks: number;
   status: string;
+  control: Record<string, number>;
   modifiers: Record<string, unknown>;
 };
 
@@ -106,6 +102,17 @@ export type PublicPlayerSummary = {
   completed_actions: ActiveAction[];
   active_action_count?: number;
   asset_count?: number;
+};
+
+export type Crew = {
+  members: number;
+  health: number;
+  morale: number;
+  fatigue: number;
+  specialization: string;
+  current_location_id: string;
+  destination_location_id: string | null;
+  is_traveling: boolean;
 };
 
 export type Contract = {

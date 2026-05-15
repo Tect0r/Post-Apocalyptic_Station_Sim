@@ -7,6 +7,7 @@ import {
   cancelPlayerAction,
   acceptContract,
   getContracts,
+  startCrewMovement,
 } from "../api/gameApi";
 import { ActiveActionsCard } from "../components/actions/ActiveActionsCard";
 import { StartActionPanel } from "../components/actions/StartActionPanel";
@@ -69,6 +70,17 @@ export function DashboardPage({ onLogout }: DashboardPageProps) {
 
     try {
       await cancelPlayerAction(actionId);
+      await loadData();
+    } catch (error) {
+      setError(error instanceof Error ? error.message : "Unknown error");
+    }
+  }
+
+  async function handleStartMovement(routeId: string) {
+    setError(null);
+
+    try {
+      await startCrewMovement(routeId);
       await loadData();
     } catch (error) {
       setError(error instanceof Error ? error.message : "Unknown error");
@@ -172,7 +184,12 @@ export function DashboardPage({ onLogout }: DashboardPageProps) {
           onSelectStation={setSelectedStationId}
         />
         <StationDetail station={selectedStation} />
-        <RouteList routes={world.routes} />
+        <RouteList
+          routes={world.routes}
+          currentLocationId={player.crew.current_location_id}
+          isTraveling={player.crew.is_traveling}
+          onStartMovement={handleStartMovement}
+        />
         <EventList events={world.events} />
       </div>
     </AppLayout>

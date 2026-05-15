@@ -41,6 +41,44 @@ def accept_contract(
             },
         )
 
+    if player.crew.is_traveling:
+        return ActionResult(
+            success=False,
+            message="crew_is_traveling",
+            data={"player_id": player_id},
+        )
+    
+    if contract.target_type == "station":
+        if player.crew.current_location_id != contract.target_id:
+            return ActionResult(
+                success=False,
+                message="crew_not_at_target_station",
+                data={
+                    "current_location_id": player.crew.current_location_id,
+                    "target_id": contract.target_id,
+                },
+            )
+
+    if contract.target_type == "route":
+        route = session.world.routes.get(contract.target_id)
+
+        if route is None:
+            return ActionResult(
+                success=False,
+                message="route_not_found",
+                data={"route_id": contract.target_id},
+            )
+
+        if player.crew.current_location_id not in (route.from_station_id, route.to_station_id):
+            return ActionResult(
+                success=False,
+                message="route_not_connected_to_current_location",
+                data={
+                    "current_location_id": player.crew.current_location_id,
+                    "route_id": route.id,
+                },
+            )
+
     if not can_afford(player.inventory, contract.cost):
         return ActionResult(
             success=False,

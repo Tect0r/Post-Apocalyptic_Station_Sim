@@ -231,3 +231,4 @@ saves/api_dev_save
 saves/test_api_save
 saves/test_completed_actions
 saves/test_contract_state
+saves/test_crew_movement
