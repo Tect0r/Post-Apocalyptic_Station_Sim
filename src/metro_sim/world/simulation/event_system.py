@@ -45,6 +45,9 @@ def process_station_event_triggers(
         build_sabotage_incident_event,
         build_medical_campaign_success_event,
         build_black_market_expands_event,
+        build_mutant_sighting_event,
+        build_supply_shortage_event,
+        build_checkpoint_incident_event,
     ]
 
     for build_event in trigger_builders:
@@ -333,3 +336,197 @@ def create_event_log(
             "severity": event.severity,
         },
     )
+
+def build_mutant_sighting_event(
+    *,
+    world: WorldState,
+    station_id: str,
+) -> tuple[WorldEvent | None, list[WorldEffect], list[WorldLogEntry]]:
+    station = world.stations[station_id]
+    danger = station.pressure.get("danger", 0)
+
+    if danger < 20:
+        return None, [], []
+
+    event = create_world_event(
+        event_type="mutant_sighting",
+        target_type="station",
+        target_id=station_id,
+        started_at_tick=world.current_tick,
+        severity=1,
+        causes=["high_route_danger_pressure"],
+        data={"danger": danger},
+    )
+
+    effects = [
+        WorldEffect(
+            target_type="station",
+            target_id=station_id,
+            field_path=["stats", "morale"],
+            operation="add",
+            value=-2,
+            reason="mutant_sighting",
+            source="event_system",
+            importance="normal",
+        ),
+        WorldEffect(
+            target_type="station",
+            target_id=station_id,
+            field_path=["stats", "security"],
+            operation="add",
+            value=-1,
+            reason="mutant_sighting",
+            source="event_system",
+            importance="normal",
+        ),
+        WorldEffect(
+            target_type="station",
+            target_id=station_id,
+            field_path=["pressure", "danger"],
+            operation="set",
+            value=0,
+            reason="mutant_sighting_resolved",
+            source="event_system",
+            importance="debug",
+        ),
+    ]
+
+    logs = [
+        create_event_log(
+            world=world,
+            event=event,
+            message=f"Mutant activity was sighted near {station_id}.",
+        )
+    ]
+
+    return event, effects, logs
+
+
+def build_supply_shortage_event(
+    *,
+    world: WorldState,
+    station_id: str,
+) -> tuple[WorldEvent | None, list[WorldEffect], list[WorldLogEntry]]:
+    station = world.stations[station_id]
+    supply_disruption = station.pressure.get("supply_disruption", 0)
+
+    if supply_disruption < 20:
+        return None, [], []
+
+    event = create_world_event(
+        event_type="supply_shortage",
+        target_type="station",
+        target_id=station_id,
+        started_at_tick=world.current_tick,
+        severity=1,
+        causes=["high_supply_disruption_pressure"],
+        data={"supply_disruption": supply_disruption},
+    )
+
+    effects = [
+        WorldEffect(
+            target_type="station",
+            target_id=station_id,
+            field_path=["stats", "morale"],
+            operation="add",
+            value=-3,
+            reason="supply_shortage",
+            source="event_system",
+            importance="normal",
+        ),
+        WorldEffect(
+            target_type="station",
+            target_id=station_id,
+            field_path=["stats", "order"],
+            operation="add",
+            value=-2,
+            reason="supply_shortage",
+            source="event_system",
+            importance="normal",
+        ),
+        WorldEffect(
+            target_type="station",
+            target_id=station_id,
+            field_path=["pressure", "supply_disruption"],
+            operation="set",
+            value=0,
+            reason="supply_shortage_resolved",
+            source="event_system",
+            importance="debug",
+        ),
+    ]
+
+    logs = [
+        create_event_log(
+            world=world,
+            event=event,
+            message=f"Supply disruption caused shortages in {station_id}.",
+        )
+    ]
+
+    return event, effects, logs
+
+
+def build_checkpoint_incident_event(
+    *,
+    world: WorldState,
+    station_id: str,
+) -> tuple[WorldEvent | None, list[WorldEffect], list[WorldLogEntry]]:
+    station = world.stations[station_id]
+    security_risk = station.pressure.get("security_risk", 0)
+
+    if security_risk < 20:
+        return None, [], []
+
+    event = create_world_event(
+        event_type="checkpoint_incident",
+        target_type="station",
+        target_id=station_id,
+        started_at_tick=world.current_tick,
+        severity=1,
+        causes=["high_security_risk_pressure"],
+        data={"security_risk": security_risk},
+    )
+
+    effects = [
+        WorldEffect(
+            target_type="station",
+            target_id=station_id,
+            field_path=["stats", "order"],
+            operation="add",
+            value=-2,
+            reason="checkpoint_incident",
+            source="event_system",
+            importance="normal",
+        ),
+        WorldEffect(
+            target_type="station",
+            target_id=station_id,
+            field_path=["stats", "security"],
+            operation="add",
+            value=-2,
+            reason="checkpoint_incident",
+            source="event_system",
+            importance="normal",
+        ),
+        WorldEffect(
+            target_type="station",
+            target_id=station_id,
+            field_path=["pressure", "security_risk"],
+            operation="set",
+            value=0,
+            reason="checkpoint_incident_resolved",
+            source="event_system",
+            importance="debug",
+        ),
+    ]
+
+    logs = [
+        create_event_log(
+            world=world,
+            event=event,
+            message=f"A checkpoint incident increased tension in {station_id}.",
+        )
+    ]
+
+    return event, effects, logs

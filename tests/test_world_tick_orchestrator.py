@@ -2,6 +2,28 @@ from metro_sim.world.factories.world_factory import create_world
 from metro_sim.world.simulation.tick_orchestrator import process_world_tick
 
 
+def test_world_tick_turns_route_danger_into_station_event():
+    world = create_world()
+
+    route_id = next(iter(world.routes.keys()))
+    route = world.routes[route_id]
+
+    route.danger = 100
+    route.condition = 100
+    route.traffic = 0
+
+    from_station_id = route.from_station_id
+    to_station_id = route.to_station_id
+
+    world.stations[from_station_id].pressure["danger"] = 19
+    world.stations[to_station_id].pressure["danger"] = 19
+
+    result = process_world_tick(world)
+
+    event_types = [event.event_type for event in result.events]
+
+    assert "mutant_sighting" in event_types
+
 def test_world_tick_processes_routes_and_applies_route_effects():
     world = create_world()
 

@@ -3,6 +3,11 @@ from metro_sim.world.models.tick_result import StationTickResult
 from metro_sim.world.models.world_effect import WorldEffect
 from metro_sim.world.models.world_log_entry import create_world_log_entry
 
+NON_DECAYING_PRESSURES = {
+    "danger",
+    "supply_disruption",
+    "security_risk",
+}
 
 def process_station_tick(
     *,
@@ -46,7 +51,16 @@ def process_station_tick(
 def create_pressure_decay_effects(station: StationState) -> list[WorldEffect]:
     effects: list[WorldEffect] = []
 
+    non_decaying_pressures = {
+        "danger",
+        "supply_disruption",
+        "security_risk",
+    }
+
     for pressure_name, pressure_value in station.pressure.items():
+        if pressure_name in non_decaying_pressures:
+            continue
+
         if pressure_value <= 0:
             continue
 

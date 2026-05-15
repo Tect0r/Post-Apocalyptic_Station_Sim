@@ -58,3 +58,41 @@ def test_event_system_creates_black_market_event_from_pressure():
 
     assert any(effect.reason == "black_market_expands" for effect in effects)
     assert len(logs) >= 1
+
+def test_event_system_creates_mutant_sighting_from_danger_pressure():
+    world = create_world()
+    station = world.stations["paveletskaya"]
+    station.pressure["danger"] = 25
+
+    events, effects, logs = process_world_events(world)
+
+    assert len(events) == 1
+    assert events[0].event_type == "mutant_sighting"
+    assert any(effect.reason == "mutant_sighting" for effect in effects)
+    assert len(logs) >= 1
+
+
+def test_event_system_creates_supply_shortage_from_supply_disruption_pressure():
+    world = create_world()
+    station = world.stations["paveletskaya"]
+    station.pressure["supply_disruption"] = 25
+
+    events, effects, logs = process_world_events(world)
+
+    assert len(events) == 1
+    assert events[0].event_type == "supply_shortage"
+    assert any(effect.reason == "supply_shortage" for effect in effects)
+    assert len(logs) >= 1
+
+
+def test_event_system_creates_checkpoint_incident_from_security_risk_pressure():
+    world = create_world()
+    station = world.stations["paveletskaya"]
+    station.pressure["security_risk"] = 25
+
+    events, effects, logs = process_world_events(world)
+
+    assert len(events) == 1
+    assert events[0].event_type == "checkpoint_incident"
+    assert any(effect.reason == "checkpoint_incident" for effect in effects)
+    assert len(logs) >= 1
