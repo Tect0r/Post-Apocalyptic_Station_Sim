@@ -1,7 +1,17 @@
 from metro_sim.world.factories.world_factory import create_world
 from metro_sim.world.simulation.tick_orchestrator import process_world_tick
 from metro_sim.world.models.world_event import create_world_event
+from metro_sim.world.simulation.snapshot_system import SNAPSHOT_INTERVAL_TICKS
 
+
+def test_world_tick_creates_snapshot_on_interval():
+    world = create_world()
+    world.current_tick = SNAPSHOT_INTERVAL_TICKS - 1
+
+    process_world_tick(world)
+
+    assert len(world.snapshots) == 1
+    assert world.snapshots[0].tick == SNAPSHOT_INTERVAL_TICKS
 
 def test_world_tick_turns_route_danger_into_station_event():
     world = create_world()

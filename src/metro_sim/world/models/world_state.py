@@ -2,6 +2,7 @@ from dataclasses import dataclass, field
 from metro_sim.world.models.station_state import StationState
 from metro_sim.world.models.world_log_entry import WorldLogEntry
 from metro_sim.world.models.world_event import WorldEvent
+from metro_sim.world.models.world_snapshot import WorldSnapshot
 
 
 @dataclass
@@ -14,3 +15,4 @@ class WorldState:
     contracts: dict = field(default_factory=dict)
     pvp_impacts: list = field(default_factory=list)
     logs: list[WorldLogEntry] = field(default_factory=list)
+    snapshots: list[WorldSnapshot] = field(default_factory=list)

@@ -6,6 +6,7 @@ from metro_sim.world.simulation.log_system import append_world_logs
 from metro_sim.world.simulation.route_system import process_routes_tick
 from metro_sim.world.simulation.station_system import process_station_tick
 from metro_sim.world.simulation.active_event_system import process_active_events
+from metro_sim.world.simulation.snapshot_system import maybe_create_world_snapshot
 
 
 def process_world_tick(world: WorldState) -> WorldTickResult:
@@ -72,6 +73,8 @@ def process_world_tick(world: WorldState) -> WorldTickResult:
         world=world,
         logs=all_logs,
     )
+
+    maybe_create_world_snapshot(world)
 
     return WorldTickResult(
         tick=world.current_tick,

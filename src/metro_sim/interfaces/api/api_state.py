@@ -9,16 +9,15 @@ DEFAULT_SAVE_NAME = "api_dev_save"
 
 _game_session: GameSession | None = None
 
-
 def get_game_session() -> GameSession:
     global _game_session
 
     if _game_session is None:
         try:
             _game_session = load_game_session(DEFAULT_SAVE_NAME)
-        except FileNotFoundError:
+        except (FileNotFoundError, ValueError):
             _game_session = create_game_session()
-            save_game_session(_game_session, DEFAULT_SAVE_NAME)
+            save_current_game_session(DEFAULT_SAVE_NAME)
 
     return _game_session
 
