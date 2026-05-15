@@ -16,7 +16,8 @@ from metro_sim.interfaces.api.routes import (
     contract_routes,
     movement_routes,
     asset_routes,
-    pvp_routes
+    pvp_routes,
+    log_routes
 )
 
 
@@ -54,6 +55,7 @@ def create_app() -> FastAPI:
     app.include_router(asset_routes.router)
     app.include_router(market_routes.router)
     app.include_router(pvp_routes.router)
+    app.include_router(log_routes.router)
 
     return app
 
