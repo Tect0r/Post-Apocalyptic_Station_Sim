@@ -1,0 +1,53 @@
+# Tick Model
+
+## Core Rule
+
+The game is tick-based.
+
+Current setting:
+
+```text
+1 real second = 1 game tick
+Server Clock
+
+The backend tracks:
+
+last_processed_at
+world.current_tick
+
+When /world is requested, the backend calculates elapsed real time and processes the required number of game ticks.
+
+Processing Rule
+
+Only one normal read endpoint should process elapsed time:
+
+GET /world
+
+Write endpoints may process elapsed time before applying state changes:
+
+POST /player/me/actions
+POST /contracts/{contract_id}/accept
+POST /player/me/movement/start
+
+Most read endpoints must not process ticks:
+
+GET /player/me
+GET /player
+GET /contracts
+GET /market
+GET /pvp/impacts
+GET /stations
+GET /routes
+Why
+
+The dashboard loads multiple endpoints per refresh. If every endpoint processes elapsed ticks, the world advances multiple ticks per second.
+
+Frontend Rule
+
+The frontend does not advance ticks manually.
+
+The frontend refreshes state periodically and displays current tick, remaining action ticks and updated world state.
+
+Debug Tick
+
+POST /admin/tick may exist for development, but it is not part of normal gameplay.

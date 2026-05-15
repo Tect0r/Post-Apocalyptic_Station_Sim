@@ -1,8 +1,8 @@
 # Persistence Plan
 
-## Phase 10: JSON Save Files
+## Current JSON Persistence
 
-Current persistence target:
+Current save structure:
 
 ```text
 saves/
@@ -10,28 +10,53 @@ saves/
     metadata.json
     world_state.json
     players.json
-Later Database Target
 
-PostgreSQL is the target database for web and multiplayer.
+saves/auth/
+  users.json
+Saved State
 
-Planned tables:
+World save includes:
+
+stations
+routes
+factions
+events
+contracts
+pvp_impacts
+markets
+
+Player save includes:
+
+crew
+crew members
+inventory
+reputation
+assets
+active actions
+completed actions
+
+Metadata includes:
+
+save_version
+save_name
+saved_at
+last_processed_at
+Future PostgreSQL Target
+
+Tables:
 
 users
 players
 crews
-player_inventory
+crew_members
+inventory
+player_actions
+contracts
 player_assets
 stations
-station_resources
-station_stats
-station_pressure
-factions
-station_faction_influence
+station_market
 routes
-actions
+factions
 events
-market_orders
-Rule
-
-JSON persistence is temporary infrastructure for development.
-The game domain should not depend on JSON-specific details.
+pvp_impacts
+market_transactions
