@@ -23,6 +23,27 @@ export type Player = {
   completed_actions: ActiveAction[];
 };
 
+export type MarketPrice = {
+  item_id: string;
+  label: string;
+  category: string;
+  buy_price: number;
+  sell_price: number;
+  stock: number;
+};
+
+export type MarketResponse = {
+  station_id: string;
+  prices: Record<string, MarketPrice>;
+  stock: Record<string, number>;
+  accessible?: boolean;
+};
+
+export type MarketTradeRequest = {
+  item_id: string;
+  amount: number;
+};
+
 export type Station = {
   id: string;
   name: string;

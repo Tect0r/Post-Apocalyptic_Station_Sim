@@ -9,7 +9,9 @@ import type {
   WorldResponse,
   PublicPlayerSummary,
   Contract,
-  PlayerAsset
+  PlayerAsset,
+  MarketResponse,
+  MarketTradeRequest
 } from "../types/game";
 
 export function getWorld(): Promise<WorldResponse> {
@@ -72,4 +74,16 @@ export function upgradePlayerAsset(assetId: string): Promise<ActionResponse> {
 
 export function repairPlayerAsset(assetId: string): Promise<ActionResponse> {
   return apiPost<ActionResponse>(`/player/me/assets/${assetId}/repair`);
+}
+
+export function getCurrentMarket(): Promise<MarketResponse> {
+  return apiGet<MarketResponse>("/market");
+}
+
+export function buyMarketItem(request: MarketTradeRequest): Promise<ActionResponse> {
+  return apiPost<ActionResponse, MarketTradeRequest>("/market/buy", request);
+}
+
+export function sellMarketItem(request: MarketTradeRequest): Promise<ActionResponse> {
+  return apiPost<ActionResponse, MarketTradeRequest>("/market/sell", request);
 }

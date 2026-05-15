@@ -10,6 +10,9 @@ import {
   startCrewMovement,
   repairPlayerAsset,
   upgradePlayerAsset,
+  buyMarketItem,
+  getCurrentMarket,
+  sellMarketItem,
 } from "../api/gameApi";
 import { ActiveActionsCard } from "../components/actions/ActiveActionsCard";
 import { StartActionPanel } from "../components/actions/StartActionPanel";
@@ -21,13 +24,20 @@ import { AppLayout } from "../components/layout/AppLayout";
 import { RouteList } from "../components/routes/RouteList";
 import { StationDetail } from "../components/stations/StationDetail";
 import { StationList } from "../components/stations/StationList";
-import type { Player, PublicPlayerSummary, WorldResponse, Contract, } from "../types/game";
+import type { 
+  Player, 
+  PublicPlayerSummary, 
+  WorldResponse, 
+  Contract,
+  MarketResponse,
+ } from "../types/game";
 import { logoutUser } from "../api/authApi";
 import { PlayerList } from "../components/players/PlayerList";
 import { CompletedActionsCard } from "../components/actions/CompletedActionsCard";
 import { ContractList } from "../components/contracts/ContractList";
 import { CrewMemberList } from "../components/crew/CrewMemberList";
 import { AssetList } from "../components/assets/AssetList";
+import { MarketPanel } from "../components/market/MarketPanel";
 
 type DashboardPageProps = {
   onLogout: () => void;
@@ -40,26 +50,25 @@ export function DashboardPage({ onLogout }: DashboardPageProps) {
   const [error, setError] = useState<string | null>(null);
   const [players, setPlayers] = useState<PublicPlayerSummary[]>([]);
   const [contracts, setContracts] = useState<Contract[]>([]);
+  const [market, setMarket] = useState<MarketResponse | null>(null);
 
   const loadData = useCallback(async () => {
     setError(null);
 
     try {
-      const [worldResponse, playerResponse, playersResponse, contractsResponse] = await Promise.all([
+      const [worldResponse, playerResponse, playersResponse, contractsResponse, marketResponse,] = await Promise.all([
         getWorld(),
         getPlayer(),
         getPlayers(),
         getContracts(),
+        getCurrentMarket(),
       ]);
-
-    setWorld(worldResponse);
-    setPlayer(playerResponse);
-    setPlayers(playersResponse.players);
-    setContracts(contractsResponse.contracts);
 
       setWorld(worldResponse);
       setPlayer(playerResponse);
       setPlayers(playersResponse.players);
+      setContracts(contractsResponse.contracts);
+      setMarket(marketResponse);
 
       if (!selectedStationId && Object.keys(worldResponse.stations).length > 0) {
         setSelectedStationId(Object.keys(worldResponse.stations)[0]);
@@ -74,6 +83,29 @@ export function DashboardPage({ onLogout }: DashboardPageProps) {
 
     try {
       await cancelPlayerAction(actionId);
+      await loadData();
+    } catch (error) {
+      setError(error instanceof Error ? error.message : "Unknown error");
+    }
+  }
+
+  async function handleBuyItem(itemId: string, amount: number) {
+    setError(null);
+
+    try {
+      await buyMarketItem({ item_id: itemId, amount });
+      await loadData();
+    } catch (error) {
+      setError(error instanceof Error ? error.message : "Unknown error");
+    }
+  }
+
+
+  async function handleSellItem(itemId: string, amount: number) {
+    setError(null);
+
+    try {
+      await sellMarketItem({ item_id: itemId, amount });
       await loadData();
     } catch (error) {
       setError(error instanceof Error ? error.message : "Unknown error");
@@ -217,6 +249,11 @@ export function DashboardPage({ onLogout }: DashboardPageProps) {
           onSelectStation={setSelectedStationId}
         />
         <StationDetail station={selectedStation} />
+        <MarketPanel
+          market={market}
+          onBuyItem={handleBuyItem}
+          onSellItem={handleSellItem}
+        />
         <RouteList
           routes={world.routes}
           currentLocationId={player.crew.current_location_id}
