@@ -13,6 +13,7 @@ export function AppLayout({ children, onLogout }: AppLayoutProps) {
 
         <nav className="sidebar-nav">
           <a href="#dashboard">Dashboard</a>
+          <a href="#assets">Assets</a>
           <a href="#crew">Crew</a>
           <a href="#stations">Stations</a>
           <a href="#routes">Routes</a>

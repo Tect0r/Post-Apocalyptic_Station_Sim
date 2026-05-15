@@ -9,6 +9,7 @@ import type {
   WorldResponse,
   PublicPlayerSummary,
   Contract,
+  PlayerAsset
 } from "../types/game";
 
 export function getWorld(): Promise<WorldResponse> {
@@ -59,4 +60,16 @@ export function startCrewMovement(routeId: string): Promise<ActionResponse> {
   return apiPost<ActionResponse, { route_id: string }>("/player/me/movement/start", {
     route_id: routeId,
   });
+}
+
+export function getPlayerAssets(): Promise<{ assets: PlayerAsset[] }> {
+  return apiGet<{ assets: PlayerAsset[] }>("/player/me/assets");
+}
+
+export function upgradePlayerAsset(assetId: string): Promise<ActionResponse> {
+  return apiPost<ActionResponse>(`/player/me/assets/${assetId}/upgrade`);
+}
+
+export function repairPlayerAsset(assetId: string): Promise<ActionResponse> {
+  return apiPost<ActionResponse>(`/player/me/assets/${assetId}/repair`);
 }

@@ -1,13 +1,5 @@
 //TODO: Sortieren
 
-export type PlayerAsset = {
-  id: string;
-  name: string;
-  asset_type: string;
-  location_id: string | null;
-  condition: number;
-};
-
 export type ActiveAction = {
   id: string;
   action_type: string;
@@ -67,6 +59,20 @@ export type Route = {
   status: string;
   control: Record<string, number>;
   modifiers: Record<string, unknown>;
+};
+
+export type PlayerAsset = {
+  id: string;
+  owner_player_id: string;
+  name: string;
+  asset_type: string;
+  station_id: string | null;
+  route_id: string | null;
+  level: number;
+  condition: number;
+  status: string;
+  effects: Record<string, number>;
+  metadata: Record<string, unknown>;
 };
 
 export type Faction = {

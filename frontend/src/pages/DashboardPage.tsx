@@ -8,6 +8,8 @@ import {
   acceptContract,
   getContracts,
   startCrewMovement,
+  repairPlayerAsset,
+  upgradePlayerAsset,
 } from "../api/gameApi";
 import { ActiveActionsCard } from "../components/actions/ActiveActionsCard";
 import { StartActionPanel } from "../components/actions/StartActionPanel";
@@ -25,6 +27,7 @@ import { PlayerList } from "../components/players/PlayerList";
 import { CompletedActionsCard } from "../components/actions/CompletedActionsCard";
 import { ContractList } from "../components/contracts/ContractList";
 import { CrewMemberList } from "../components/crew/CrewMemberList";
+import { AssetList } from "../components/assets/AssetList";
 
 type DashboardPageProps = {
   onLogout: () => void;
@@ -99,6 +102,29 @@ export function DashboardPage({ onLogout }: DashboardPageProps) {
     }
   }
 
+  async function handleUpgradeAsset(assetId: string) {
+    setError(null);
+
+    try {
+      await upgradePlayerAsset(assetId);
+      await loadData();
+    } catch (error) {
+      setError(error instanceof Error ? error.message : "Unknown error");
+    }
+  }
+
+  async function handleRepairAsset(assetId: string) {
+    setError(null);
+
+    try {
+      await repairPlayerAsset(assetId);
+      await loadData();
+    } catch (error) {
+      setError(error instanceof Error ? error.message : "Unknown error");
+    }
+  }
+
+
   async function handleStartAction(actionType: string, targetId: string) {
     setError(null);
 
@@ -164,6 +190,11 @@ export function DashboardPage({ onLogout }: DashboardPageProps) {
         <CrewStatusCard player={player} />
         <CrewMemberList crewMembers={player.crew.crew_members} />
         <InventoryCard inventory={player.inventory} />
+        <AssetList
+          assets={player.assets}
+          onUpgradeAsset={handleUpgradeAsset}
+          onRepairAsset={handleRepairAsset}
+        />
         <ActiveActionsCard
           activeActions={player.active_actions}
           currentTick={world.tick}
