@@ -24,6 +24,7 @@ import { logoutUser } from "../api/authApi";
 import { PlayerList } from "../components/players/PlayerList";
 import { CompletedActionsCard } from "../components/actions/CompletedActionsCard";
 import { ContractList } from "../components/contracts/ContractList";
+import { CrewMemberList } from "../components/crew/CrewMemberList";
 
 type DashboardPageProps = {
   onLogout: () => void;
@@ -161,6 +162,7 @@ export function DashboardPage({ onLogout }: DashboardPageProps) {
 
       <div className="dashboard-grid">
         <CrewStatusCard player={player} />
+        <CrewMemberList crewMembers={player.crew.crew_members} />
         <InventoryCard inventory={player.inventory} />
         <ActiveActionsCard
           activeActions={player.active_actions}

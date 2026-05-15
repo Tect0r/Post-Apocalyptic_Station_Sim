@@ -11,6 +11,7 @@ export type PlayerAsset = {
 export type ActiveAction = {
   id: string;
   action_type: string;
+  assigned_crew_member_ids: string[];
   target_type: string;
   target_id: string;
   started_tick: number;
@@ -40,6 +41,20 @@ export type Station = {
   stats: Record<string, number>;
   pressure: Record<string, number>;
   faction_influence: Record<string, number>;
+};
+
+export type CrewMember = {
+  id: string;
+  name: string;
+  role: string;
+  health: number;
+  morale: number;
+  fatigue: number;
+  skills: Record<string, number>;
+  traits: string[];
+  status: string;
+  current_location_id: string;
+  assigned_action_id: string | null;
 };
 
 export type Route = {
@@ -106,6 +121,7 @@ export type PublicPlayerSummary = {
 
 export type Crew = {
   members: number;
+  crew_members: CrewMember[];
   health: number;
   morale: number;
   fatigue: number;
