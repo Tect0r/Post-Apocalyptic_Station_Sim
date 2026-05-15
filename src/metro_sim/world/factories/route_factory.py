@@ -12,5 +12,7 @@ def create_route_state(
         distance=route_data["distance"],
         danger_level=route_data["danger_level"],
         status=route_data.get("status", "open"),
+        travel_time_ticks=route_data["travel_time_ticks"],
+        control=route_data.get("control", {}),
         modifiers=route_data.get("modifiers", {}),
     )

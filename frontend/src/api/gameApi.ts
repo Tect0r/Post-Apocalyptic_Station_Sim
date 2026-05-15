@@ -54,3 +54,9 @@ export function getContracts(): Promise<{ contracts: Contract[] }> {
 export function acceptContract(contractId: string): Promise<ActionResponse> {
   return apiPost<ActionResponse>(`/contracts/${contractId}/accept`);
 }
+
+export function startCrewMovement(routeId: string): Promise<ActionResponse> {
+  return apiPost<ActionResponse, { route_id: string }>("/player/me/movement/start", {
+    route_id: routeId,
+  });
+}

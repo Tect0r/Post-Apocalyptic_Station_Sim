@@ -133,6 +133,7 @@
       "to_station_id": "polis",
       "distance": 4,
       "danger_level": 3,
+      "travel_time_ticks": 40,
       "status": "open",
       "modifiers": {
         "trade_value": 6,
@@ -150,6 +151,7 @@
       "to_station_id": "hansa_ring",
       "distance": 2,
       "danger_level": 2,
+      "travel_time_ticks": 20,
       "status": "open",
       "modifiers": {
         "trade_value": 8,
@@ -167,6 +169,7 @@
       "to_station_id": "polis",
       "distance": 5,
       "danger_level": 4,
+      "travel_time_ticks": 50,
       "status": "open",
       "modifiers": {
         "trade_value": 7,

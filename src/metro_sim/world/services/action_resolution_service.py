@@ -8,6 +8,7 @@ from metro_sim.world.models.world_state import WorldState
 from metro_sim.contracts.models.contract_status import ContractStatus
 from metro_sim.world.services.pressure_service import add_station_pressure
 from metro_sim.player.services.crew_assignment_service import release_crew_members_from_action
+from metro_sim.player.actions.player_action_type import PlayerActionType
 
 
 def resolve_completed_player_actions(
@@ -29,6 +30,7 @@ def resolve_completed_player_actions(
                 continue
 
             apply_action_effects(world, player, action)
+            apply_movement_completion(player, action)
             update_linked_contract_on_completion(world, action)
 
             action.status = PlayerActionStatus.COMPLETED
@@ -152,3 +154,17 @@ def update_linked_contract_on_completion(world: WorldState, action: PlayerAction
     contract = world.contracts[contract_id]
     contract.status = ContractStatus.COMPLETED
     contract.completed_tick = world.current_tick
+
+def apply_movement_completion(player: PlayerState, action: PlayerAction) -> None:
+    if action.action_type != PlayerActionType.MOVE_CREW:
+        return
+
+    movement = action.payload.get("movement", {})
+    destination_id = movement.get("to_station_id")
+
+    if destination_id is None:
+        return
+
+    player.crew.current_location_id = destination_id
+    player.crew.destination_location_id = None
+    player.crew.is_traveling = False

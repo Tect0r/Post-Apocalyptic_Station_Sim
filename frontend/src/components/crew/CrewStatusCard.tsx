@@ -30,6 +30,20 @@ export function CrewStatusCard({ player }: CrewStatusCardProps) {
           <span>Specialization</span>
           <strong>{player.crew.specialization}</strong>
         </div>
+        <div>
+          <span>Location</span>
+          <strong>{player.crew.current_location_id}</strong>
+        </div>
+        <div>
+          <span>Traveling</span>
+          <strong>{player.crew.is_traveling ? "Yes" : "No"}</strong>
+        </div>
+        {player.crew.destination_location_id && (
+          <div>
+            <span>Destination</span>
+            <strong>{player.crew.destination_location_id}</strong>
+          </div>
+        )}
       </div>
     </section>
   );

@@ -12,3 +12,4 @@ class PlayerActionType(StrEnum):
     START_STALKER_EXPEDITION = "start_stalker_expedition"
     TREAT_WOUNDED = "treat_wounded"
     MAINTAIN_FACTION_CONTACT = "maintain_faction_contact"
+    MOVE_CREW = "move_crew"
