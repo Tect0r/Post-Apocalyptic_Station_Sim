@@ -7,6 +7,10 @@ from metro_sim.player.actions.start_player_action_request import StartPlayerActi
 from metro_sim.player.actions.player_action_status import PlayerActionStatus
 from metro_sim.player.services.inventory_service import can_afford, pay_cost
 from metro_sim.utils.file_loader import load_player_actions_data
+from metro_sim.player.services.crew_assignment_service import (
+    mark_crew_members_assigned,
+    validate_crew_member_assignment,
+)
 
 
 def start_player_action(
@@ -32,6 +36,17 @@ def start_player_action(
 
     action_definition = action_definitions[action_type]
     player = session.players[request.player_id]
+
+    assigned_crew_member_ids = request.assigned_crew_member_ids or []
+
+    if assigned_crew_member_ids:
+        assignment_result = validate_crew_member_assignment(
+            player=player,
+            crew_member_ids=assigned_crew_member_ids,
+        )
+
+        if not assignment_result.success:
+            return assignment_result
 
     target_type = action_definition["target_type"]
     target_id = request.target_id
@@ -70,12 +85,20 @@ def start_player_action(
         started_tick=session.world.current_tick,
         duration_ticks=action_definition["duration_ticks"],
         status=PlayerActionStatus.ACTIVE,
+        assigned_crew_member_ids=assigned_crew_member_ids,
         payload={
             "definition": action_definition,
         },
     )
 
     player.active_actions.append(action)
+
+    if assigned_crew_member_ids:
+        mark_crew_members_assigned(
+            player=player,
+            crew_member_ids=assigned_crew_member_ids,
+            action_id=action.id,
+        )
 
     return ActionResult(
         success=True,

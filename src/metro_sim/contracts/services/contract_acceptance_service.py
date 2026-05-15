@@ -7,12 +7,17 @@ from metro_sim.player.actions.player_action import PlayerAction
 from metro_sim.player.actions.player_action_status import PlayerActionStatus
 from metro_sim.player.actions.player_action_type import PlayerActionType
 from metro_sim.player.services.inventory_service import can_afford, pay_cost
+from metro_sim.player.services.crew_assignment_service import (
+    mark_crew_members_assigned,
+    validate_crew_member_assignment,
+)
 
 
 def accept_contract(
     session: GameSession,
     player_id: str,
     contract_id: str,
+    assigned_crew_member_ids: list[str] | None = None,
 ) -> ActionResult:
     if player_id not in session.players:
         return ActionResult(
@@ -50,6 +55,17 @@ def accept_contract(
 
     pay_cost(player.inventory, contract.cost)
 
+    assigned_crew_member_ids = assigned_crew_member_ids or []
+
+    if assigned_crew_member_ids:
+        assignment_result = validate_crew_member_assignment(
+            player=player,
+            crew_member_ids=assigned_crew_member_ids,
+        )
+
+        if not assignment_result.success:
+            return assignment_result
+
     action = PlayerAction(
         id=str(uuid4()),
         player_id=player.id,
@@ -59,6 +75,7 @@ def accept_contract(
         started_tick=session.world.current_tick,
         duration_ticks=contract.duration_ticks,
         status=PlayerActionStatus.ACTIVE,
+        assigned_crew_member_ids=assigned_crew_member_ids,
         payload={
             "contract_id": contract.id,
             "definition": {
@@ -69,6 +86,13 @@ def accept_contract(
     )
 
     player.active_actions.append(action)
+
+    if assigned_crew_member_ids:
+        mark_crew_members_assigned(
+            player=player,
+            crew_member_ids=assigned_crew_member_ids,
+            action_id=action.id,
+        )
 
     contract.status = ContractStatus.ACCEPTED
     contract.accepted_by_player_id = player.id
