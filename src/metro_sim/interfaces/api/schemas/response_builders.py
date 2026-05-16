@@ -12,6 +12,9 @@ def build_world_response(session: GameSession) -> dict:
         "factions": summary["factions"],
         "events": summary["events"],
         "players": summary["players"],
+        "movements": summary.get("movements", []),
+        "npc_traders": summary.get("npc_traders", {}),
+        "logs": summary.get("logs", []),
     }
 
 

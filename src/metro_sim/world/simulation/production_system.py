@@ -8,8 +8,8 @@ PRODUCTION_INTERVAL_TICKS = 10
 
 PRODUCTION_BY_STATION_TYPE: dict[str, dict[str, int]] = {
     "hansa_station": {
-        "food": 8,
-        "water": 8,
+        "food": 12,
+        "water": 12,
         "trade_goods": 12,
         "parts": 4,
     },
@@ -30,6 +30,7 @@ PRODUCTION_BY_STATION_TYPE: dict[str, dict[str, int]] = {
     },
     "frontier_stronghold": {
         "ammo": 10,
+        "food": 4,
         "parts": 4,
         "water": 3,
     },

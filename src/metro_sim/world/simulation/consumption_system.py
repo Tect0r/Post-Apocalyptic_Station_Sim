@@ -3,7 +3,7 @@ from metro_sim.world.models.world_log_entry import WorldLogEntry, create_world_l
 from metro_sim.world.models.world_state import WorldState
 
 
-CONSUMPTION_INTERVAL_TICKS = 10
+CONSUMPTION_INTERVAL_TICKS = 30
 
 
 def process_consumption_tick(world: WorldState) -> tuple[list[WorldEffect], list[WorldLogEntry]]:
@@ -70,9 +70,9 @@ def calculate_station_consumption(station) -> dict[str, int]:
     # per 100 people per consumption interval
     population_units = population / 100
 
-    food = round(population_units * 2)
-    water = round(population_units * 2)
-    medicine = round(population_units * 0.15)
+    food = round(population_units * 0.5)
+    water = round(population_units * 0.5)
+    medicine = round(population_units * 0.05)
 
     ammo = 0
     if station.station_type in {

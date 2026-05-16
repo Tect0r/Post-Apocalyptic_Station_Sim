@@ -10,16 +10,19 @@
       "active_movement_id": null,
       "rest_until_tick": null,
       "inventory": {
-        "food": 20,
-        "water": 15,
-        "medicine": 3,
-        "trade_goods": 10
+        "food": 30,
+        "water": 25,
+        "medicine": 4,
+        "ammo": 5,
+        "trade_goods": 12,
+        "parts": 4
       },
       "data": {
         "faction_id": "hansa",
+        "trader_role": "regulated_supplier",
         "risk_tolerance": 35,
         "base_risk_tolerance": 35,
-        "max_risk_tolerance": 80,
+        "max_risk_tolerance": 75,
         "profit_risk_factor": 0.2,
         "rest_duration_ticks": 30,
         "preferred_targets": [
@@ -28,9 +31,9 @@
           "tulskaya"
         ],
         "known_market_profit": {
-          "paveletskaya_radial": 20,
-          "dobryninskaya_serpukhovskaya": 35,
-          "tulskaya": 60
+          "paveletskaya_radial": 25,
+          "dobryninskaya_serpukhovskaya": 40,
+          "tulskaya": 55
         }
       }
     },
@@ -44,18 +47,21 @@
       "active_movement_id": null,
       "rest_until_tick": null,
       "inventory": {
-        "food": 20,
-        "water": 15,
+        "food": 8,
+        "water": 10,
         "medicine": 3,
-        "trade_goods": 10
+        "ammo": 25,
+        "trade_goods": 6,
+        "parts": 8
       },
       "data": {
         "faction_id": "independent",
-        "risk_tolerance": 35,
-        "base_risk_tolerance": 35,
-        "max_risk_tolerance": 80,
-        "profit_risk_factor": 0.2,
-        "rest_duration_ticks": 30,
+        "trader_role": "frontier_runner",
+        "risk_tolerance": 55,
+        "base_risk_tolerance": 55,
+        "max_risk_tolerance": 90,
+        "profit_risk_factor": 0.25,
+        "rest_duration_ticks": 45,
         "preferred_targets": [
           "nakhimovsky_prospekt",
           "nagornaya",
@@ -63,9 +69,49 @@
           "paveletskaya_radial"
         ],
         "known_market_profit": {
-          "paveletskaya_radial": 20,
-          "dobryninskaya_serpukhovskaya": 35,
-          "tulskaya": 60
+          "nakhimovsky_prospekt": 10,
+          "nagornaya": 20,
+          "tulskaya": 55,
+          "paveletskaya_radial": 75
+        }
+      }
+    },
+    "trader_tulskaya_scavenger": {
+      "id": "trader_tulskaya_scavenger",
+      "name": "Tulskaya Scavenger Trader",
+      "current_station_id": "tulskaya",
+      "home_station_id": "tulskaya",
+      "status": "idle",
+      "target_station_id": null,
+      "active_movement_id": null,
+      "rest_until_tick": null,
+      "inventory": {
+        "food": 6,
+        "water": 5,
+        "medicine": 1,
+        "ammo": 12,
+        "trade_goods": 8,
+        "parts": 12
+      },
+      "data": {
+        "faction_id": "independent",
+        "trader_role": "scavenger",
+        "risk_tolerance": 45,
+        "base_risk_tolerance": 45,
+        "max_risk_tolerance": 85,
+        "profit_risk_factor": 0.3,
+        "rest_duration_ticks": 35,
+        "preferred_targets": [
+          "dobryninskaya_serpukhovskaya",
+          "paveletskaya_radial",
+          "nagatinskaya",
+          "nagornaya"
+        ],
+        "known_market_profit": {
+          "dobryninskaya_serpukhovskaya": 30,
+          "paveletskaya_radial": 45,
+          "nagatinskaya": 35,
+          "nagornaya": 50
         }
       }
     }

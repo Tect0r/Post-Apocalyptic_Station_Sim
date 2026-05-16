@@ -63,3 +63,12 @@ def test_movement_progress_is_included_in_game_summary():
     summary = build_game_summary(session)
 
     assert "movements" in summary
+
+def test_game_summary_contains_npc_traders():
+    session = create_game_session()
+
+    summary = build_game_summary(session)
+
+    assert "npc_traders" in summary
+    assert summary["npc_traders"]
+    assert "trader_paveletskaya_supply" in summary["npc_traders"]
