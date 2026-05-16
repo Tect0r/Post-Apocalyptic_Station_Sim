@@ -2,9 +2,87 @@ from metro_sim.world.factories.world_factory import create_world
 from metro_sim.world.models.npc_trader import create_npc_trader
 from metro_sim.world.simulation.trader_decision_service import (
     calculate_effective_risk_tolerance,
+    calculate_route_risk,
     evaluate_trader_target,
 )
 
+def test_hansa_trader_has_lower_risk_on_hansa_controlled_route():
+    world = create_world()
+
+    route = world.routes["route_paveletskaya_ring_radial"]
+    route.danger = 30
+    route.condition = 100
+    route.control["hansa"] = 80
+    route.control["bandits"] = 0
+
+    trader = create_npc_trader(
+        name="Hansa Trader",
+        current_station_id="paveletskaya_ring",
+        home_station_id="paveletskaya_ring",
+        data={
+            "faction_id": "hansa"
+        },
+    )
+
+    risk = calculate_route_risk(
+        world=world,
+        route_ids=["route_paveletskaya_ring_radial"],
+        trader=trader,
+    )
+
+    assert risk < 30
+
+def test_hansa_trader_has_higher_risk_on_bandit_controlled_route():
+    world = create_world()
+
+    route = world.routes["route_paveletskaya_ring_radial"]
+    route.danger = 30
+    route.condition = 100
+    route.control["hansa"] = 0
+    route.control["bandits"] = 80
+
+    trader = create_npc_trader(
+        name="Hansa Trader",
+        current_station_id="paveletskaya_ring",
+        home_station_id="paveletskaya_ring",
+        data={
+            "faction_id": "hansa"
+        },
+    )
+
+    risk = calculate_route_risk(
+        world=world,
+        route_ids=["route_paveletskaya_ring_radial"],
+        trader=trader,
+    )
+
+    assert risk > 30
+    
+def test_bandit_trader_has_lower_risk_on_bandit_controlled_route():
+    world = create_world()
+
+    route = world.routes["route_paveletskaya_ring_radial"]
+    route.danger = 30
+    route.condition = 100
+    route.control["hansa"] = 0
+    route.control["bandits"] = 80
+
+    trader = create_npc_trader(
+        name="Bandit Trader",
+        current_station_id="paveletskaya_ring",
+        home_station_id="paveletskaya_ring",
+        data={
+            "faction_id": "bandits"
+        },
+    )
+
+    risk = calculate_route_risk(
+        world=world,
+        route_ids=["route_paveletskaya_ring_radial"],
+        trader=trader,
+    )
+
+    assert risk < 30
 
 def test_expected_profit_increases_effective_risk_tolerance():
     trader = create_npc_trader(

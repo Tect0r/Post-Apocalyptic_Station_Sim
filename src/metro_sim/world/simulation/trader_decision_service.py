@@ -49,6 +49,7 @@ def evaluate_trader_target(
     route_risk = calculate_route_risk(
         world=world,
         route_ids=path_result.route_ids,
+        trader=trader,
     )
 
     effective_risk_tolerance = calculate_effective_risk_tolerance(
@@ -98,6 +99,7 @@ def calculate_route_risk(
     *,
     world: WorldState,
     route_ids: list[str],
+    trader: NpcTrader | None = None,
 ) -> int:
     if not route_ids:
         return 0
@@ -106,8 +108,16 @@ def calculate_route_risk(
 
     for route_id in route_ids:
         route = world.routes[route_id]
-        total_risk += route.danger
-        total_risk += max(0, 100 - route.condition) // 2
+
+        route_risk = route.danger
+        route_risk += max(0, 100 - route.condition) // 2
+        route_risk += calculate_faction_route_risk_modifier(
+            trader=trader,
+            route_control=route.control,
+        )
+
+        route_risk = max(0, route_risk)
+        total_risk += route_risk
 
     return total_risk // len(route_ids)
 
@@ -155,3 +165,56 @@ def evaluation_to_dict(evaluation: TraderTargetEvaluation) -> dict:
         "score": evaluation.score,
         "error": evaluation.error,
     }
+
+def calculate_faction_route_risk_modifier(
+    *,
+    trader: NpcTrader | None,
+    route_control: dict[str, int],
+) -> int:
+    if trader is None:
+        return 0
+
+    trader_faction_id = trader.data.get("faction_id")
+
+    if trader_faction_id is None:
+        return 0
+
+    modifier = 0
+
+    own_control = route_control.get(trader_faction_id, 0)
+    bandit_control = route_control.get("bandits", 0)
+    hansa_control = route_control.get("hansa", 0)
+    polis_control = route_control.get("polis", 0)
+
+    # Own faction controls the route: safer for this trader.
+    if own_control >= 50:
+        modifier -= 15
+    elif own_control >= 25:
+        modifier -= 8
+
+    # Bandit control is dangerous for most traders,
+    # but less dangerous for bandit traders.
+    if bandit_control >= 40 and trader_faction_id != "bandits":
+        modifier += 20
+    elif bandit_control >= 40 and trader_faction_id == "bandits":
+        modifier -= 10
+
+    # Hansa-controlled routes are safer for Hansa and somewhat safer for independents.
+    if hansa_control >= 60:
+        if trader_faction_id == "hansa":
+            modifier -= 12
+        elif trader_faction_id == "independent":
+            modifier -= 4
+        elif trader_faction_id == "bandits":
+            modifier += 10
+
+    # Polis control increases safety for Polis and independents, but not for bandits.
+    if polis_control >= 50:
+        if trader_faction_id == "polis":
+            modifier -= 12
+        elif trader_faction_id == "independent":
+            modifier -= 5
+        elif trader_faction_id == "bandits":
+            modifier += 10
+
+    return modifier
