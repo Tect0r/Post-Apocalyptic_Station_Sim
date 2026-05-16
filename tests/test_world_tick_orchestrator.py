@@ -6,6 +6,17 @@ from metro_sim.world.simulation.movement_system import start_world_movement
 from metro_sim.world.models.npc_trader import create_npc_trader
 
 
+def test_world_tick_processes_production_and_consumption_on_interval():
+    world = create_world()
+    station = world.stations["paveletskaya_ring"]
+
+    station.resources["trade_goods"] = 0
+    world.current_tick = 9
+
+    process_world_tick(world)
+
+    assert station.resources["trade_goods"] > 0
+
 def test_world_tick_updates_market_prices():
     world = create_world()
     station = world.stations["paveletskaya_radial"]

@@ -11,6 +11,8 @@ from metro_sim.world.simulation.faction_system import process_factions_tick
 from metro_sim.world.simulation.movement_system import process_world_movements
 from metro_sim.world.simulation.npc_trader_system import process_npc_traders_tick
 from metro_sim.world.simulation.market_system import process_markets_tick
+from metro_sim.world.simulation.production_system import process_production_tick
+from metro_sim.world.simulation.consumption_system import process_consumption_tick
 
 
 def process_world_tick(world: WorldState) -> WorldTickResult:
@@ -66,6 +68,29 @@ def process_world_tick(world: WorldState) -> WorldTickResult:
     )
     all_logs.extend(pre_event_effect_logs)
 
+    #production
+    production_effects, production_logs = process_production_tick(world)
+    all_effects.extend(production_effects)
+    all_logs.extend(production_logs)
+
+    production_effect_logs = apply_world_effects(
+        world=world,
+        effects=production_effects,
+    )
+    all_logs.extend(production_effect_logs)
+
+    #consumption
+    consumption_effects, consumption_logs = process_consumption_tick(world)
+    all_effects.extend(consumption_effects)
+    all_logs.extend(consumption_logs)
+
+    consumption_effect_logs = apply_world_effects(
+        world=world,
+        effects=consumption_effects,
+    )
+    all_logs.extend(consumption_effect_logs)
+
+    #market
     market_effects, market_logs = process_markets_tick(world)
 
     all_effects.extend(market_effects)

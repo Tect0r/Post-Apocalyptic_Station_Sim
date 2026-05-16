@@ -16,7 +16,8 @@
         "water": 0,
         "medicine": 0,
         "ammo": 0,
-        "trade_goods": 0
+        "trade_goods": 0,
+        "parts": 0
       },
       "stats": {
         "morale": 0,

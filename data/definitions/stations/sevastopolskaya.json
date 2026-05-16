@@ -12,11 +12,12 @@
       "tags": ["frontier", "military", "defensive", "mutant_pressure", "isolated"],
       "population": 520,
       "resources": {
-        "food": 260,
-        "water": 220,
-        "medicine": 35,
-        "ammo": 180,
-        "trade_goods": 60
+        "food": 0,
+        "water": 0,
+        "medicine": 0,
+        "ammo": 0,
+        "trade_goods": 0,
+        "parts": 0
       },
       "stats": {
         "morale": 54,
