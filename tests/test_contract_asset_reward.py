@@ -5,6 +5,7 @@ from metro_sim.core.game_session import advance_tick, create_game_session
 def test_contract_completion_creates_player_asset():
     session = create_game_session()
     player = session.players["player_001"]
+    player.crew.current_location_id = "paveletskaya_ring"
 
     result = accept_contract(
         session=session,
@@ -21,4 +22,4 @@ def test_contract_completion_creates_player_asset():
 
     assert len(player.assets) == 1
     assert player.assets[0].asset_type == "storage_room"
-    assert player.assets[0].station_id == "paveletskaya"
+    assert player.assets[0].station_id == "paveletskaya_ring"

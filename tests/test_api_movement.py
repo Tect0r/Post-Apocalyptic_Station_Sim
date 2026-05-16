@@ -12,7 +12,7 @@ def test_start_crew_movement_via_api():
             "/player/me/movement/start",
             headers=auth["headers"],
             json={
-                "route_id": "route_paveletskaya_hansa_ring",
+                "route_id": "route_paveletskaya_ring_radial",
             },
         )
 
@@ -28,4 +28,4 @@ def test_start_crew_movement_via_api():
         player = player_response.json()
 
         assert player["crew"]["is_traveling"] is True
-        assert player["crew"]["destination_location_id"] == "hansa_ring"
+        assert player["crew"]["destination_location_id"] == "paveletskaya_ring"

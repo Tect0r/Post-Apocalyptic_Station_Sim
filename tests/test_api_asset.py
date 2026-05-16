@@ -24,7 +24,7 @@ def test_add_asset_via_debug_api():
             headers=auth["headers"],
             json={
                 "asset_type": "storage_room",
-                "station_id": "paveletskaya",
+                "station_id": "paveletskaya_ring",
             },
         )
 
@@ -49,7 +49,7 @@ def test_upgrade_asset_via_api():
             headers=auth["headers"],
             json={
                 "asset_type": "storage_room",
-                "station_id": "paveletskaya",
+                "station_id": "paveletskaya_ring",
             },
         )
 

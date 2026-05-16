@@ -1,5 +1,6 @@
 from collections import deque
 from dataclasses import dataclass
+from typing import Any
 
 from metro_sim.world.models.route_state import RouteState
 from metro_sim.world.models.world_state import WorldState
@@ -92,8 +93,14 @@ def build_station_adjacency(
     adjacency: dict[str, list[tuple[str, str]]] = {}
 
     for route_id, route in world.routes.items():
-        from_station_id = route.from_station_id
-        to_station_id = route.to_station_id
+        from_station_id = get_route_value(route, "from_station_id")
+        to_station_id = get_route_value(route, "to_station_id")
+
+        if not isinstance(from_station_id, str) or not from_station_id:
+            continue
+
+        if not isinstance(to_station_id, str) or not to_station_id:
+            continue
 
         if from_station_id not in world.stations:
             continue
@@ -101,11 +108,51 @@ def build_station_adjacency(
         if to_station_id not in world.stations:
             continue
 
-        adjacency.setdefault(from_station_id, []).append((to_station_id, route_id))
-        adjacency.setdefault(to_station_id, []).append((from_station_id, route_id))
+        if is_route_blocked(route):
+            continue
+
+        adjacency.setdefault(from_station_id, [])
+
+        if (to_station_id, route_id) not in adjacency[from_station_id]:
+            adjacency[from_station_id].append((to_station_id, route_id))
+
+        if is_route_bidirectional(route):
+            adjacency.setdefault(to_station_id, [])
+
+            if (from_station_id, route_id) not in adjacency[to_station_id]:
+                adjacency[to_station_id].append((from_station_id, route_id))
 
     return adjacency
 
+
+def get_route_value(route: Any, key: str, default: Any = None) -> Any:
+    if isinstance(route, dict):
+        return route.get(key, default)
+
+    return getattr(route, key, default)
+
+
+def is_route_blocked(route: Any) -> bool:
+    status = get_route_value(route, "status", "open")
+
+    if status in {"blocked", "closed", "destroyed"}:
+        return True
+
+    tags = get_route_value(route, "tags", []) or []
+
+    if "blocked" in tags or "closed" in tags:
+        return True
+
+    condition = get_route_value(route, "condition", 100)
+
+    if isinstance(condition, int | float) and condition <= 0:
+        return True
+
+    return False
+
+
+def is_route_bidirectional(route: Any) -> bool:
+    return bool(get_route_value(route, "bidirectional", True))
 
 def calculate_total_travel_time(
     *,

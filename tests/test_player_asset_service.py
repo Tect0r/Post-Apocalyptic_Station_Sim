@@ -15,7 +15,7 @@ def test_add_player_asset_to_station():
         session=session,
         player_id="player_001",
         asset_type="storage_room",
-        station_id="paveletskaya",
+        station_id="paveletskaya_radial",
     )
 
     player = session.players["player_001"]
@@ -23,7 +23,7 @@ def test_add_player_asset_to_station():
     assert result.success is True
     assert len(player.assets) == 1
     assert player.assets[0].asset_type == "storage_room"
-    assert player.assets[0].station_id == "paveletskaya"
+    assert player.assets[0].station_id == "paveletskaya_radial"
     assert player.assets[0].level == 1
 
 
@@ -34,7 +34,7 @@ def test_upgrade_player_asset_increases_level():
         session=session,
         player_id="player_001",
         asset_type="storage_room",
-        station_id="paveletskaya",
+        station_id="paveletskaya_radial",
     )
 
     asset_id = add_result.data["asset_id"]
@@ -59,7 +59,7 @@ def test_damage_player_asset_changes_condition_and_status():
         session=session,
         player_id="player_001",
         asset_type="storage_room",
-        station_id="paveletskaya",
+        station_id="paveletskaya_radial",
     )
 
     asset_id = add_result.data["asset_id"]
@@ -86,7 +86,7 @@ def test_repair_player_asset_increases_condition():
         session=session,
         player_id="player_001",
         asset_type="storage_room",
-        station_id="paveletskaya",
+        station_id="paveletskaya_radial",
     )
 
     asset_id = add_result.data["asset_id"]

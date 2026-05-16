@@ -6,6 +6,9 @@ from metro_sim.world.models.route_state import RouteState
 from metro_sim.world.models.station_state import StationState
 from metro_sim.world.models.world_state import WorldState
 from metro_sim.world.models.npc_trader import NpcTrader
+from metro_sim.contracts.factories.contract_factory import create_contract_state
+from metro_sim.contracts.models.contract_state import ContractState
+from metro_sim.world.models.faction_state import FactionState
 
 
 DEFINITIONS_ROOT = Path("data/definitions")
@@ -48,6 +51,7 @@ def create_world_from_manifest(
         stations=stations,
         routes=routes,
         factions=factions,
+        npc_traders=npc_traders,
     )
 
     return WorldState(
@@ -75,6 +79,9 @@ def load_station_definitions(
             if node_id in stations:
                 raise ValueError(f"Duplicate station node id: {node_id}")
 
+            if node_data is None:
+                node_data = {}
+
             node_data = dict(node_data)
             node_data.setdefault("id", node_id)
             node_data.setdefault("complex_id", data.get("complex_id"))
@@ -100,6 +107,9 @@ def load_route_definitions(
             if route_id in routes:
                 raise ValueError(f"Duplicate route id: {route_id}")
 
+            if route_data is None:
+                route_data = {}
+
             route_data = dict(route_data)
             route_data.setdefault("id", route_id)
 
@@ -113,9 +123,22 @@ def load_faction_definitions(
     *,
     base_dir: Path,
     faction_file: str,
-) -> dict[str, Any]:
+) -> dict[str, FactionState]:
     data = read_json(base_dir / faction_file)
-    return data.get("factions", {})
+    faction_data_by_id = data.get("factions", {})
+
+    factions: dict[str, FactionState] = {}
+
+    for faction_id, faction_data in faction_data_by_id.items():
+        if faction_id in factions:
+            raise ValueError(f"Duplicate faction id: {faction_id}")
+
+        faction_data = dict(faction_data)
+        faction_data.setdefault("id", faction_id)
+
+        factions[faction_id] = FactionState(**faction_data)
+
+    return factions
 
 
 def validate_world_definitions(
@@ -246,6 +269,9 @@ def load_npc_trader_definitions(
     for trader_id, trader_data in trader_data_by_id.items():
         if trader_id in traders:
             raise ValueError(f"Duplicate NPC trader id: {trader_id}")
+            
+        if trader_data is None:
+            trader_data = {}
 
         trader_data = dict(trader_data)
         trader_data.setdefault("id", trader_id)
@@ -301,9 +327,23 @@ def load_contract_definitions(
     *,
     base_dir: Path,
     contract_file: str | None,
-) -> dict[str, Any]:
+) -> dict[str, ContractState]:
     if contract_file is None:
         return {}
 
     data = read_json(base_dir / contract_file)
-    return data.get("contracts", {})
+    contract_data_by_id = data.get("contracts", {})
+
+    contracts: dict[str, ContractState] = {}
+
+    for contract_id, contract_data in contract_data_by_id.items():
+        if contract_id in contracts:
+            raise ValueError(f"Duplicate contract id: {contract_id}")
+
+        contracts[contract_id] = create_contract_state(
+            contract_id=contract_id,
+            contract_data=contract_data,
+            created_tick=0,
+        )
+
+    return contracts

@@ -162,7 +162,7 @@ def test_save_and_load_preserves_crew_movement_state():
     start_crew_movement(
         session=session,
         player_id="player_001",
-        route_id="route_paveletskaya_hansa_ring",
+        route_id="route_paveletskaya_ring_radial",
     )
 
     save_game_session(session, "test_crew_movement")
@@ -171,7 +171,7 @@ def test_save_and_load_preserves_crew_movement_state():
     loaded_player = loaded_session.players["player_001"]
 
     assert loaded_player.crew.current_location_id == "paveletskaya_radial"
-    assert loaded_player.crew.destination_location_id == "hansa_ring"
+    assert loaded_player.crew.destination_location_id == "paveletskaya_ring"
     assert loaded_player.crew.is_traveling is True
     assert len(loaded_player.active_actions) == 1
 
@@ -214,15 +214,26 @@ def test_save_and_load_preserves_expanded_player_assets():
 def test_save_and_load_preserves_market_stock_after_trade():
     session = create_game_session()
     station = session.world.stations["paveletskaya_radial"]
+    player = session.players["player_001"]
+
+    station.market.setdefault("stock", {})
+    station.market["stock"]["food"] = 10
+
+    station.market.setdefault("item_prices", {})
+    station.market["item_prices"]["food"] = 1
+
+    player.inventory.items["currency"] = 100
 
     stock_before = station.market["stock"]["food"]
 
-    buy_market_item(
+    result = buy_market_item(
         session=session,
         player_id="player_001",
         item_id="food",
         amount=2,
     )
+
+    assert result.success is True
 
     save_game_session(session, "test_market_stock")
     loaded_session = load_game_session("test_market_stock")

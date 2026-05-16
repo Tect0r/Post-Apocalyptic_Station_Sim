@@ -16,7 +16,7 @@ def test_start_action_can_assign_crew_members():
         StartPlayerActionRequest(
             player_id="player_001",
             action_type=PlayerActionType.SUPPORT_MILITIA,
-            target_id="paveletskaya",
+            target_id="paveletskaya_radial",
             assigned_crew_member_ids=["crew_001", "crew_002"],
         ),
     )
@@ -45,7 +45,7 @@ def test_start_action_fails_for_busy_crew_member():
         StartPlayerActionRequest(
             player_id="player_001",
             action_type=PlayerActionType.SUPPORT_MILITIA,
-            target_id="paveletskaya",
+            target_id="paveletskaya_radial",
             assigned_crew_member_ids=["crew_001"],
         ),
     )
@@ -55,7 +55,7 @@ def test_start_action_fails_for_busy_crew_member():
         StartPlayerActionRequest(
             player_id="player_001",
             action_type=PlayerActionType.REPAIR_WATER_FILTER,
-            target_id="paveletskaya",
+            target_id="paveletskaya_radial",
             assigned_crew_member_ids=["crew_001"],
         ),
     )
@@ -72,7 +72,7 @@ def test_assigned_crew_members_are_released_after_action_completion():
         StartPlayerActionRequest(
             player_id="player_001",
             action_type=PlayerActionType.SUPPORT_MILITIA,
-            target_id="paveletskaya",
+            target_id="paveletskaya_radial",
             assigned_crew_member_ids=["crew_001"],
         ),
     )

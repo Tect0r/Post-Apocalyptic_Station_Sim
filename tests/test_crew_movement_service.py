@@ -10,7 +10,7 @@ def test_start_crew_movement_creates_movement_action():
     result = start_crew_movement(
         session=session,
         player_id="player_001",
-        route_id="route_paveletskaya_hansa_ring",
+        route_id="route_paveletskaya_ring_radial",
     )
 
     player = session.players["player_001"]
@@ -18,7 +18,7 @@ def test_start_crew_movement_creates_movement_action():
     assert result.success is True
     assert result.message == "crew_movement_started"
     assert player.crew.is_traveling is True
-    assert player.crew.destination_location_id == "hansa_ring"
+    assert player.crew.destination_location_id == "paveletskaya_ring"
     assert len(player.active_actions) == 1
     assert player.active_actions[0].action_type == PlayerActionType.MOVE_CREW
 
@@ -29,7 +29,7 @@ def test_crew_movement_completes_and_updates_location():
     start_crew_movement(
         session=session,
         player_id="player_001",
-        route_id="route_paveletskaya_hansa_ring",
+        route_id="route_paveletskaya_ring_radial",
     )
 
     player = session.players["player_001"]
@@ -38,22 +38,35 @@ def test_crew_movement_completes_and_updates_location():
     while session.world.current_tick < action.completes_at_tick:
         advance_tick(session)
 
-    assert player.crew.current_location_id == "hansa_ring"
+    assert player.crew.current_location_id == "paveletskaya_ring"
     assert player.crew.destination_location_id is None
     assert player.crew.is_traveling is False
 
 
-def test_start_crew_movement_fails_if_route_not_connected():
+def test_start_crew_movement_succeeds_for_connected_route():
     session = create_game_session()
 
     result = start_crew_movement(
         session=session,
         player_id="player_001",
-        route_id="route_hansa_ring_polis",
+        route_id="route_paveletskaya_ring_radial",
+    )
+
+    assert result.success is True
+    assert result.message == "crew_movement_started"
+    assert result.data["route_id"] == "route_paveletskaya_ring_radial"
+
+def test_start_crew_movement_fails_if_route_not_found():
+    session = create_game_session()
+
+    result = start_crew_movement(
+        session=session,
+        player_id="player_001",
+        route_id="unknown_route",
     )
 
     assert result.success is False
-    assert result.message == "route_not_connected_to_current_location"
+    assert result.message == "route_not_found"
 
 def test_crew_members_travel_with_crew_movement():
     session = create_game_session()
@@ -61,7 +74,7 @@ def test_crew_members_travel_with_crew_movement():
     start_crew_movement(
         session=session,
         player_id="player_001",
-        route_id="route_paveletskaya_hansa_ring",
+        route_id="route_paveletskaya_ring_radial",
     )
 
     player = session.players["player_001"]
@@ -77,7 +90,7 @@ def test_crew_members_travel_with_crew_movement():
         advance_tick(session)
 
     assert all(
-        member.current_location_id == "hansa_ring"
+        member.current_location_id == "paveletskaya_ring"
         for member in player.crew.crew_members
     )
 

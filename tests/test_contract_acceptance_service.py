@@ -75,8 +75,8 @@ def test_accept_route_contract_fails_when_route_not_connected():
     result = accept_contract(
         session=session,
         player_id="player_001",
-        contract_id="contract_secure_hansa_route",
+        contract_id="contract_secure_paveletskaya_transfer",
     )
 
-    # This should pass if the route is connected to Paveletskaya.
+    # This should pass if the route is connected to paveletskaya_radial.
     assert result.success is True

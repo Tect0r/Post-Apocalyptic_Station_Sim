@@ -18,7 +18,7 @@ def test_player_can_complete_station_action():
         StartPlayerActionRequest(
             player_id="player_001",
             action_type=PlayerActionType.SUPPORT_MILITIA,
-            target_id="paveletskaya",
+            target_id="paveletskaya_radial",
         ),
     )
 
@@ -29,7 +29,7 @@ def test_player_can_complete_station_action():
 
     assert len(player.active_actions) == 0
     assert player.crew.fatigue > 10
-    assert session.world.stations["paveletskaya"].pressure["militia_support"] > 0
+    assert session.world.stations["paveletskaya_radial"].pressure["militia_support"] > 0
 
 
 def test_player_can_complete_route_action():
@@ -41,7 +41,7 @@ def test_player_can_complete_route_action():
         StartPlayerActionRequest(
             player_id="player_001",
             action_type=PlayerActionType.SECURE_ROUTE,
-            target_id="route_paveletskaya_hansa_ring",
+            target_id="route_paveletskaya_ring_radial",
         ),
     )
 
@@ -50,10 +50,10 @@ def test_player_can_complete_route_action():
     action = player.active_actions[0]
     complete_action(session, action.duration_ticks)
 
-    route = session.world.routes["route_paveletskaya_hansa_ring"]
+    route = session.world.routes["route_paveletskaya_ring_radial"]
 
     assert len(player.active_actions) == 0
-    assert route.modifiers["pressure"]["security"] > 0
+    assert route.pressure["security"] > 0
 
 
 def test_player_can_gain_asset_from_action():
@@ -65,7 +65,7 @@ def test_player_can_gain_asset_from_action():
         StartPlayerActionRequest(
             player_id="player_001",
             action_type=PlayerActionType.RENT_STORAGE,
-            target_id="paveletskaya",
+            target_id="paveletskaya_radial",
         ),
     )
 
@@ -76,7 +76,7 @@ def test_player_can_gain_asset_from_action():
 
     assert len(player.assets) == 1
     assert player.assets[0].asset_type == "storage_room"
-    assert player.assets[0].station_id == "paveletskaya"
+    assert player.assets[0].station_id == "paveletskaya_radial"
 
 
 def test_player_can_gain_inventory_from_action():
@@ -90,7 +90,7 @@ def test_player_can_gain_inventory_from_action():
         StartPlayerActionRequest(
             player_id="player_001",
             action_type=PlayerActionType.START_STALKER_EXPEDITION,
-            target_id="paveletskaya",
+            target_id="paveletskaya_radial",
         ),
     )
 

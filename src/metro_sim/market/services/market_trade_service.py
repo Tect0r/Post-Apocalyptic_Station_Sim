@@ -110,7 +110,12 @@ def sell_market_item(
 
     player.inventory.items[item_id] = player_amount - amount
     player.inventory.items[CURRENCY_ITEM_ID] = player.inventory.items.get(CURRENCY_ITEM_ID, 0) + total_value
+    
+    if station.market is None:
+        station.market = {}
+    
     station.market.setdefault("stock", {})
+
     station.market["stock"][item_id] = station.market["stock"].get(item_id, 0) + amount
 
     return ActionResult(

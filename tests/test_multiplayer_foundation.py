@@ -42,7 +42,7 @@ def test_two_players_influence_same_station_pressure():
                 headers=user_a["headers"],
                 json={
                     "action_type": "support_militia",
-                    "target_id": "paveletskaya",
+                    "target_id": "paveletskaya_radial",
                 },
             )
 
@@ -51,7 +51,7 @@ def test_two_players_influence_same_station_pressure():
                 headers=user_b["headers"],
                 json={
                     "action_type": "hide_contraband",
-                    "target_id": "paveletskaya",
+                    "target_id": "paveletskaya_radial",
                 },
             )
 
@@ -77,7 +77,7 @@ def test_two_players_influence_same_station_pressure():
             assert world_response.status_code == 200
 
             station_response = client.get(
-                "/stations/paveletskaya",
+                "/stations/paveletskaya_radial",
                 headers=user_a["headers"],
             )
 

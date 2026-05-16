@@ -14,7 +14,7 @@ def test_completed_action_is_added_to_completed_history():
         StartPlayerActionRequest(
             player_id="player_001",
             action_type=PlayerActionType.SUPPORT_MILITIA,
-            target_id="paveletskaya",
+            target_id="paveletskaya_radial",
         ),
     )
 

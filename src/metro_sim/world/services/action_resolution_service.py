@@ -1,4 +1,4 @@
-from uuid import uuid4
+from typing import Any
 
 from metro_sim.player.actions.player_action import PlayerAction
 from metro_sim.player.models.player_asset import PlayerAsset
@@ -106,15 +106,52 @@ def apply_route_pressure_effects(
     if action.target_type != "route":
         return
 
-    if action.target_id not in world.routes:
+    if not action.target_id:
         return
 
-    route = world.routes[action.target_id]
-    pressure = route.modifiers.setdefault("pressure", {})
+    route = world.routes.get(action.target_id)
+
+    if route is None:
+        return
+
+    pressure = get_or_create_route_pressure(route)
 
     for pressure_key, delta in route_pressure_effects.items():
+        if not isinstance(pressure_key, str) or not pressure_key:
+            continue
+
+        if not isinstance(delta, int | float):
+            continue
+
         current_value = pressure.get(pressure_key, 0)
-        pressure[pressure_key] = max(0, min(100, current_value + delta))
+
+        if not isinstance(current_value, int | float):
+            current_value = 0
+
+        pressure[pressure_key] = clamp_pressure_value(current_value + delta)
+
+
+def get_or_create_route_pressure(route: Any) -> dict[str, int]:
+    if isinstance(route, dict):
+        pressure = route.get("pressure")
+
+        if not isinstance(pressure, dict):
+            pressure = {}
+            route["pressure"] = pressure
+
+        return pressure
+
+    pressure = getattr(route, "pressure", None)
+
+    if not isinstance(pressure, dict):
+        pressure = {}
+        setattr(route, "pressure", pressure)
+
+    return pressure
+
+
+def clamp_pressure_value(value: int | float) -> int:
+    return int(max(0, min(100, value)))
 
 
 def apply_inventory_effects(player: PlayerState, inventory_effects: dict[str, int]) -> None:

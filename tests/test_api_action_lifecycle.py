@@ -13,7 +13,7 @@ def test_cancel_action_via_api():
             headers=auth["headers"],
             json={
                 "action_type": "support_militia",
-                "target_id": "paveletskaya",
+                "target_id": "paveletskaya_radial",
             },
         )
 

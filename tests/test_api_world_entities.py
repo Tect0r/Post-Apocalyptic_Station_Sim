@@ -10,14 +10,14 @@ def test_get_stations_returns_stations():
 
     assert response.status_code == 200
     assert "stations" in response.json()
-    assert "paveletskaya" in response.json()["stations"]
+    assert "paveletskaya_ring" in response.json()["stations"]
 
 
 def test_get_station_returns_single_station():
-    response = client.get("/stations/paveletskaya")
+    response = client.get("/stations/paveletskaya_ring")
 
     assert response.status_code == 200
-    assert response.json()["id"] == "paveletskaya"
+    assert response.json()["id"] == "paveletskaya_ring"
 
 
 def test_get_missing_station_returns_404():

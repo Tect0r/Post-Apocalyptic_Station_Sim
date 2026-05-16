@@ -25,4 +25,4 @@ def test_completed_player_action_adds_station_pressure():
 
     resolve_completed_player_actions(session.world, session.players)
 
-    assert station.pressure["militia_support"] == 8
+    assert station.pressure["militia_support"] == 13

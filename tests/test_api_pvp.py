@@ -12,7 +12,7 @@ def test_pvp_station_pressure_via_api():
             "/pvp/station-pressure",
             headers=auth["headers"],
             json={
-                "station_id": "paveletskaya",
+                "station_id": "paveletskaya_radial",
                 "pressure_key": "sabotage",
                 "amount": 5,
             },
@@ -28,7 +28,7 @@ def test_get_pvp_impacts_via_api():
             "/pvp/station-pressure",
             headers=auth["headers"],
             json={
-                "station_id": "paveletskaya",
+                "station_id": "paveletskaya_radial",
                 "pressure_key": "sabotage",
                 "amount": 5,
             },

@@ -12,8 +12,8 @@ def test_start_player_action_via_api():
             "/player/me/actions",
             headers=auth["headers"],
             json={
-                "action_type": "support_militia",
-                "target_id": "paveletskaya",
+                "action_type": "hide_contraband",
+                "target_id": "paveletskaya_radial",
             },
         )
 
@@ -23,7 +23,7 @@ def test_start_player_action_via_api():
 
         assert data["success"] is True
         assert data["message"] == "player_action_started"
-        assert data["data"]["action_type"] == "support_militia"
+        assert data["data"]["action_type"] == "hide_contraband"
 
 
 def test_start_player_action_rejects_unknown_action_type():
@@ -33,7 +33,7 @@ def test_start_player_action_rejects_unknown_action_type():
             headers=auth["headers"],
             json={
                 "action_type": "unknown_action",
-                "target_id": "paveletskaya",
+                "target_id": "paveletskaya_radial",
             },
         )
 
@@ -62,7 +62,7 @@ def test_start_player_action_requires_authentication():
         "/player/me/actions",
         json={
             "action_type": "support_militia",
-            "target_id": "paveletskaya",
+            "target_id": "paveletskaya_radial",
         },
     )
 

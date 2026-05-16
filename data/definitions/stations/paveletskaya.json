@@ -12,9 +12,9 @@
       "tags": ["hansa", "ring_line", "trade", "station_complex"],
       "population": 600,
       "resources": {
-        "food": 0,
+        "food": 5,
         "water": 0,
-        "medicine": 0,
+        "medicine": 5,
         "ammo": 0,
         "trade_goods": 0,
         "parts": 0
@@ -67,9 +67,9 @@
       "tags": ["independent", "frontier", "mutant_pressure", "station_complex"],
       "population": 420,
       "resources": {
-        "food": 0,
+        "food": 5,
         "water": 0,
-        "medicine": 0,
+        "medicine": 5,
         "ammo": 0,
         "trade_goods": 0,
         "parts": 0

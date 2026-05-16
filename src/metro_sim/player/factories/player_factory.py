@@ -35,11 +35,12 @@ def create_initial_player(
         reputation=ReputationState(
             values={
                 "paveletskaya_radial": 0,
-                "polis": 0,
-                "hansa_ring": 0,
+                "paveletskaya_ring": 0,
+                "sevastopolskaya": 0,
                 "hansa": 0,
                 "bandits": 0,
                 "independent": 0,
+                "polis": 0,
             }
         ),
         assets=[],

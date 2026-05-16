@@ -10,18 +10,21 @@ def test_add_station_pressure_increases_value():
     world = create_world()
     station = world.stations["paveletskaya_radial"]
 
+    start_value = station.pressure["militia_support"]
+
     add_station_pressure(station, "militia_support", 8)
 
-    assert station.pressure["militia_support"] == 8
-
+    assert station.pressure["militia_support"] == start_value + 8
 
 def test_station_pressure_is_capped_at_100():
     world = create_world()
     station = world.stations["paveletskaya_radial"]
 
-    add_station_pressure(station, "sabotage", 150)
+    station.pressure["militia_support"] = 95
 
-    assert station.pressure["sabotage"] == 100
+    add_station_pressure(station, "militia_support", 20)
+
+    assert station.pressure["militia_support"] == 100
 
 
 def test_reduce_station_pressure_does_not_go_below_zero():

@@ -14,7 +14,7 @@ def test_cancel_player_action_moves_action_to_completed_history():
         StartPlayerActionRequest(
             player_id="player_001",
             action_type=PlayerActionType.SUPPORT_MILITIA,
-            target_id="paveletskaya",
+            target_id="paveletskaya_radial",
         ),
     )
 

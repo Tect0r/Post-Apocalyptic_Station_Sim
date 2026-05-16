@@ -13,6 +13,6 @@ def test_loaded_contract_has_expected_fields():
     contract = world.contracts["contract_support_paveletskaya_militia"]
 
     assert contract.title == "Support Paveletskaya Militia"
-    assert contract.target_id == "paveletskaya"
+    assert contract.target_id == "paveletskaya_radial"
     assert contract.action_type == "support_militia"
     assert contract.duration_ticks > 0

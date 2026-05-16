@@ -10,7 +10,7 @@ class CrewState:
     morale: int
     fatigue: int
     specialization: str
-    current_location_id: str = "paveletskaya"
+    current_location_id: str = "paveletskaya_radial"
     destination_location_id: str | None = None
     is_traveling: bool = False
     crew_members: list[CrewMemberState] = field(default_factory=list)

@@ -17,7 +17,7 @@ def test_player_can_damage_other_player_asset_indirectly():
         session=session,
         player_id="player_002",
         asset_type="storage_room",
-        station_id="paveletskaya",
+        station_id="paveletskaya_radial",
     )
 
     asset_id = add_result.data["asset_id"]
@@ -43,7 +43,7 @@ def test_player_cannot_damage_own_asset_indirectly():
         session=session,
         player_id="player_001",
         asset_type="storage_room",
-        station_id="paveletskaya",
+        station_id="paveletskaya_radial",
     )
 
     result = damage_player_asset_indirectly(

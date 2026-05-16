@@ -13,7 +13,7 @@ def test_start_player_action_adds_active_action_to_player():
         StartPlayerActionRequest(
             player_id="player_001",
             action_type=PlayerActionType.SUPPORT_MILITIA,
-            target_id="paveletskaya",
+            target_id="paveletskaya_radial",
         ),
     )
 
@@ -27,7 +27,7 @@ def test_start_player_action_adds_active_action_to_player():
 
     assert action.action_type == PlayerActionType.SUPPORT_MILITIA
     assert action.target_type == "station"
-    assert action.target_id == "paveletskaya"
+    assert action.target_id == "paveletskaya_radial"
     assert action.status == PlayerActionStatus.ACTIVE
 
 def test_start_player_action_pays_action_cost():
@@ -42,7 +42,7 @@ def test_start_player_action_pays_action_cost():
         StartPlayerActionRequest(
             player_id="player_001",
             action_type=PlayerActionType.SUPPORT_MILITIA,
-            target_id="paveletskaya",
+            target_id="paveletskaya_radial",
         ),
     )
 
@@ -58,7 +58,7 @@ def test_start_player_action_fails_for_missing_player():
         StartPlayerActionRequest(
             player_id="missing_player",
             action_type=PlayerActionType.SUPPORT_MILITIA,
-            target_id="paveletskaya",
+            target_id="paveletskaya_radial",
         ),
     )
 
@@ -92,7 +92,7 @@ def test_start_player_action_fails_when_resources_are_missing():
         StartPlayerActionRequest(
             player_id="player_001",
             action_type=PlayerActionType.SUPPORT_MILITIA,
-            target_id="paveletskaya",
+            target_id="paveletskaya_radial",
         ),
     )
 

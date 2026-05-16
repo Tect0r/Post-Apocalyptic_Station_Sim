@@ -100,10 +100,15 @@ def build_game_summary(session: GameSession) -> dict:
                 "id": route.id,
                 "from_station_id": route.from_station_id,
                 "to_station_id": route.to_station_id,
+                "route_type": route.route_type,
                 "distance": route.distance,
+                "travel_time_ticks": route.travel_time_ticks,
                 "danger": route.danger,
-                "status": route.status,
-                "modifiers": route.modifiers,
+                "traffic": route.traffic,
+                "condition": route.condition,
+                "control": route.control,
+                "pressure": route.pressure,
+                "tags": route.tags,
             }
             for route_id, route in session.world.routes.items()
         },
@@ -120,11 +125,17 @@ def build_game_summary(session: GameSession) -> dict:
         "events": [
             {
                 "id": event.id,
-                "tick": event.tick,
-                "station_id": event.station_id,
                 "event_type": event.event_type,
+                "target_type": event.target_type,
+                "target_id": event.target_id,
+                "started_at_tick": event.started_at_tick,
+                "status": event.status,
                 "severity": event.severity,
-                "description_key": event.description_key,
+                "causes": event.causes,
+                "data": event.data,
+                "duration_ticks": event.duration_ticks,
+                "ends_at_tick": event.ends_at_tick,
+                "current_phase": event.current_phase,
             }
             for event in session.world.events[-10:]
         ],

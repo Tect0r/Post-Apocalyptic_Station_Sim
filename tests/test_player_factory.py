@@ -26,7 +26,7 @@ def test_create_initial_player_has_reputation():
     player = create_initial_player()
 
     assert isinstance(player.reputation, ReputationState)
-    assert player.reputation.values["paveletskaya"] == 0
+    assert player.reputation.values["paveletskaya_ring"] == 0
     assert player.reputation.values["hansa"] == 0
     assert player.reputation.values["bandits"] == 0
 

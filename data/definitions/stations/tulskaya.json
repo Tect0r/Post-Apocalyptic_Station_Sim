@@ -12,9 +12,9 @@
       "tags": ["outpost", "transit", "low_population", "unstable"],
       "population": 120,
       "resources": {
-        "food": 0,
+        "food": 5,
         "water": 0,
-        "medicine": 0,
+        "medicine": 5,
         "ammo": 0,
         "trade_goods": 0,
         "parts": 0
