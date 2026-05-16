@@ -69,6 +69,11 @@ def process_world_movements(
 
         movement.status = "completed"
 
+        apply_movement_completion_to_actor(
+            world=world,
+            movement=movement,
+        )
+
         logs.append(
             create_world_log_entry(
                 tick=world.current_tick,
@@ -93,3 +98,19 @@ def process_world_movements(
         )
 
     return logs
+
+def apply_movement_completion_to_actor(
+    *,
+    world: WorldState,
+    movement: WorldMovement,
+) -> None:
+    if movement.actor_type == "npc_trader":
+        trader = world.npc_traders.get(movement.actor_id)
+
+        if trader is None:
+            return
+
+        trader.current_station_id = movement.to_station_id
+        trader.target_station_id = None
+        trader.active_movement_id = None
+        trader.status = "idle"

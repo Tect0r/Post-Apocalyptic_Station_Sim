@@ -9,6 +9,7 @@ from metro_sim.world.simulation.active_event_system import process_active_events
 from metro_sim.world.simulation.snapshot_system import maybe_create_world_snapshot
 from metro_sim.world.simulation.faction_system import process_factions_tick
 from metro_sim.world.simulation.movement_system import process_world_movements
+from metro_sim.world.simulation.npc_trader_system import process_npc_traders_tick
 
 
 def process_world_tick(world: WorldState) -> WorldTickResult:
@@ -20,6 +21,9 @@ def process_world_tick(world: WorldState) -> WorldTickResult:
 
     movement_logs = process_world_movements(world)
     all_logs.extend(movement_logs)
+
+    npc_trader_logs = process_npc_traders_tick(world)
+    all_logs.extend(npc_trader_logs)
 
     # 1. Station systems generate pre-event effects.
     for station_id, station in world.stations.items():

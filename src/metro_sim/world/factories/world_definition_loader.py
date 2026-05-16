@@ -5,6 +5,7 @@ from typing import Any
 from metro_sim.world.models.route_state import RouteState
 from metro_sim.world.models.station_state import StationState
 from metro_sim.world.models.world_state import WorldState
+from metro_sim.world.factories.npc_trader_factory import create_initial_npc_traders
 
 
 DEFINITIONS_ROOT = Path("data/definitions")
@@ -50,6 +51,7 @@ def create_world_from_manifest(
         routes=routes,
         factions=factions,
         contracts=contracts,
+        npc_traders=create_initial_npc_traders(),
     )
 
 

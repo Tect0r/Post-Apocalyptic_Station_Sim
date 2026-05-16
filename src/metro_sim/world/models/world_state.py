@@ -4,6 +4,7 @@ from metro_sim.world.models.world_log_entry import WorldLogEntry
 from metro_sim.world.models.world_event import WorldEvent
 from metro_sim.world.models.world_snapshot import WorldSnapshot
 from metro_sim.world.models.world_movement import WorldMovement
+from metro_sim.world.models.npc_trader import NpcTrader
 
 
 @dataclass
@@ -18,3 +19,4 @@ class WorldState:
     logs: list[WorldLogEntry] = field(default_factory=list)
     snapshots: list[WorldSnapshot] = field(default_factory=list)
     movements: list[WorldMovement] = field(default_factory=list)
+    npc_traders: dict[str, NpcTrader] = field(default_factory=dict)

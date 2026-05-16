@@ -3,7 +3,33 @@ from metro_sim.world.simulation.tick_orchestrator import process_world_tick
 from metro_sim.world.models.world_event import create_world_event
 from metro_sim.world.simulation.snapshot_system import SNAPSHOT_INTERVAL_TICKS
 from metro_sim.world.simulation.movement_system import start_world_movement
+from metro_sim.world.models.npc_trader import create_npc_trader
 
+
+def test_world_tick_processes_npc_traders():
+    world = create_world()
+
+    trader = create_npc_trader(
+        name="Test Trader",
+        current_station_id="paveletskaya_ring",
+        home_station_id="paveletskaya_ring",
+        data={
+            "preferred_targets": ["paveletskaya_radial"]
+        },
+    )
+
+    world.npc_traders = {
+        trader.id: trader
+    }
+
+    process_world_tick(world)
+
+    assert trader.status == "traveling"
+    assert len(world.movements) == 1
+    assert any(
+        log.category == "npc_trader_movement_started"
+        for log in world.logs
+    )
 
 def test_world_tick_processes_completed_movements():
     world = create_world()
