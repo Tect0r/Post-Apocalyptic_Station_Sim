@@ -45,8 +45,16 @@
       "market": {
         "market_type": "weak_local_trade",
         "activity": 20,
-        "price_level": 135
-      }
+        "price_level": 125,
+        "item_prices": {
+          "food": 10,
+          "water": 8,
+          "medicine": 30,
+          "ammo": 20,
+          "trade_goods": 15,
+          "parts": 25
+        }
+      }   
     }
   }
 }

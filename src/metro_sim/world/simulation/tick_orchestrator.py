@@ -10,6 +10,7 @@ from metro_sim.world.simulation.snapshot_system import maybe_create_world_snapsh
 from metro_sim.world.simulation.faction_system import process_factions_tick
 from metro_sim.world.simulation.movement_system import process_world_movements
 from metro_sim.world.simulation.npc_trader_system import process_npc_traders_tick
+from metro_sim.world.simulation.market_system import process_markets_tick
 
 
 def process_world_tick(world: WorldState) -> WorldTickResult:
@@ -58,6 +59,23 @@ def process_world_tick(world: WorldState) -> WorldTickResult:
         effects=all_effects,
     )
     all_logs.extend(pre_event_effect_logs)
+
+    pre_event_effect_logs = apply_world_effects(
+        world=world,
+        effects=all_effects,
+    )
+    all_logs.extend(pre_event_effect_logs)
+
+    market_effects, market_logs = process_markets_tick(world)
+
+    all_effects.extend(market_effects)
+    all_logs.extend(market_logs)
+
+    market_effect_logs = apply_world_effects(
+        world=world,
+        effects=market_effects,
+    )
+    all_logs.extend(market_effect_logs)
 
     active_event_effects, active_event_logs = process_active_events(world)
 

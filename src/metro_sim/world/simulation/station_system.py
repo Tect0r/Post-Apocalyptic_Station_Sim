@@ -18,7 +18,12 @@ def process_station_tick(
     logs = []
 
     effects.extend(create_pressure_decay_effects(station))
-    effects.extend(create_basic_station_drift_effects(station))
+
+    if station.inhabited:
+        effects.extend(create_inhabited_station_need_effects(station))
+        effects.extend(create_basic_station_drift_effects(station))
+    else:
+        effects.extend(create_abandoned_station_effects(station))
 
     logs.append(
         create_world_log_entry(
@@ -29,6 +34,9 @@ def process_station_tick(
             target_id=station.id,
             importance="debug",
             data={
+                "inhabited": station.inhabited,
+                "station_type": station.station_type,
+                "resources": station.resources,
                 "stats": station.stats,
                 "pressure": station.pressure,
             },
@@ -39,6 +47,9 @@ def process_station_tick(
         station_id=station.id,
         report={
             "station_id": station.id,
+            "inhabited": station.inhabited,
+            "station_type": station.station_type,
+            "resources": station.resources,
             "pressure": station.pressure,
             "stats": station.stats,
             "faction_influence": station.faction_influence,
@@ -55,6 +66,8 @@ def create_pressure_decay_effects(station: StationState) -> list[WorldEffect]:
         "danger",
         "supply_disruption",
         "security_risk",
+        "unrest",
+        "faction_tension",
     }
 
     for pressure_name, pressure_value in station.pressure.items():
@@ -132,6 +145,175 @@ def create_basic_station_drift_effects(station: StationState) -> list[WorldEffec
                 value=-1,
                 reason="smuggling_pressure",
                 source="station_system",
+            )
+        )
+
+    return effects
+
+def create_inhabited_station_need_effects(station: StationState) -> list[WorldEffect]:
+    effects: list[WorldEffect] = []
+
+    population = max(0, int(station.population))
+
+    if population <= 0:
+        return effects
+
+    food = int(station.resources.get("food", 0))
+    water = int(station.resources.get("water", 0))
+    medicine = int(station.resources.get("medicine", 0))
+    ammo = int(station.resources.get("ammo", 0))
+
+    food_per_100_people = food / max(1, population / 100)
+    water_per_100_people = water / max(1, population / 100)
+    medicine_per_100_people = medicine / max(1, population / 100)
+    ammo_per_100_people = ammo / max(1, population / 100)
+
+    if food_per_100_people < 30:
+        effects.extend([
+            WorldEffect(
+                target_type="station",
+                target_id=station.id,
+                field_path=["stats", "morale"],
+                operation="add",
+                value=-1,
+                reason="food_shortage",
+                source="station_needs",
+                importance="normal",
+            ),
+            WorldEffect(
+                target_type="station",
+                target_id=station.id,
+                field_path=["pressure", "unrest"],
+                operation="add",
+                value=1,
+                reason="food_shortage",
+                source="station_needs",
+                importance="normal",
+            ),
+            WorldEffect(
+                target_type="station",
+                target_id=station.id,
+                field_path=["pressure", "supply_disruption"],
+                operation="add",
+                value=1,
+                reason="food_shortage",
+                source="station_needs",
+                importance="debug",
+            ),
+        ])
+
+    if water_per_100_people < 25:
+        effects.extend([
+            WorldEffect(
+                target_type="station",
+                target_id=station.id,
+                field_path=["stats", "health"],
+                operation="add",
+                value=-1,
+                reason="water_shortage",
+                source="station_needs",
+                importance="normal",
+            ),
+            WorldEffect(
+                target_type="station",
+                target_id=station.id,
+                field_path=["pressure", "unrest"],
+                operation="add",
+                value=1,
+                reason="water_shortage",
+                source="station_needs",
+                importance="normal",
+            ),
+            WorldEffect(
+                target_type="station",
+                target_id=station.id,
+                field_path=["pressure", "supply_disruption"],
+                operation="add",
+                value=1,
+                reason="water_shortage",
+                source="station_needs",
+                importance="debug",
+            ),
+        ])
+
+    if medicine_per_100_people < 3:
+        effects.extend([
+            WorldEffect(
+                target_type="station",
+                target_id=station.id,
+                field_path=["stats", "health"],
+                operation="add",
+                value=-1,
+                reason="medicine_shortage",
+                source="station_needs",
+                importance="normal",
+            ),
+            WorldEffect(
+                target_type="station",
+                target_id=station.id,
+                field_path=["pressure", "medical_support"],
+                operation="add",
+                value=1,
+                reason="medicine_shortage",
+                source="station_needs",
+                importance="debug",
+            ),
+        ])
+
+    if ammo_per_100_people < 8:
+        effects.extend([
+            WorldEffect(
+                target_type="station",
+                target_id=station.id,
+                field_path=["stats", "security"],
+                operation="add",
+                value=-1,
+                reason="ammo_shortage",
+                source="station_needs",
+                importance="normal",
+            ),
+            WorldEffect(
+                target_type="station",
+                target_id=station.id,
+                field_path=["pressure", "security_risk"],
+                operation="add",
+                value=1,
+                reason="ammo_shortage",
+                source="station_needs",
+                importance="debug",
+            ),
+        ])
+
+    return effects
+
+def create_abandoned_station_effects(station: StationState) -> list[WorldEffect]:
+    effects: list[WorldEffect] = []
+
+    if "mutant_activity" in station.tags:
+        effects.append(
+            WorldEffect(
+                target_type="station",
+                target_id=station.id,
+                field_path=["pressure", "danger"],
+                operation="add",
+                value=1,
+                reason="abandoned_mutant_activity",
+                source="station_system",
+                importance="debug",
+            )
+        )
+
+    if "bandit_activity" in station.tags:
+        effects.append(
+            WorldEffect(
+                target_type="station",
+                target_id=station.id,
+                field_path=["pressure", "security_risk"],
+                operation="add",
+                value=1,
+                reason="abandoned_bandit_activity",
+                source="station_system",
+                importance="debug",
             )
         )
 

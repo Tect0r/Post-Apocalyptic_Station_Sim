@@ -6,6 +6,37 @@ from metro_sim.world.simulation.movement_system import start_world_movement
 from metro_sim.world.models.npc_trader import create_npc_trader
 
 
+def test_world_tick_updates_market_prices():
+    world = create_world()
+    station = world.stations["paveletskaya_radial"]
+
+    station.population = 500
+    station.resources["food"] = 20
+    station.market["item_prices"] = {
+        "food": 10,
+        "water": 8,
+        "medicine": 30,
+        "ammo": 20,
+        "trade_goods": 15,
+        "parts": 25,
+    }
+
+    process_world_tick(world)
+
+    assert station.market["item_prices"]["food"] > 10
+
+def test_world_tick_processes_station_needs():
+    world = create_world()
+    station = world.stations["paveletskaya_radial"]
+
+    station.population = 500
+    station.resources["food"] = 50
+    station.stats["morale"] = 50
+
+    process_world_tick(world)
+
+    assert station.stats["morale"] < 50
+
 def test_world_tick_processes_npc_traders():
     world = create_world()
 

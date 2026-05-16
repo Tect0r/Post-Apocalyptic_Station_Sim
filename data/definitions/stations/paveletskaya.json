@@ -39,6 +39,19 @@
         "independent": 15,
         "polis": 0,
         "bandits": 5
+      },
+      "market": {
+        "market_type": "big_trading_hub",
+        "activity": 35,
+        "price_level": 125,
+        "item_prices": {
+          "food": 10,
+          "water": 8,
+          "medicine": 30,
+          "ammo": 20,
+          "trade_goods": 15,
+          "parts": 25
+        }
       }
     },
     "paveletskaya_radial": {
@@ -78,6 +91,19 @@
         "hansa": 25,
         "polis": 5,
         "bandits": 10
+      },
+      "market": {
+        "market_type": "small_local_trade",
+        "activity": 35,
+        "price_level": 125,
+        "item_prices": {
+          "food": 10,
+          "water": 8,
+          "medicine": 30,
+          "ammo": 20,
+          "trade_goods": 15,
+          "parts": 25
+        }
       }
     }
   }

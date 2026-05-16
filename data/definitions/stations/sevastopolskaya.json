@@ -45,7 +45,15 @@
       "market": {
         "market_type": "frontier_supply_trade",
         "activity": 35,
-        "price_level": 145
+        "price_level": 125,
+        "item_prices": {
+          "food": 10,
+          "water": 8,
+          "medicine": 30,
+          "ammo": 20,
+          "trade_goods": 15,
+          "parts": 25
+        }
       }
     }
   }
