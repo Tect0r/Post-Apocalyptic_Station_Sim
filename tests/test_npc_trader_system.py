@@ -56,6 +56,9 @@ def test_npc_trader_system_starts_movement_for_idle_trader():
         current_station_id="paveletskaya_ring",
         home_station_id="paveletskaya_ring",
         data={
+            "base_risk_tolerance": 80,
+            "max_risk_tolerance": 100,
+            "profit_risk_factor": 0.2,
             "preferred_targets": ["sevastopolskaya"]
         },
     )
@@ -206,3 +209,33 @@ def test_resting_npc_trader_does_not_move_before_rest_until_tick():
     assert trader.rest_until_tick == 50
     assert len(world.movements) == 0
     assert logs == []
+
+def test_npc_trader_chooses_more_profitable_target_if_risk_is_acceptable():
+    world = create_world()
+
+    trader = create_npc_trader(
+        name="Test Trader",
+        current_station_id="paveletskaya_ring",
+        home_station_id="paveletskaya_ring",
+        data={
+            "base_risk_tolerance": 100,
+            "max_risk_tolerance": 100,
+            "profit_risk_factor": 0.0,
+            "preferred_targets": [
+                "paveletskaya_radial",
+                "dobryninskaya_serpukhovskaya"
+            ],
+            "known_market_profit": {
+                "paveletskaya_radial": 5,
+                "dobryninskaya_serpukhovskaya": 50
+            }
+        },
+    )
+
+    world.npc_traders = {
+        trader.id: trader,
+    }
+
+    process_npc_traders_tick(world)
+
+    assert trader.target_station_id == "dobryninskaya_serpukhovskaya"

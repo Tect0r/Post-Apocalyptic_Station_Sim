@@ -2,6 +2,7 @@ from metro_sim.world.models.npc_trader import NpcTrader
 from metro_sim.world.models.world_log_entry import WorldLogEntry, create_world_log_entry
 from metro_sim.world.models.world_state import WorldState
 from metro_sim.world.simulation.movement_system import start_world_movement
+from metro_sim.world.simulation.trader_decision_service import evaluate_trader_target
 
 
 def process_npc_traders_tick(world: WorldState) -> list[WorldLogEntry]:
@@ -102,19 +103,6 @@ def process_single_trader_tick(
     return logs
 
 
-def choose_trader_target_station(
-    *,
-    world: WorldState,
-    trader: NpcTrader,
-) -> str | None:
-    preferred_targets = trader.data.get("preferred_targets", [])
-
-    for station_id in preferred_targets:
-        if station_id in world.stations and station_id != trader.current_station_id:
-            return station_id
-
-    return None
-
 def process_resting_trader_tick(
     *,
     world: WorldState,
@@ -144,3 +132,35 @@ def process_resting_trader_tick(
             },
         )
     ]
+
+def choose_trader_target_station(
+    *,
+    world: WorldState,
+    trader: NpcTrader,
+) -> str | None:
+    preferred_targets = trader.data.get("preferred_targets", [])
+
+    best_station_id = None
+    best_score = -9999
+
+    for station_id in preferred_targets:
+        if station_id == trader.current_station_id:
+            continue
+
+        if station_id not in world.stations:
+            continue
+
+        evaluation = evaluate_trader_target(
+            world=world,
+            trader=trader,
+            target_station_id=station_id,
+        )
+
+        if not evaluation.success:
+            continue
+
+        if evaluation.score > best_score:
+            best_score = evaluation.score
+            best_station_id = station_id
+
+    return best_station_id

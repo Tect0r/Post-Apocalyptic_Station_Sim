@@ -18,12 +18,20 @@
       "data": {
         "faction_id": "hansa",
         "risk_tolerance": 35,
+        "base_risk_tolerance": 35,
+        "max_risk_tolerance": 80,
+        "profit_risk_factor": 0.2,
         "rest_duration_ticks": 30,
         "preferred_targets": [
           "paveletskaya_radial",
           "dobryninskaya_serpukhovskaya",
           "tulskaya"
-        ]
+        ],
+        "known_market_profit": {
+          "paveletskaya_radial": 20,
+          "dobryninskaya_serpukhovskaya": 35,
+          "tulskaya": 60
+        }
       }
     },
     "trader_sevastopolskaya_runner": {
@@ -42,14 +50,22 @@
       },
       "data": {
         "faction_id": "independent",
-        "risk_tolerance": 55,
-        "rest_duration_ticks": 45,
+        "risk_tolerance": 35,
+        "base_risk_tolerance": 35,
+        "max_risk_tolerance": 80,
+        "profit_risk_factor": 0.2,
+        "rest_duration_ticks": 30,
         "preferred_targets": [
           "nakhimovsky_prospekt",
           "nagornaya",
           "tulskaya",
           "paveletskaya_radial"
-        ]
+        ],
+        "known_market_profit": {
+          "paveletskaya_radial": 20,
+          "dobryninskaya_serpukhovskaya": 35,
+          "tulskaya": 60
+        }
       }
     }
   }
