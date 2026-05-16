@@ -42,6 +42,7 @@ def evaluate_trader_target(
         )
 
     expected_profit = get_expected_profit(
+        world=world,
         trader=trader,
         target_station_id=target_station_id,
     )
@@ -88,9 +89,19 @@ def evaluate_trader_target(
 
 def get_expected_profit(
     *,
+    world: WorldState,
     trader: NpcTrader,
     target_station_id: str,
 ) -> int:
+    market_profit = calculate_market_based_expected_profit(
+        world=world,
+        trader=trader,
+        target_station_id=target_station_id,
+    )
+
+    if market_profit > 0:
+        return market_profit
+
     known_market_profit = trader.data.get("known_market_profit", {})
     return int(known_market_profit.get(target_station_id, 0))
 
@@ -218,3 +229,44 @@ def calculate_faction_route_risk_modifier(
             modifier += 10
 
     return modifier
+
+def calculate_market_based_expected_profit(
+    *,
+    world: WorldState,
+    trader: NpcTrader,
+    target_station_id: str,
+) -> int:
+    current_station = world.stations.get(trader.current_station_id)
+    target_station = world.stations.get(target_station_id)
+
+    if current_station is None or target_station is None:
+        return 0
+
+    current_prices = current_station.market.get("item_prices", {})
+    target_prices = target_station.market.get("item_prices", {})
+
+    if not current_prices or not target_prices:
+        return 0
+
+    inventory = trader.inventory or {}
+
+    total_profit = 0
+
+    for item_id, amount in inventory.items():
+        if amount <= 0:
+            continue
+
+        source_price = int(current_prices.get(item_id, 0))
+        target_price = int(target_prices.get(item_id, 0))
+
+        if source_price <= 0 or target_price <= 0:
+            continue
+
+        unit_profit = target_price - source_price
+
+        if unit_profit <= 0:
+            continue
+
+        total_profit += unit_profit * amount
+
+    return total_profit

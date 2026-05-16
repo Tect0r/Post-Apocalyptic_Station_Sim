@@ -44,9 +44,10 @@
       "active_movement_id": null,
       "rest_until_tick": null,
       "inventory": {
-        "ammo": 15,
-        "medicine": 2,
-        "trade_goods": 6
+        "food": 20,
+        "water": 15,
+        "medicine": 3,
+        "trade_goods": 10
       },
       "data": {
         "faction_id": "independent",
