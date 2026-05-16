@@ -1,7 +1,19 @@
 import pytest
 
 from metro_sim.world.factories.world_definition_loader import create_world_from_manifest
+from metro_sim.world.services.pathfinding_service import find_station_path
 
+
+def test_world_slice_is_connected_from_paveletskaya_to_sevastopolskaya():
+    world = create_world_from_manifest()
+
+    result = find_station_path(
+        world=world,
+        from_station_id="paveletskaya_ring",
+        to_station_id="sevastopolskaya",
+    )
+
+    assert result.success is True
 
 def test_create_world_from_manifest_loads_stations_routes_and_factions():
     world = create_world_from_manifest()

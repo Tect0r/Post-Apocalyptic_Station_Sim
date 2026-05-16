@@ -2,7 +2,29 @@ from metro_sim.world.factories.world_factory import create_world
 from metro_sim.world.simulation.tick_orchestrator import process_world_tick
 from metro_sim.world.models.world_event import create_world_event
 from metro_sim.world.simulation.snapshot_system import SNAPSHOT_INTERVAL_TICKS
+from metro_sim.world.simulation.movement_system import start_world_movement
 
+
+def test_world_tick_processes_completed_movements():
+    world = create_world()
+
+    result = start_world_movement(
+        world=world,
+        actor_type="trader",
+        actor_id="trader_001",
+        from_station_id="paveletskaya_ring",
+        to_station_id="paveletskaya_radial",
+    )
+
+    movement = result.movement
+    assert movement is not None
+
+    world.current_tick = movement.arrives_at_tick - 1
+
+    process_world_tick(world)
+
+    assert movement.status == "completed"
+    assert any(log.category == "movement_completed" for log in world.logs)
 
 def test_world_tick_processes_faction_system():
     world = create_world()
