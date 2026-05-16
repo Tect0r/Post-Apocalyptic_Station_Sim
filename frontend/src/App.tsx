@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { getAccessToken } from "./api/apiClient";
 import { AuthPage } from "./pages/AuthPage";
-import { DashboardPage } from "./pages/DashboardPage";
+import { WorldObserverPage } from "./pages/WorldObserverPage";
 import "./App.css";
 
 function App() {
@@ -11,7 +11,7 @@ function App() {
     return <AuthPage onAuthenticated={() => setIsAuthenticated(true)} />;
   }
 
-  return <DashboardPage onLogout={() => setIsAuthenticated(false)} />;
+  return <WorldObserverPage onLogout={() => setIsAuthenticated(false)} />;
 }
 
 export default App;

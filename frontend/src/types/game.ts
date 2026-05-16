@@ -57,18 +57,6 @@ export type MarketTradeRequest = {
   amount: number;
 };
 
-export type Station = {
-  id: string;
-  name: string;
-  station_type: string;
-  description_key: string;
-  resources: Record<string, number>;
-  population: Record<string, number>;
-  stats: Record<string, number>;
-  pressure: Record<string, number>;
-  faction_influence: Record<string, number>;
-};
-
 export type CrewMember = {
   id: string;
   name: string;
@@ -81,18 +69,6 @@ export type CrewMember = {
   status: string;
   current_location_id: string;
   assigned_action_id: string | null;
-};
-
-export type Route = {
-  id: string;
-  from_station_id: string;
-  to_station_id: string;
-  distance: number;
-  danger: number;
-  travel_time_ticks: number;
-  status: string;
-  control: Record<string, number>;
-  modifiers: Record<string, unknown>;
 };
 
 export type PlayerAsset = {
@@ -115,24 +91,6 @@ export type Faction = {
   resources: Record<string, number>;
   relations: Record<string, number>;
   controlled_stations: string[];
-};
-
-export type WorldEvent = {
-  id: string;
-  tick: number;
-  station_id: string | null;
-  event_type: string;
-  severity: number;
-  description_key: string;
-};
-
-export type WorldResponse = {
-  tick: number;
-  stations: Record<string, Station>;
-  routes: Record<string, Route>;
-  factions: Record<string, Faction>;
-  events: WorldEvent[];
-  players?: Record<string, PublicPlayerSummary>;
 };
 
 export type StartActionRequest = {
@@ -190,4 +148,120 @@ export type Contract = {
   created_tick: number;
   accepted_tick: number | null;
   completed_tick: number | null;
+};
+
+export type Station = {
+  id: string;
+  name: string;
+  complex_id?: string | null;
+  line?: string | null;
+  station_type: string;
+  description_key?: string | null;
+  inhabited: boolean;
+  tags: string[];
+  resources: Record<string, number>;
+  population: number;
+  stats: Record<string, number>;
+  pressure: Record<string, number>;
+  faction_influence: Record<string, number>;
+  market: {
+    market_type?: string;
+    activity?: number;
+    price_level?: number;
+    item_prices?: Record<string, number>;
+    stock?: Record<string, number>;
+    [key: string]: unknown;
+  };
+  ui: {
+    map_x?: number;
+    map_y?: number;
+    icon_type?: string;
+    display_group?: string;
+    [key: string]: unknown;
+  };
+};
+
+export type Route = {
+  id: string;
+  display_name?: string | null;
+  from_station_id: string;
+  to_station_id: string;
+  route_type: string;
+  line?: string | null;
+  bidirectional: boolean;
+  distance: number;
+  travel_time_ticks: number;
+  danger: number;
+  traffic: number;
+  condition: number;
+  control: Record<string, number>;
+  pressure: Record<string, number>;
+  tags: string[];
+  ui: Record<string, unknown>;
+};
+
+export type WorldEvent = {
+  id: string;
+  event_type: string;
+  target_type: string;
+  target_id: string;
+  started_at_tick: number;
+  status: string;
+  severity: number;
+  causes: string[];
+  data: Record<string, unknown>;
+  duration_ticks: number;
+  ends_at_tick: number | null;
+  current_phase: string | null;
+};
+
+export type WorldMovement = {
+  id: string;
+  actor_type: string;
+  actor_id: string;
+  from_station_id: string;
+  to_station_id: string;
+  station_path: string[];
+  route_path: string[];
+  started_at_tick: number;
+  arrives_at_tick: number;
+  status: string;
+  progress: number;
+  data: Record<string, unknown>;
+};
+
+export type NpcTrader = {
+  id: string;
+  name: string;
+  current_station_id: string;
+  home_station_id: string;
+  status: string;
+  target_station_id: string | null;
+  active_movement_id: string | null;
+  rest_until_tick: number | null;
+  inventory: Record<string, number>;
+  data: Record<string, unknown>;
+};
+
+export type WorldLogEntry = {
+  id: string;
+  tick: number;
+  category: string;
+  message: string;
+  target_type: string | null;
+  target_id: string | null;
+  importance: string;
+  data: Record<string, unknown>;
+};
+
+export type WorldResponse = {
+  tick: number;
+  stations: Record<string, Station>;
+  routes: Record<string, Route>;
+  factions: Record<string, Faction>;
+  events: WorldEvent[];
+  movements: WorldMovement[];
+  npc_traders: Record<string, NpcTrader>;
+  logs: WorldLogEntry[];
+  players?: Record<string, Player>;
 };

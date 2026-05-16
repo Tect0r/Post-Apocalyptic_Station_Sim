@@ -100,3 +100,19 @@ export function influenceStationPressure(request: {
 }): Promise<ActionResponse> {
   return apiPost<ActionResponse, typeof request>("/pvp/station-pressure", request);
 }
+
+export function advanceWorldTicks(ticks: number): Promise<{
+  success: boolean;
+  mode: string;
+  tick: number;
+  ticks_advanced: number;
+}> {
+  return apiPost(`/admin/tick?ticks=${ticks}`);
+}
+
+export function resetWorld(): Promise<{
+  success: boolean;
+  tick: number;
+}> {
+  return apiPost("/admin/reset");
+}
