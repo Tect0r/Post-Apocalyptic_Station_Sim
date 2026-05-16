@@ -10,7 +10,7 @@ def create_route_state(
         from_station_id=route_data["from_station_id"],
         to_station_id=route_data["to_station_id"],
         distance=route_data["distance"],
-        danger_level=route_data["danger_level"],
+        danger=route_data["danger"],
         status=route_data.get("status", "open"),
         travel_time_ticks=route_data["travel_time_ticks"],
         control=route_data.get("control", {}),

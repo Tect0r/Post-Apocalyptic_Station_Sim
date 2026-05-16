@@ -14,7 +14,7 @@ def test_action_resolution_keeps_action_active_before_completion_tick():
         StartPlayerActionRequest(
             player_id="player_001",
             action_type=PlayerActionType.SUPPORT_MILITIA,
-            target_id="paveletskaya",
+            target_id="paveletskaya_radial",
         ),
     )
 
@@ -32,10 +32,10 @@ def test_action_resolution_keeps_action_active_before_completion_tick():
 def test_action_resolution_completes_action_and_applies_effects():
     session = create_game_session()
     player = session.players["player_001"]
-    station = session.world.stations["paveletskaya"]
+    station = session.world.stations["paveletskaya_radial"]
 
     fatigue_before = player.crew.fatigue
-    reputation_before = player.reputation.values["paveletskaya"]
+    reputation_before = player.reputation.values["paveletskaya_radial"]
     pressure_before = station.pressure.get("militia_support", 0)
 
     start_result = start_player_action(
@@ -43,7 +43,7 @@ def test_action_resolution_completes_action_and_applies_effects():
         StartPlayerActionRequest(
             player_id="player_001",
             action_type=PlayerActionType.SUPPORT_MILITIA,
-            target_id="paveletskaya",
+            target_id="paveletskaya_radial",
         ),
     )
 
@@ -61,5 +61,5 @@ def test_action_resolution_completes_action_and_applies_effects():
     assert len(player.active_actions) == 0
 
     assert player.crew.fatigue == fatigue_before + 5
-    assert player.reputation.values["paveletskaya"] == reputation_before + 3
+    assert player.reputation.values["paveletskaya_radial"] == reputation_before + 3
     assert station.pressure["militia_support"] == pressure_before + 8

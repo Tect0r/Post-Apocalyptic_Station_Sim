@@ -49,7 +49,9 @@
         "smuggling": 0,
         "danger": 0,
         "supply_disruption": 0,
-        "security_risk": 0
+        "security_risk": 0,
+        "unrest": 0,
+        "faction_tension": 0
       },
       "faction_influence": {
         "hansa": 25,
@@ -108,7 +110,9 @@
         "smuggling": 0,
         "danger": 0,
         "supply_disruption": 0,
-        "security_risk": 0
+        "security_risk": 0,
+        "unrest": 0,
+        "faction_tension": 0
       },
       "faction_influence": {
         "hansa": 10,
@@ -167,7 +171,9 @@
         "smuggling": 0,
         "danger": 0,
         "supply_disruption": 0,
-        "security_risk": 0
+        "security_risk": 0,
+        "unrest": 0,
+        "faction_tension": 0
       },
       "faction_influence": {
         "hansa": 75,

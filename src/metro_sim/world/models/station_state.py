@@ -5,12 +5,16 @@ from dataclasses import dataclass, field
 class StationState:
     id: str
     name: str
-    station_type: str
-    description_key: str
-    resources: dict[str, int]
-    population: dict[str, int]
-    stats: dict[str, int]
-    pressure: dict[str, int] = field(default_factory=dict)
-    faction_influence: dict[str, int] = field(default_factory=dict)
-    buildings: dict = field(default_factory=dict)
+    population: int
+    resources: dict
+    stats: dict
+    pressure: dict
+    faction_influence: dict
+
+    complex_id: str | None = None
+    line: str | None = None
+    station_type: str = "station"
+    inhabited: bool = True
+    tags: list[str] = field(default_factory=list)
     market: dict = field(default_factory=dict)
+    description_key: str | None = None

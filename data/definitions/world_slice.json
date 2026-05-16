@@ -1,0 +1,18 @@
+{
+  "id": "paveletskaya_to_sevastopolskaya_slice",
+  "name": "Paveletskaya to Sevastopolskaya Slice",
+  "station_files": [
+    "stations/paveletskaya.json",
+    "stations/dobryninskaya_serpukhovskaya.json",
+    "stations/tulskaya.json",
+    "stations/nagatinskaya.json",
+    "stations/nagornaya.json",
+    "stations/nakhimovsky_prospekt.json",
+    "stations/sevastopolskaya.json"
+  ],
+  "route_files": [
+    "routes/paveletskaya_to_sevastopolskaya_slice.json"
+  ],
+  "faction_file": "factions.json",
+  "contract_file": "contracts.json"
+}

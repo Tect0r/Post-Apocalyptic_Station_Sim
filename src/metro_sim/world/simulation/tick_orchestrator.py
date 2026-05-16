@@ -7,6 +7,7 @@ from metro_sim.world.simulation.route_system import process_routes_tick
 from metro_sim.world.simulation.station_system import process_station_tick
 from metro_sim.world.simulation.active_event_system import process_active_events
 from metro_sim.world.simulation.snapshot_system import maybe_create_world_snapshot
+from metro_sim.world.simulation.faction_system import process_factions_tick
 
 
 def process_world_tick(world: WorldState) -> WorldTickResult:
@@ -36,6 +37,12 @@ def process_world_tick(world: WorldState) -> WorldTickResult:
     route_effects, route_logs = process_routes_tick(world)
     all_effects.extend(route_effects)
     all_logs.extend(route_logs)
+
+    # Faction system
+    faction_effects, faction_logs = process_factions_tick(world)
+
+    all_effects.extend(faction_effects)
+    all_logs.extend(faction_logs)
 
     # 3. Apply pre-event effects so EventSystem sees updated pressure/state.
     pre_event_effect_logs = apply_world_effects(

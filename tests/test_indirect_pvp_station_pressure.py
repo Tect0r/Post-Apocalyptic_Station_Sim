@@ -4,14 +4,14 @@ from metro_sim.pvp.services.station_pressure_pvp_service import influence_statio
 
 def test_player_can_influence_station_pressure():
     session = create_game_session()
-    station = session.world.stations["paveletskaya"]
+    station = session.world.stations["paveletskaya_radial"]
 
     before = station.pressure["sabotage"]
 
     result = influence_station_pressure(
         session=session,
         source_player_id="player_001",
-        station_id="paveletskaya",
+        station_id="paveletskaya_radial",
         pressure_key="sabotage",
         amount=5,
     )
@@ -27,7 +27,7 @@ def test_station_pressure_pvp_has_cooldown():
     first = influence_station_pressure(
         session=session,
         source_player_id="player_001",
-        station_id="paveletskaya",
+        station_id="paveletskaya_radial",
         pressure_key="sabotage",
         amount=5,
     )
@@ -35,7 +35,7 @@ def test_station_pressure_pvp_has_cooldown():
     second = influence_station_pressure(
         session=session,
         source_player_id="player_001",
-        station_id="paveletskaya",
+        station_id="paveletskaya_radial",
         pressure_key="sabotage",
         amount=5,
     )

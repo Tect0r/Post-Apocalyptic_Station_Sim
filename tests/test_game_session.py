@@ -16,7 +16,7 @@ def test_create_game_session_contains_world_and_player():
 def test_create_game_session_player_does_not_control_station():
     session = create_game_session()
 
-    station = session.world.stations["paveletskaya"]
+    station = session.world.stations["paveletskaya_radial"]
 
     assert session.players["player_001"].id != station.id
     assert not hasattr(session.players["player_001"], "station")
@@ -47,7 +47,7 @@ def test_game_tick_completes_player_action_after_duration():
         StartPlayerActionRequest(
             player_id="player_001",
             action_type=PlayerActionType.SUPPORT_MILITIA,
-            target_id="paveletskaya",
+            target_id="paveletskaya_radial",
         ),
     )
 
@@ -59,4 +59,4 @@ def test_game_tick_completes_player_action_after_duration():
 
     assert len(player.active_actions) == 0
     assert player.crew.fatigue >= 15
-    assert session.world.stations["paveletskaya"].pressure["militia_support"] == 8
+    assert session.world.stations["paveletskaya_radial"].pressure["militia_support"] == 8

@@ -8,7 +8,7 @@ from metro_sim.world.services.pressure_service import (
 
 def test_add_station_pressure_increases_value():
     world = create_world()
-    station = world.stations["paveletskaya"]
+    station = world.stations["paveletskaya_radial"]
 
     add_station_pressure(station, "militia_support", 8)
 
@@ -17,7 +17,7 @@ def test_add_station_pressure_increases_value():
 
 def test_station_pressure_is_capped_at_100():
     world = create_world()
-    station = world.stations["paveletskaya"]
+    station = world.stations["paveletskaya_radial"]
 
     add_station_pressure(station, "sabotage", 150)
 
@@ -26,7 +26,7 @@ def test_station_pressure_is_capped_at_100():
 
 def test_reduce_station_pressure_does_not_go_below_zero():
     world = create_world()
-    station = world.stations["paveletskaya"]
+    station = world.stations["paveletskaya_radial"]
 
     reduce_station_pressure(station, "smuggling", 10)
 
@@ -35,7 +35,7 @@ def test_reduce_station_pressure_does_not_go_below_zero():
 
 def test_decay_station_pressure_reduces_all_values():
     world = create_world()
-    station = world.stations["paveletskaya"]
+    station = world.stations["paveletskaya_radial"]
 
     station.pressure["militia_support"] = 8
     station.pressure["medical_support"] = 3

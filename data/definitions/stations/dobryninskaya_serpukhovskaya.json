@@ -1,0 +1,45 @@
+{
+  "complex_id": "dobryninskaya_serpukhovskaya",
+  "name": "Dobryninskaya / Serpukhovskaya",
+  "nodes": {
+    "dobryninskaya_serpukhovskaya": {
+      "id": "dobryninskaya_serpukhovskaya",
+      "name": "Dobryninskaya / Serpukhovskaya",
+      "complex_id": "dobryninskaya_serpukhovskaya",
+      "line": "serpukhovsko_timiryazevskaya",
+      "station_type": "transit_station_complex",
+      "inhabited": true,
+      "tags": ["station_complex", "transit", "independent"],
+      "population": 260,
+      "resources": {
+        "food": 150,
+        "water": 130,
+        "medicine": 18
+      },
+      "stats": {
+        "morale": 52,
+        "order": 55,
+        "security": 50,
+        "health": 48,
+        "comfort": 38
+      },
+      "pressure": {
+        "danger": 12,
+        "sabotage": 0,
+        "militia_support": 2,
+        "medical_support": 0,
+        "smuggling": 5,
+        "supply_disruption": 4,
+        "security_risk": 8,
+        "unrest": 6,
+        "faction_tension": 10
+      },
+      "faction_influence": {
+        "independent": 55,
+        "hansa": 20,
+        "polis": 5,
+        "bandits": 20
+      }
+    }
+  }
+}

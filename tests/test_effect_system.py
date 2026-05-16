@@ -5,12 +5,12 @@ from metro_sim.world.simulation.effect_system import apply_world_effects
 
 def test_effect_system_adds_value_to_station_stat():
     world = create_world()
-    station = world.stations["paveletskaya"]
+    station = world.stations["paveletskaya_radial"]
     station.stats["morale"] = 50
 
     effect = WorldEffect(
         target_type="station",
-        target_id="paveletskaya",
+        target_id="paveletskaya_radial",
         field_path=["stats", "morale"],
         operation="add",
         value=5,
@@ -26,12 +26,12 @@ def test_effect_system_adds_value_to_station_stat():
 
 def test_effect_system_subtracts_value_from_station_stat():
     world = create_world()
-    station = world.stations["paveletskaya"]
+    station = world.stations["paveletskaya_radial"]
     station.stats["morale"] = 50
 
     effect = WorldEffect(
         target_type="station",
-        target_id="paveletskaya",
+        target_id="paveletskaya_radial",
         field_path=["stats", "morale"],
         operation="subtract",
         value=5,
@@ -45,12 +45,12 @@ def test_effect_system_subtracts_value_from_station_stat():
 
 def test_effect_system_sets_value_on_station_stat():
     world = create_world()
-    station = world.stations["paveletskaya"]
+    station = world.stations["paveletskaya_radial"]
     station.stats["morale"] = 50
 
     effect = WorldEffect(
         target_type="station",
-        target_id="paveletskaya",
+        target_id="paveletskaya_radial",
         field_path=["stats", "morale"],
         operation="set",
         value=75,
@@ -64,12 +64,12 @@ def test_effect_system_sets_value_on_station_stat():
 
 def test_effect_system_clamps_station_stat_to_maximum():
     world = create_world()
-    station = world.stations["paveletskaya"]
+    station = world.stations["paveletskaya_radial"]
     station.stats["morale"] = 98
 
     effect = WorldEffect(
         target_type="station",
-        target_id="paveletskaya",
+        target_id="paveletskaya_radial",
         field_path=["stats", "morale"],
         operation="add",
         value=20,
@@ -83,12 +83,12 @@ def test_effect_system_clamps_station_stat_to_maximum():
 
 def test_effect_system_clamps_station_stat_to_minimum():
     world = create_world()
-    station = world.stations["paveletskaya"]
+    station = world.stations["paveletskaya_radial"]
     station.stats["morale"] = 2
 
     effect = WorldEffect(
         target_type="station",
-        target_id="paveletskaya",
+        target_id="paveletskaya_radial",
         field_path=["stats", "morale"],
         operation="subtract",
         value=20,
@@ -124,7 +124,7 @@ def test_effect_system_logs_failure_for_unknown_field():
 
     effect = WorldEffect(
         target_type="station",
-        target_id="paveletskaya",
+        target_id="paveletskaya_radial",
         field_path=["stats", "unknown_stat"],
         operation="add",
         value=5,
@@ -140,12 +140,12 @@ def test_effect_system_logs_failure_for_unknown_field():
 
 def test_effect_system_logs_failure_for_unknown_operation():
     world = create_world()
-    station = world.stations["paveletskaya"]
+    station = world.stations["paveletskaya_radial"]
     station.stats["morale"] = 50
 
     effect = WorldEffect(
         target_type="station",
-        target_id="paveletskaya",
+        target_id="paveletskaya_radial",
         field_path=["stats", "morale"],
         operation="multiply",
         value=2,

@@ -4,6 +4,17 @@ from metro_sim.world.models.world_event import create_world_event
 from metro_sim.world.simulation.snapshot_system import SNAPSHOT_INTERVAL_TICKS
 
 
+def test_world_tick_processes_faction_system():
+    world = create_world()
+    station = world.stations["paveletskaya_radial"]
+
+    station.faction_influence["bandits"] = 50
+    station.pressure["smuggling"] = 0
+
+    process_world_tick(world)
+
+    assert station.pressure["smuggling"] > 0
+
 def test_world_tick_creates_snapshot_on_interval():
     world = create_world()
     world.current_tick = SNAPSHOT_INTERVAL_TICKS - 1
@@ -98,22 +109,22 @@ def test_process_world_tick_applies_effects():
 
 def test_world_tick_runs_event_system_and_applies_event_effects():
     world = create_world()
-    station = world.stations["paveletskaya"]
+    station = world.stations["paveletskaya_radial"]
     station.pressure["militia_support"] = 25
     start_order = station.stats["order"]
 
     result = process_world_tick(world)
 
-    assert len(result.events) == 1
+    assert len(result.events) == 9
     assert result.events[0].event_type == "militia_gains_control"
 
-    assert len(world.events) == 1
+    assert len(world.events) == 9
     assert station.pressure["militia_support"] == 0
     assert station.stats["order"] > start_order
 
 def test_world_tick_starts_mutant_attack_from_high_danger_pressure():
     world = create_world()
-    station = world.stations["paveletskaya"]
+    station = world.stations["paveletskaya_radial"]
     station.pressure["danger"] = 50
 
     result = process_world_tick(world)
@@ -126,13 +137,13 @@ def test_world_tick_starts_mutant_attack_from_high_danger_pressure():
 
 def test_world_tick_processes_running_events():
     world = create_world()
-    station = world.stations["paveletskaya"]
+    station = world.stations["paveletskaya_radial"]
     station.stats["morale"] = 50
 
     event = create_world_event(
         event_type="mutant_attack",
         target_type="station",
-        target_id="paveletskaya",
+        target_id="paveletskaya_radial",
         started_at_tick=0,
         status="running",
         duration_ticks=1,

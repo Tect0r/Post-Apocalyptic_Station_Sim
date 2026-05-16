@@ -7,7 +7,7 @@ from metro_sim.world.services.influence_service import (
 
 def test_add_faction_influence_keeps_total_at_100():
     world = create_world()
-    station = world.stations["paveletskaya"]
+    station = world.stations["paveletskaya_radial"]
 
     add_faction_influence(station, "hansa", 48)
 
@@ -17,7 +17,7 @@ def test_add_faction_influence_keeps_total_at_100():
 
 def test_reduce_faction_influence_keeps_total_at_100():
     world = create_world()
-    station = world.stations["paveletskaya"]
+    station = world.stations["paveletskaya_radial"]
 
     reduce_faction_influence(station, "hansa", 48)
 

@@ -1,0 +1,52 @@
+{
+  "complex_id": "nakhimovsky_prospekt",
+  "name": "Nakhimovsky Prospekt",
+  "nodes": {
+    "nakhimovsky_prospekt": {
+      "id": "nakhimovsky_prospekt",
+      "name": "Nakhimovsky Prospekt",
+      "complex_id": "nakhimovsky_prospekt",
+      "line": "serpukhovsko_timiryazevskaya",
+      "station_type": "abandoned_frontier_station",
+      "inhabited": false,
+      "tags": ["abandoned", "frontier", "mutant_activity", "near_sevastopolskaya", "transit"],
+      "population": 0,
+      "resources": {
+        "food": 0,
+        "water": 0,
+        "medicine": 0,
+        "ammo": 0,
+        "trade_goods": 0
+      },
+      "stats": {
+        "morale": 0,
+        "order": 0,
+        "security": 0,
+        "health": 0,
+        "comfort": 0
+      },
+      "pressure": {
+        "danger": 40,
+        "sabotage": 0,
+        "militia_support": 0,
+        "medical_support": 0,
+        "smuggling": 0,
+        "supply_disruption": 0,
+        "security_risk": 20,
+        "unrest": 0,
+        "faction_tension": 0
+      },
+      "faction_influence": {
+        "hansa": 0,
+        "independent": 10,
+        "polis": 10,
+        "bandits": 25
+      },
+      "market": {
+        "market_type": "none",
+        "activity": 0,
+        "price_level": 0
+      }
+    }
+  }
+}

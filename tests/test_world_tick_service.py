@@ -15,8 +15,8 @@ def test_advance_world_tick_returns_station_report():
 
     result = advance_world_tick(world)
 
-    assert "paveletskaya" in result.station_reports
-    assert isinstance(result.station_reports["paveletskaya"], dict)
+    assert "paveletskaya_radial" in result.station_reports
+    assert isinstance(result.station_reports["paveletskaya_radial"], dict)
 
 def test_advance_world_tick_ticks_multiple_stations():
     world = create_world()
@@ -24,5 +24,5 @@ def test_advance_world_tick_ticks_multiple_stations():
     result = advance_world_tick(world)
 
     assert world.current_tick == 1
-    assert "paveletskaya" in result.station_reports
-    assert "polis" in result.station_reports
+    assert "paveletskaya_radial" in result.station_reports
+    assert "dobryninskaya_serpukhovskaya" in result.station_reports

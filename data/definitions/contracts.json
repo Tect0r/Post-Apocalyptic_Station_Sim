@@ -1,0 +1,212 @@
+{
+  "contracts": {
+    "contract_support_paveletskaya_militia": {
+      "title": "Support Paveletskaya Militia",
+      "description_key": "contract.support_paveletskaya_militia.description",
+      "issuer_type": "station",
+      "issuer_id": "paveletskaya_radial",
+      "target_type": "station",
+      "target_id": "paveletskaya_radial",
+      "action_type": "support_militia",
+      "duration_ticks": 30,
+      "cost": {
+        "ammo": 10,
+        "food": 3
+      },
+      "reward": {
+        "ammo": 4,
+        "parts": 2
+      },
+      "effects": {
+        "station_pressure": {
+          "militia_support": 8
+        },
+        "player_reputation": {
+          "station": 3,
+          "bandits": -2
+        },
+        "crew": {
+          "fatigue": 5
+        }
+      }
+    },
+    "contract_repair_paveletskaya_filter": {
+      "title": "Repair Paveletskaya Radial Water Filter",
+      "description_key": "contract.repair_paveletskaya_filter.description",
+      "issuer_type": "station",
+      "issuer_id": "paveletskaya_radial",
+      "target_type": "station",
+      "target_id": "paveletskaya_radial",
+      "action_type": "repair_water_filter",
+      "duration_ticks": 25,
+      "cost": {
+        "medicine": 1,
+        "water": 2,
+        "parts": 2
+      },
+      "reward": {
+        "food": 4,
+        "water": 6
+      },
+      "effects": {
+        "station_pressure": {
+          "medical_support": 3,
+          "supply_disruption": -5
+        },
+        "player_reputation": {
+          "station": 2
+        },
+        "crew": {
+          "fatigue": 4
+        }
+      }
+    },
+    "contract_secure_paveletskaya_transfer": {
+      "title": "Secure Paveletskaya Transfer Route",
+      "description_key": "contract.secure_paveletskaya_transfer.description",
+      "issuer_type": "faction",
+      "issuer_id": "hansa",
+      "target_type": "route",
+      "target_id": "route_paveletskaya_ring_radial",
+      "action_type": "secure_route",
+      "duration_ticks": 30,
+      "cost": {
+        "ammo": 8,
+        "food": 3,
+        "water": 3
+      },
+      "reward": {
+        "ammo": 12,
+        "parts": 4
+      },
+      "effects": {
+        "route_pressure": {
+          "security": 6
+        },
+        "player_reputation": {
+          "station": 2,
+          "hansa": 1
+        },
+        "crew": {
+          "fatigue": 5
+        }
+      }
+    },
+    "contract_secure_radial_to_dobryninskaya_route": {
+      "title": "Secure Route to Dobryninskaya / Serpukhovskaya",
+      "description_key": "contract.secure_radial_to_dobryninskaya_route.description",
+      "issuer_type": "station",
+      "issuer_id": "paveletskaya_radial",
+      "target_type": "route",
+      "target_id": "route_paveletskaya_radial_dobryninskaya_serpukhovskaya",
+      "action_type": "secure_route",
+      "duration_ticks": 45,
+      "cost": {
+        "ammo": 8,
+        "food": 3,
+        "water": 3
+      },
+      "reward": {
+        "ammo": 10,
+        "parts": 4
+      },
+      "effects": {
+        "route_pressure": {
+          "security": 6
+        },
+        "player_reputation": {
+          "station": 2,
+          "independent": 1
+        },
+        "crew": {
+          "fatigue": 7
+        }
+      }
+    },
+    "contract_hide_bandit_contraband": {
+      "title": "Hide Contraband in Paveletskaya Radial",
+      "description_key": "contract.hide_bandit_contraband.description",
+      "issuer_type": "faction",
+      "issuer_id": "bandits",
+      "target_type": "station",
+      "target_id": "paveletskaya_radial",
+      "action_type": "hide_contraband",
+      "duration_ticks": 35,
+      "cost": {
+        "ammo": 4
+      },
+      "reward": {
+        "ammo": 14
+      },
+      "effects": {
+        "station_pressure": {
+          "smuggling": 8
+        },
+        "player_reputation": {
+          "bandits": 3,
+          "hansa": -2
+        },
+        "crew": {
+          "fatigue": 3
+        }
+      }
+    },
+    "contract_treat_sevastopolskaya_wounded": {
+      "title": "Treat Wounded in Sevastopolskaya",
+      "description_key": "contract.treat_sevastopolskaya_wounded.description",
+      "issuer_type": "station",
+      "issuer_id": "sevastopolskaya",
+      "target_type": "station",
+      "target_id": "sevastopolskaya",
+      "action_type": "treat_wounded",
+      "duration_ticks": 40,
+      "cost": {
+        "medicine": 2,
+        "water": 2
+      },
+      "reward": {
+        "medicine": 1,
+        "parts": 3
+      },
+      "effects": {
+        "station_pressure": {
+          "medical_support": 8
+        },
+        "player_reputation": {
+          "station": 3,
+          "polis": 1,
+          "independent": 1
+        },
+        "crew": {
+          "fatigue": 4
+        }
+      }
+    },
+    "contract_rent_paveletskaya_storage": {
+      "title": "Rent Storage Room in Paveletskaya Ring",
+      "description_key": "contract.rent_paveletskaya_storage.description",
+      "issuer_type": "station",
+      "issuer_id": "paveletskaya_ring",
+      "target_type": "station",
+      "target_id": "paveletskaya_ring",
+      "action_type": "rent_storage",
+      "duration_ticks": 15,
+      "cost": {
+        "ammo": 5
+      },
+      "reward": {},
+      "effects": {
+        "player_asset": {
+          "asset_type": "storage_room"
+        },
+        "player_reputation": {
+          "station": 1,
+          "hansa": 1
+        },
+        "crew": {
+          "fatigue": 1
+        }
+      }
+    }
+  }
+}

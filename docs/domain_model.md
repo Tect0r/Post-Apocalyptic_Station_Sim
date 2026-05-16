@@ -146,7 +146,7 @@ Contains:
 - from_station_id
 - to_station_id
 - travel_time_ticks
-- danger_level
+- danger
 - status
 - control
 - modifiers

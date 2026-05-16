@@ -6,14 +6,14 @@ from metro_sim.world.simulation.effect_system import apply_world_effects
 
 def test_active_mutant_attack_completes_after_duration():
     world = create_world()
-    station = world.stations["paveletskaya"]
+    station = world.stations["paveletskaya_radial"]
     station.stats["morale"] = 50
     station.stats["security"] = 50
 
     event = create_world_event(
         event_type="mutant_attack",
         target_type="station",
-        target_id="paveletskaya",
+        target_id="paveletskaya_radial",
         started_at_tick=0,
         status="running",
         duration_ticks=3,
@@ -39,7 +39,7 @@ def test_active_mutant_attack_changes_phase():
     event = create_world_event(
         event_type="mutant_attack",
         target_type="station",
-        target_id="paveletskaya",
+        target_id="paveletskaya_radial",
         started_at_tick=0,
         status="running",
         duration_ticks=40,

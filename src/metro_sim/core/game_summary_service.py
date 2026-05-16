@@ -101,7 +101,7 @@ def build_game_summary(session: GameSession) -> dict:
                 "from_station_id": route.from_station_id,
                 "to_station_id": route.to_station_id,
                 "distance": route.distance,
-                "danger_level": route.danger_level,
+                "danger": route.danger,
                 "status": route.status,
                 "modifiers": route.modifiers,
             }

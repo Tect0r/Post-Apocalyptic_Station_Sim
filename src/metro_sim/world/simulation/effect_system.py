@@ -19,6 +19,9 @@ NUMERIC_LIMITS: dict[tuple[str, ...], tuple[int, int]] = {
     ("pressure", "danger"): (0, 100),
     ("pressure", "supply_disruption"): (0, 100),
     ("pressure", "security_risk"): (0, 100),
+
+    ("pressure", "unrest"): (0, 100),
+    ("pressure", "faction_tension"): (0, 100),
 }
 
 

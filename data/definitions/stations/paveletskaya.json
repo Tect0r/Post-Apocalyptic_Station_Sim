@@ -1,0 +1,84 @@
+{
+  "complex_id": "paveletskaya",
+  "name": "Paveletskaya",
+  "nodes": {
+    "paveletskaya_ring": {
+      "id": "paveletskaya_ring",
+      "name": "Paveletskaya Ring",
+      "complex_id": "paveletskaya",
+      "line": "koltsevaya",
+      "station_type": "hansa_station",
+      "inhabited": true,
+      "tags": ["hansa", "ring_line", "trade", "station_complex"],
+      "population": 600,
+      "resources": {
+        "food": 400,
+        "water": 350,
+        "medicine": 60
+      },
+      "stats": {
+        "morale": 65,
+        "order": 75,
+        "security": 70,
+        "health": 62,
+        "comfort": 55
+      },
+      "pressure": {
+        "danger": 5,
+        "sabotage": 0,
+        "militia_support": 0,
+        "medical_support": 0,
+        "smuggling": 2,
+        "supply_disruption": 0,
+        "security_risk": 4,
+        "unrest": 3,
+        "faction_tension": 8
+      },
+      "faction_influence": {
+        "hansa": 80,
+        "independent": 15,
+        "polis": 0,
+        "bandits": 5
+      }
+    },
+    "paveletskaya_radial": {
+      "id": "paveletskaya_radial",
+      "name": "Paveletskaya Radial",
+      "complex_id": "paveletskaya",
+      "line": "zamoskvoretskaya",
+      "station_type": "independent_frontier_station",
+      "inhabited": true,
+      "tags": ["independent", "frontier", "mutant_pressure", "station_complex"],
+      "population": 420,
+      "resources": {
+        "food": 220,
+        "water": 180,
+        "medicine": 25
+      },
+      "stats": {
+        "morale": 48,
+        "order": 50,
+        "security": 43,
+        "health": 45,
+        "comfort": 34
+      },
+      "pressure": {
+        "danger": 18,
+        "sabotage": 0,
+        "militia_support": 5,
+        "medical_support": 0,
+        "smuggling": 4,
+        "supply_disruption": 3,
+        "security_risk": 10,
+        "unrest": 8,
+        "faction_tension": 15
+      },
+      "faction_influence": {
+        "independent": 60,
+        "hansa": 25,
+        "polis": 5,
+        "bandits": 10
+      }
+    }
+  }
+}

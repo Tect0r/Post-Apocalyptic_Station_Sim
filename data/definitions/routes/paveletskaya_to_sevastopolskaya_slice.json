@@ -1,0 +1,137 @@
+{
+  "routes": {
+    "route_paveletskaya_ring_radial": {
+      "id": "route_paveletskaya_ring_radial",
+      "from_station_id": "paveletskaya_ring",
+      "to_station_id": "paveletskaya_radial",
+      "route_type": "transfer",
+      "travel_time_ticks": 20,
+      "distance": 0,
+      "danger": 5,
+      "traffic": 60,
+      "condition": 80,
+      "control": {
+        "hansa": 70,
+        "independent": 20,
+        "polis": 0,
+        "bandits": 0
+      },
+      "pressure": {},
+      "tags": ["transfer", "controlled_access", "political_border"]
+    },
+    "route_paveletskaya_radial_dobryninskaya_serpukhovskaya": {
+      "id": "route_paveletskaya_radial_dobryninskaya_serpukhovskaya",
+      "from_station_id": "paveletskaya_radial",
+      "to_station_id": "dobryninskaya_serpukhovskaya",
+      "route_type": "tunnel",
+      "travel_time_ticks": 90,
+      "distance": 1,
+      "danger": 25,
+      "traffic": 25,
+      "condition": 70,
+      "control": {
+        "hansa": 10,
+        "independent": 50,
+        "polis": 5,
+        "bandits": 20
+      },
+      "pressure": {},
+      "tags": ["tunnel", "frontier_route"]
+    },
+    "route_dobryninskaya_serpukhovskaya_tulskaya": {
+      "id": "route_dobryninskaya_serpukhovskaya_tulskaya",
+      "from_station_id": "dobryninskaya_serpukhovskaya",
+      "to_station_id": "tulskaya",
+      "route_type": "tunnel",
+      "travel_time_ticks": 80,
+      "distance": 1,
+      "danger": 30,
+      "traffic": 20,
+      "condition": 65,
+      "control": {
+        "hansa": 5,
+        "independent": 45,
+        "polis": 5,
+        "bandits": 30
+      },
+      "pressure": {},
+      "tags": ["tunnel", "dangerous"]
+    },
+    "route_tulskaya_nagatinskaya": {
+      "id": "route_tulskaya_nagatinskaya",
+      "from_station_id": "tulskaya",
+      "to_station_id": "nagatinskaya",
+      "route_type": "tunnel",
+      "travel_time_ticks": 100,
+      "distance": 1,
+      "danger": 42,
+      "traffic": 10,
+      "condition": 55,
+      "control": {
+        "hansa": 0,
+        "independent": 20,
+        "polis": 0,
+        "bandits": 40
+      },
+      "pressure": {},
+      "tags": ["tunnel", "low_traffic", "bandit_activity"]
+    },
+    "route_nagatinskaya_nagornaya": {
+      "id": "route_nagatinskaya_nagornaya",
+      "from_station_id": "nagatinskaya",
+      "to_station_id": "nagornaya",
+      "route_type": "tunnel",
+      "travel_time_ticks": 100,
+      "distance": 1,
+      "danger": 55,
+      "traffic": 5,
+      "condition": 45,
+      "control": {
+        "hansa": 0,
+        "independent": 5,
+        "polis": 0,
+        "bandits": 45
+      },
+      "pressure": {},
+      "tags": ["tunnel", "abandoned", "mutant_activity"]
+    },
+    "route_nagornaya_nakhimovsky_prospekt": {
+      "id": "route_nagornaya_nakhimovsky_prospekt",
+      "from_station_id": "nagornaya",
+      "to_station_id": "nakhimovsky_prospekt",
+      "route_type": "tunnel",
+      "travel_time_ticks": 100,
+      "distance": 1,
+      "danger": 60,
+      "traffic": 4,
+      "condition": 40,
+      "control": {
+        "hansa": 0,
+        "independent": 5,
+        "polis": 0,
+        "bandits": 30
+      },
+      "pressure": {},
+      "tags": ["tunnel", "abandoned", "mutant_activity"]
+    },
+    "route_nakhimovsky_prospekt_sevastopolskaya": {
+      "id": "route_nakhimovsky_prospekt_sevastopolskaya",
+      "from_station_id": "nakhimovsky_prospekt",
+      "to_station_id": "sevastopolskaya",
+      "route_type": "tunnel",
+      "travel_time_ticks": 90,
+      "distance": 1,
+      "danger": 50,
+      "traffic": 15,
+      "condition": 50,
+      "control": {
+        "hansa": 0,
+        "independent": 30,
+        "polis": 20,
+        "bandits": 25
+      },
+      "pressure": {},
+      "tags": ["tunnel", "frontier_route"]
+    }
+  }
+}

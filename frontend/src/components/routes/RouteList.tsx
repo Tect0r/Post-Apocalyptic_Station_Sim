@@ -36,7 +36,7 @@ export function RouteList({
                 {route.from_station_id} → {route.to_station_id}
               </span>
 
-              <span>Danger: {route.danger_level}</span>
+              <span>Danger: {route.danger}</span>
               <span>Status: {route.status}</span>
               <span>Travel Time: {route.travel_time_ticks}s</span>
 

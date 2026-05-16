@@ -18,10 +18,10 @@ def create_initial_player(
             morale=55,
             fatigue=10,
             specialization="stalker",
-            current_location_id="paveletskaya",
+            current_location_id="paveletskaya_radial",
             destination_location_id=None,
             is_traveling=False,
-            crew_members=create_initial_crew_members("paveletskaya"),
+            crew_members=create_initial_crew_members("paveletskaya_radial"),
         ),
         inventory=InventoryState(
             items={
@@ -34,7 +34,7 @@ def create_initial_player(
         ),
         reputation=ReputationState(
             values={
-                "paveletskaya": 0,
+                "paveletskaya_radial": 0,
                 "polis": 0,
                 "hansa_ring": 0,
                 "hansa": 0,

@@ -1,0 +1,52 @@
+{
+  "complex_id": "sevastopolskaya",
+  "name": "Sevastopolskaya",
+  "nodes": {
+    "sevastopolskaya": {
+      "id": "sevastopolskaya",
+      "name": "Sevastopolskaya",
+      "complex_id": "sevastopolskaya",
+      "line": "serpukhovsko_timiryazevskaya",
+      "station_type": "frontier_stronghold",
+      "inhabited": true,
+      "tags": ["frontier", "military", "defensive", "mutant_pressure", "isolated"],
+      "population": 520,
+      "resources": {
+        "food": 260,
+        "water": 220,
+        "medicine": 35,
+        "ammo": 180,
+        "trade_goods": 60
+      },
+      "stats": {
+        "morale": 54,
+        "order": 68,
+        "security": 76,
+        "health": 50,
+        "comfort": 30
+      },
+      "pressure": {
+        "danger": 30,
+        "sabotage": 0,
+        "militia_support": 12,
+        "medical_support": 0,
+        "smuggling": 2,
+        "supply_disruption": 8,
+        "security_risk": 14,
+        "unrest": 5,
+        "faction_tension": 6
+      },
+      "faction_influence": {
+        "hansa": 5,
+        "independent": 55,
+        "polis": 30,
+        "bandits": 10
+      },
+      "market": {
+        "market_type": "frontier_supply_trade",
+        "activity": 35,
+        "price_level": 145
+      }
+    }
+  }
+}

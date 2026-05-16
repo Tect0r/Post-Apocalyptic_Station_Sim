@@ -88,7 +88,7 @@ export type Route = {
   from_station_id: string;
   to_station_id: string;
   distance: number;
-  danger_level: number;
+  danger: number;
   travel_time_ticks: number;
   status: string;
   control: Record<string, number>;

@@ -4,7 +4,7 @@ from metro_sim.world.services.event_rule_service import station_matches_event_ru
 
 def test_station_matches_event_rule_when_pressure_threshold_is_met():
     world = create_world()
-    station = world.stations["paveletskaya"]
+    station = world.stations["paveletskaya_radial"]
 
     station.pressure["militia_support"] = 25
 
@@ -21,7 +21,7 @@ def test_station_matches_event_rule_when_pressure_threshold_is_met():
 
 def test_station_does_not_match_event_rule_when_pressure_is_too_low():
     world = create_world()
-    station = world.stations["paveletskaya"]
+    station = world.stations["paveletskaya_radial"]
 
     station.pressure["militia_support"] = 10
 

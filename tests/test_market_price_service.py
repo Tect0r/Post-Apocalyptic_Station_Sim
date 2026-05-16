@@ -4,7 +4,7 @@ from metro_sim.world.factories.world_factory import create_world
 
 def test_station_market_prices_include_tradeable_items():
     world = create_world()
-    station = world.stations["paveletskaya"]
+    station = world.stations["paveletskaya_radial"]
 
     prices = get_station_market_prices(station)
 
@@ -17,7 +17,7 @@ def test_station_market_prices_include_tradeable_items():
 
 def test_station_market_prices_include_stock():
     world = create_world()
-    station = world.stations["paveletskaya"]
+    station = world.stations["paveletskaya_radial"]
 
     prices = get_station_market_prices(station)
 

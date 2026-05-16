@@ -1,0 +1,28 @@
+{
+  "factions": {
+    "hansa": {
+      "id": "hansa",
+      "name": "Hansa",
+      "type": "trade_faction",
+      "tags": ["trade", "order", "wealth"]
+    },
+    "polis": {
+      "id": "polis",
+      "name": "Polis",
+      "type": "military_scientific_faction",
+      "tags": ["military", "science", "security"]
+    },
+    "independent": {
+      "id": "independent",
+      "name": "Independent Stations",
+      "type": "loose_station_network",
+      "tags": ["independent", "local"]
+    },
+    "bandits": {
+      "id": "bandits",
+      "name": "Bandits",
+      "type": "hostile_faction",
+      "tags": ["crime", "raiding", "smuggling"]
+    }
+  }
+}

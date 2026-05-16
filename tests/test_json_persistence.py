@@ -20,7 +20,7 @@ def test_save_and_load_preserves_pvp_impacts():
     influence_station_pressure(
         session=session,
         source_player_id="player_001",
-        station_id="paveletskaya",
+        station_id="paveletskaya_radial",
         pressure_key="sabotage",
         amount=5,
     )
@@ -30,7 +30,7 @@ def test_save_and_load_preserves_pvp_impacts():
 
     assert len(loaded_session.world.pvp_impacts) == 1
     assert loaded_session.world.pvp_impacts[0].source_player_id == "player_001"
-    assert loaded_session.world.pvp_impacts[0].target_id == "paveletskaya"
+    assert loaded_session.world.pvp_impacts[0].target_id == "paveletskaya_radial"
 
 def test_save_and_load_game_session_roundtrip():
     session = create_game_session()
@@ -54,7 +54,7 @@ def test_save_and_load_preserves_active_actions():
         StartPlayerActionRequest(
             player_id="player_001",
             action_type=PlayerActionType.SUPPORT_MILITIA,
-            target_id="paveletskaya",
+            target_id="paveletskaya_radial",
         ),
     )
 
@@ -67,11 +67,11 @@ def test_save_and_load_preserves_active_actions():
 
     assert len(loaded_player.active_actions) == 1
     assert loaded_player.active_actions[0].action_type == PlayerActionType.SUPPORT_MILITIA
-    assert loaded_player.active_actions[0].target_id == "paveletskaya"
+    assert loaded_player.active_actions[0].target_id == "paveletskaya_radial"
 
 def test_save_and_load_preserves_world_events():
     session = create_game_session()
-    station = session.world.stations["paveletskaya"]
+    station = session.world.stations["paveletskaya_radial"]
     station.pressure["militia_support"] = 25
 
     advance_tick(session)
@@ -92,7 +92,7 @@ def test_save_and_load_preserves_player_assets():
         StartPlayerActionRequest(
             player_id="player_001",
             action_type=PlayerActionType.RENT_STORAGE,
-            target_id="paveletskaya",
+            target_id="paveletskaya_radial",
         ),
     )
 
@@ -109,7 +109,7 @@ def test_save_and_load_preserves_player_assets():
 
     assert len(loaded_player.assets) == 1
     assert loaded_player.assets[0].asset_type == "storage_room"
-    assert loaded_player.assets[0].station_id == "paveletskaya"
+    assert loaded_player.assets[0].station_id == "paveletskaya_radial"
 
 
 def test_save_and_load_preserves_completed_actions():
@@ -120,7 +120,7 @@ def test_save_and_load_preserves_completed_actions():
         StartPlayerActionRequest(
             player_id="player_001",
             action_type=PlayerActionType.SUPPORT_MILITIA,
-            target_id="paveletskaya",
+            target_id="paveletskaya_radial",
         ),
     )
 
@@ -170,7 +170,7 @@ def test_save_and_load_preserves_crew_movement_state():
 
     loaded_player = loaded_session.players["player_001"]
 
-    assert loaded_player.crew.current_location_id == "paveletskaya"
+    assert loaded_player.crew.current_location_id == "paveletskaya_radial"
     assert loaded_player.crew.destination_location_id == "hansa_ring"
     assert loaded_player.crew.is_traveling is True
     assert len(loaded_player.active_actions) == 1
@@ -195,7 +195,7 @@ def test_save_and_load_preserves_expanded_player_assets():
         session=session,
         player_id="player_001",
         asset_type="storage_room",
-        station_id="paveletskaya",
+        station_id="paveletskaya_radial",
     )
 
     save_game_session(session, "test_expanded_assets")
@@ -206,14 +206,14 @@ def test_save_and_load_preserves_expanded_player_assets():
 
     assert asset.owner_player_id == "player_001"
     assert asset.asset_type == "storage_room"
-    assert asset.station_id == "paveletskaya"
+    assert asset.station_id == "paveletskaya_radial"
     assert asset.route_id is None
     assert asset.level == 1
     assert asset.condition == 100
 
 def test_save_and_load_preserves_market_stock_after_trade():
     session = create_game_session()
-    station = session.world.stations["paveletskaya"]
+    station = session.world.stations["paveletskaya_radial"]
 
     stock_before = station.market["stock"]["food"]
 
@@ -227,6 +227,6 @@ def test_save_and_load_preserves_market_stock_after_trade():
     save_game_session(session, "test_market_stock")
     loaded_session = load_game_session("test_market_stock")
 
-    loaded_station = loaded_session.world.stations["paveletskaya"]
+    loaded_station = loaded_session.world.stations["paveletskaya_radial"]
 
     assert loaded_station.market["stock"]["food"] == stock_before - 2

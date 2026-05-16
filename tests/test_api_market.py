@@ -14,7 +14,7 @@ def test_get_current_market():
         )
 
         assert response.status_code == 200
-        assert response.json()["station_id"] == "paveletskaya"
+        assert response.json()["station_id"] == "paveletskaya_radial"
         assert "prices" in response.json()
 
 

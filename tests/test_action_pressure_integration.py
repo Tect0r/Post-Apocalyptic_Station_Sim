@@ -7,14 +7,14 @@ from metro_sim.world.services.action_resolution_service import resolve_completed
 
 def test_completed_player_action_adds_station_pressure():
     session = create_game_session()
-    station = session.world.stations["paveletskaya"]
+    station = session.world.stations["paveletskaya_radial"]
 
     start_result = start_player_action(
         session,
         StartPlayerActionRequest(
             player_id="player_001",
             action_type=PlayerActionType.SUPPORT_MILITIA,
-            target_id="paveletskaya",
+            target_id="paveletskaya_radial",
         ),
     )
 

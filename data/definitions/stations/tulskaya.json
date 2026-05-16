@@ -1,0 +1,52 @@
+{
+  "complex_id": "tulskaya",
+  "name": "Tulskaya",
+  "nodes": {
+    "tulskaya": {
+      "id": "tulskaya",
+      "name": "Tulskaya",
+      "complex_id": "tulskaya",
+      "line": "serpukhovsko_timiryazevskaya",
+      "station_type": "small_outpost",
+      "inhabited": true,
+      "tags": ["outpost", "transit", "low_population", "unstable"],
+      "population": 120,
+      "resources": {
+        "food": 80,
+        "water": 70,
+        "medicine": 8,
+        "ammo": 35,
+        "trade_goods": 25
+      },
+      "stats": {
+        "morale": 42,
+        "order": 45,
+        "security": 38,
+        "health": 40,
+        "comfort": 25
+      },
+      "pressure": {
+        "danger": 20,
+        "sabotage": 0,
+        "militia_support": 0,
+        "medical_support": 0,
+        "smuggling": 8,
+        "supply_disruption": 5,
+        "security_risk": 12,
+        "unrest": 10,
+        "faction_tension": 10
+      },
+      "faction_influence": {
+        "hansa": 10,
+        "independent": 45,
+        "polis": 5,
+        "bandits": 40
+      },
+      "market": {
+        "market_type": "weak_local_trade",
+        "activity": 20,
+        "price_level": 135
+      }
+    }
+  }
+}
