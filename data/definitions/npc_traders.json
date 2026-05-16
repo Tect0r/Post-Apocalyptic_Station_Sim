@@ -1,0 +1,56 @@
+{
+  "npc_traders": {
+    "trader_paveletskaya_supply": {
+      "id": "trader_paveletskaya_supply",
+      "name": "Paveletskaya Supply Trader",
+      "current_station_id": "paveletskaya_ring",
+      "home_station_id": "paveletskaya_ring",
+      "status": "idle",
+      "target_station_id": null,
+      "active_movement_id": null,
+      "rest_until_tick": null,
+      "inventory": {
+        "food": 20,
+        "water": 15,
+        "medicine": 3,
+        "trade_goods": 10
+      },
+      "data": {
+        "faction_id": "hansa",
+        "risk_tolerance": 35,
+        "rest_duration_ticks": 30,
+        "preferred_targets": [
+          "paveletskaya_radial",
+          "dobryninskaya_serpukhovskaya",
+          "tulskaya"
+        ]
+      }
+    },
+    "trader_sevastopolskaya_runner": {
+      "id": "trader_sevastopolskaya_runner",
+      "name": "Sevastopolskaya Runner",
+      "current_station_id": "sevastopolskaya",
+      "home_station_id": "sevastopolskaya",
+      "status": "idle",
+      "target_station_id": null,
+      "active_movement_id": null,
+      "rest_until_tick": null,
+      "inventory": {
+        "ammo": 15,
+        "medicine": 2,
+        "trade_goods": 6
+      },
+      "data": {
+        "faction_id": "independent",
+        "risk_tolerance": 55,
+        "rest_duration_ticks": 45,
+        "preferred_targets": [
+          "nakhimovsky_prospekt",
+          "nagornaya",
+          "tulskaya",
+          "paveletskaya_radial"
+        ]
+      }
+    }
+  }
+}

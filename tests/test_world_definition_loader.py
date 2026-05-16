@@ -3,6 +3,29 @@ import pytest
 from metro_sim.world.factories.world_definition_loader import create_world_from_manifest
 from metro_sim.world.services.pathfinding_service import find_station_path
 
+def test_loaded_npc_traders_reference_existing_stations():
+    world = create_world_from_manifest()
+
+    for trader in world.npc_traders.values():
+        assert trader.current_station_id in world.stations
+        assert trader.home_station_id in world.stations
+
+        for target_station_id in trader.data.get("preferred_targets", []):
+            assert target_station_id in world.stations
+
+def test_create_world_from_manifest_loads_npc_traders():
+    world = create_world_from_manifest()
+
+    assert world.npc_traders
+    assert "trader_paveletskaya_supply" in world.npc_traders
+
+    trader = world.npc_traders["trader_paveletskaya_supply"]
+
+    assert trader.current_station_id == "paveletskaya_ring"
+    assert trader.home_station_id == "paveletskaya_ring"
+    assert trader.status == "idle"
+    assert trader.data["faction_id"] == "hansa"
+    assert trader.data["preferred_targets"]
 
 def test_world_slice_is_connected_from_paveletskaya_to_sevastopolskaya():
     world = create_world_from_manifest()

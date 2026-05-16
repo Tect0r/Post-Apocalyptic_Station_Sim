@@ -4,6 +4,18 @@ from metro_sim.world.simulation.movement_system import process_world_movements
 from metro_sim.world.simulation.npc_trader_system import process_npc_traders_tick
 
 
+def test_loaded_npc_trader_can_start_movement():
+    world = create_world()
+
+    trader = world.npc_traders["trader_paveletskaya_supply"]
+
+    logs = process_npc_traders_tick(world)
+
+    assert trader.status == "traveling"
+    assert trader.active_movement_id is not None
+    assert len(world.movements) >= 1
+    assert any(log.category == "npc_trader_movement_started" for log in logs)
+
 def test_npc_trader_arrival_sets_trader_to_resting():
     world = create_world()
 

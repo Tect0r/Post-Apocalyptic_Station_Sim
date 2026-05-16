@@ -14,5 +14,6 @@
     "routes/paveletskaya_to_sevastopolskaya_slice.json"
   ],
   "faction_file": "factions.json",
-  "contract_file": "contracts.json"
+  "contract_file": "contracts.json",
+  "npc_trader_file": "npc_traders.json"
 }

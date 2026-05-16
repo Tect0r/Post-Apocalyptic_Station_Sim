@@ -5,7 +5,7 @@ from typing import Any
 from metro_sim.world.models.route_state import RouteState
 from metro_sim.world.models.station_state import StationState
 from metro_sim.world.models.world_state import WorldState
-from metro_sim.world.factories.npc_trader_factory import create_initial_npc_traders
+from metro_sim.world.models.npc_trader import NpcTrader
 
 
 DEFINITIONS_ROOT = Path("data/definitions")
@@ -39,6 +39,11 @@ def create_world_from_manifest(
         contract_file=manifest.get("contract_file"),
     )
 
+    npc_traders = load_npc_trader_definitions(
+        base_dir=base_dir,
+        npc_trader_file=manifest.get("npc_trader_file"),
+    )
+
     validate_world_definitions(
         stations=stations,
         routes=routes,
@@ -51,7 +56,7 @@ def create_world_from_manifest(
         routes=routes,
         factions=factions,
         contracts=contracts,
-        npc_traders=create_initial_npc_traders(),
+        npc_traders=npc_traders,
     )
 
 
@@ -118,13 +123,19 @@ def validate_world_definitions(
     stations: dict[str, StationState],
     routes: dict[str, RouteState],
     factions: dict[str, Any],
+    npc_traders: dict[str, NpcTrader] | None = None,
 ) -> None:
     validate_required_station_fields(stations)
     validate_required_route_fields(stations=stations, routes=routes)
     validate_faction_references(
         stations=stations,
         routes=routes,
+        factions=factions
+    )
+    validate_npc_trader_references(
+        stations=stations,
         factions=factions,
+        npc_traders=npc_traders or {},
     )
 
 
@@ -219,6 +230,65 @@ def validate_faction_references(
                 f"Route {route_id} references unknown factions: {sorted(unknown_factions)}"
             )
 
+def load_npc_trader_definitions(
+    *,
+    base_dir: Path,
+    npc_trader_file: str | None,
+) -> dict[str, NpcTrader]:
+    if npc_trader_file is None:
+        return {}
+
+    data = read_json(base_dir / npc_trader_file)
+    trader_data_by_id = data.get("npc_traders", {})
+
+    traders: dict[str, NpcTrader] = {}
+
+    for trader_id, trader_data in trader_data_by_id.items():
+        if trader_id in traders:
+            raise ValueError(f"Duplicate NPC trader id: {trader_id}")
+
+        trader_data = dict(trader_data)
+        trader_data.setdefault("id", trader_id)
+
+        trader = NpcTrader(**trader_data)
+        traders[trader_id] = trader
+
+    return traders
+
+def validate_npc_trader_references(
+    *,
+    stations: dict[str, StationState],
+    factions: dict[str, Any],
+    npc_traders: dict[str, NpcTrader],
+) -> None:
+    faction_ids = set(factions.keys())
+
+    for trader_id, trader in npc_traders.items():
+        if trader.current_station_id not in stations:
+            raise ValueError(
+                f"NPC trader {trader_id} references unknown current_station_id: "
+                f"{trader.current_station_id}"
+            )
+
+        if trader.home_station_id not in stations:
+            raise ValueError(
+                f"NPC trader {trader_id} references unknown home_station_id: "
+                f"{trader.home_station_id}"
+            )
+
+        preferred_targets = trader.data.get("preferred_targets", [])
+        for station_id in preferred_targets:
+            if station_id not in stations:
+                raise ValueError(
+                    f"NPC trader {trader_id} references unknown preferred target: "
+                    f"{station_id}"
+                )
+
+        faction_id = trader.data.get("faction_id")
+        if faction_id is not None and faction_id not in faction_ids:
+            raise ValueError(
+                f"NPC trader {trader_id} references unknown faction_id: {faction_id}"
+            )
 
 def read_json(path: Path) -> Any:
     if not path.exists():
