@@ -15,6 +15,7 @@ class StationState:
     line: str | None = None
     station_type: str = "station"
     inhabited: bool = True
+    ui: dict = field(default_factory=dict)
     tags: list[str] = field(default_factory=list)
     market: dict = field(default_factory=dict)
     description_key: str | None = None

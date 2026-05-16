@@ -92,6 +92,12 @@ def build_game_summary(session: GameSession) -> dict:
                 "stats": station.stats,
                 "pressure": station.pressure,
                 "faction_influence": station.faction_influence,
+                "complex_id": station.complex_id,
+                "line": station.line,
+                "inhabited": station.inhabited,
+                "tags": station.tags,
+                "market": station.market,
+                "ui": station.ui,
             }
             for station_id, station in session.world.stations.items()
         },
@@ -109,6 +115,10 @@ def build_game_summary(session: GameSession) -> dict:
                 "control": route.control,
                 "pressure": route.pressure,
                 "tags": route.tags,
+                "display_name": route.display_name,
+                "line": route.line,
+                "bidirectional": route.bidirectional,
+                "ui": route.ui,
             }
             for route_id, route in session.world.routes.items()
         },
@@ -139,4 +149,67 @@ def build_game_summary(session: GameSession) -> dict:
             }
             for event in session.world.events[-10:]
         ],
+        "movements": [
+            {
+                "id": movement.id,
+                "actor_type": movement.actor_type,
+                "actor_id": movement.actor_id,
+                "from_station_id": movement.from_station_id,
+                "to_station_id": movement.to_station_id,
+                "station_path": movement.station_path,
+                "route_path": movement.route_path,
+                "started_at_tick": movement.started_at_tick,
+                "arrives_at_tick": movement.arrives_at_tick,
+                "status": movement.status,
+                "progress": calculate_movement_progress(
+                    current_tick=session.world.current_tick,
+                    started_at_tick=movement.started_at_tick,
+                    arrives_at_tick=movement.arrives_at_tick,
+                ),
+                "data": movement.data,
+            }
+            for movement in session.world.movements
+        ],
+        "npc_traders": {
+            trader_id: {
+                "id": trader.id,
+                "name": trader.name,
+                "current_station_id": trader.current_station_id,
+                "home_station_id": trader.home_station_id,
+                "status": trader.status,
+                "target_station_id": trader.target_station_id,
+                "active_movement_id": trader.active_movement_id,
+                "rest_until_tick": trader.rest_until_tick,
+                "inventory": trader.inventory,
+                "data": trader.data,
+            }
+            for trader_id, trader in session.world.npc_traders.items()
+        },
+        "logs": [
+            {
+                "id": log.id,
+                "tick": log.tick,
+                "category": log.category,
+                "message": log.message,
+                "target_type": log.target_type,
+                "target_id": log.target_id,
+                "importance": log.importance,
+                "data": log.data,
+            }
+            for log in session.world.logs[-50:]
+        ],
     }
+
+def calculate_movement_progress(
+    *,
+    current_tick: int,
+    started_at_tick: int,
+    arrives_at_tick: int,
+) -> float:
+    duration = arrives_at_tick - started_at_tick
+
+    if duration <= 0:
+        return 1.0
+
+    progress = (current_tick - started_at_tick) / duration
+    return max(0.0, min(1.0, progress))

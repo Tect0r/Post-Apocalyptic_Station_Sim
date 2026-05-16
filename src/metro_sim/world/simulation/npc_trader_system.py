@@ -55,6 +55,14 @@ def process_single_trader_tick(
 
     target_station_id = target_choice.selected_station_id
 
+    trader.data["last_target_choice"] = {
+        "selected_station_id": target_station_id,
+        "evaluations": [
+            evaluation_to_dict(evaluation)
+            for evaluation in target_choice.evaluations
+        ],
+    }
+
     logs.append(
         create_world_log_entry(
             tick=world.current_tick,

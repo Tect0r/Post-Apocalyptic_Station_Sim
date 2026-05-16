@@ -4,9 +4,12 @@ from dataclasses import dataclass, field
 @dataclass
 class RouteState:
     id: str
+    display_name: str
     from_station_id: str
     to_station_id: str
     travel_time_ticks: int
+    line: str
+    bidirectional: bool
     status: str = "open"
     route_type: str = "tunnel"
     distance: int = 1
@@ -17,3 +20,4 @@ class RouteState:
     control: dict[str, int] = field(default_factory=dict)
     pressure: dict = field(default_factory=dict)
     tags: list[str] = field(default_factory=list)
+    ui: dict = field(default_factory=dict)

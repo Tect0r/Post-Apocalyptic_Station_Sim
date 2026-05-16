@@ -2,9 +2,12 @@
   "routes": {
     "route_paveletskaya_ring_radial": {
       "id": "route_paveletskaya_ring_radial",
+      "display_name": "Paveletskaya Ring Transfer",
       "from_station_id": "paveletskaya_ring",
       "to_station_id": "paveletskaya_radial",
       "route_type": "transfer",
+      "line": "paveletskaya_complex",
+      "bidirectional": true,
       "travel_time_ticks": 20,
       "distance": 0,
       "danger": 5,
@@ -16,14 +19,33 @@
         "polis": 0,
         "bandits": 0
       },
-      "pressure": {},
-      "tags": ["transfer", "controlled_access", "political_border"]
+      "pressure": {
+        "security": 0,
+        "blockade": 0,
+        "mutant_activity": 0,
+        "bandit_activity": 0,
+        "supply_disruption": 0
+      },
+      "tags": [
+        "transfer",
+        "controlled_access",
+        "political_border",
+        "station_complex"
+      ],
+      "ui": {
+        "line_group": "paveletskaya_complex",
+        "line_style": "transfer",
+        "display_order": 10
+      }
     },
     "route_paveletskaya_radial_dobryninskaya_serpukhovskaya": {
       "id": "route_paveletskaya_radial_dobryninskaya_serpukhovskaya",
+      "display_name": "Paveletskaya Radial - Dobryninskaya / Serpukhovskaya",
       "from_station_id": "paveletskaya_radial",
       "to_station_id": "dobryninskaya_serpukhovskaya",
       "route_type": "tunnel",
+      "line": "serpukhovsko_timiryazevskaya",
+      "bidirectional": true,
       "travel_time_ticks": 90,
       "distance": 1,
       "danger": 25,
@@ -35,14 +57,32 @@
         "polis": 5,
         "bandits": 20
       },
-      "pressure": {},
-      "tags": ["tunnel", "frontier_route"]
+      "pressure": {
+        "security": 0,
+        "blockade": 0,
+        "mutant_activity": 0,
+        "bandit_activity": 0,
+        "supply_disruption": 0
+      },
+      "tags": [
+        "tunnel",
+        "frontier_route",
+        "inhabited_connection"
+      ],
+      "ui": {
+        "line_group": "serpukhovsko_timiryazevskaya",
+        "line_style": "tunnel",
+        "display_order": 20
+      }
     },
     "route_dobryninskaya_serpukhovskaya_tulskaya": {
       "id": "route_dobryninskaya_serpukhovskaya_tulskaya",
+      "display_name": "Dobryninskaya / Serpukhovskaya - Tulskaya",
       "from_station_id": "dobryninskaya_serpukhovskaya",
       "to_station_id": "tulskaya",
       "route_type": "tunnel",
+      "line": "serpukhovsko_timiryazevskaya",
+      "bidirectional": true,
       "travel_time_ticks": 80,
       "distance": 1,
       "danger": 30,
@@ -54,14 +94,32 @@
         "polis": 5,
         "bandits": 30
       },
-      "pressure": {},
-      "tags": ["tunnel", "dangerous"]
+      "pressure": {
+        "security": 0,
+        "blockade": 0,
+        "mutant_activity": 0,
+        "bandit_activity": 0,
+        "supply_disruption": 0
+      },
+      "tags": [
+        "tunnel",
+        "dangerous",
+        "trade_route"
+      ],
+      "ui": {
+        "line_group": "serpukhovsko_timiryazevskaya",
+        "line_style": "tunnel",
+        "display_order": 30
+      }
     },
     "route_tulskaya_nagatinskaya": {
       "id": "route_tulskaya_nagatinskaya",
+      "display_name": "Tulskaya - Nagatinskaya",
       "from_station_id": "tulskaya",
       "to_station_id": "nagatinskaya",
       "route_type": "tunnel",
+      "line": "serpukhovsko_timiryazevskaya",
+      "bidirectional": true,
       "travel_time_ticks": 100,
       "distance": 1,
       "danger": 42,
@@ -73,14 +131,33 @@
         "polis": 0,
         "bandits": 40
       },
-      "pressure": {},
-      "tags": ["tunnel", "low_traffic", "bandit_activity"]
+      "pressure": {
+        "security": 0,
+        "blockade": 0,
+        "mutant_activity": 5,
+        "bandit_activity": 10,
+        "supply_disruption": 0
+      },
+      "tags": [
+        "tunnel",
+        "low_traffic",
+        "bandit_activity",
+        "dangerous"
+      ],
+      "ui": {
+        "line_group": "serpukhovsko_timiryazevskaya",
+        "line_style": "danger_tunnel",
+        "display_order": 40
+      }
     },
     "route_nagatinskaya_nagornaya": {
       "id": "route_nagatinskaya_nagornaya",
+      "display_name": "Nagatinskaya - Nagornaya",
       "from_station_id": "nagatinskaya",
       "to_station_id": "nagornaya",
       "route_type": "tunnel",
+      "line": "serpukhovsko_timiryazevskaya",
+      "bidirectional": true,
       "travel_time_ticks": 100,
       "distance": 1,
       "danger": 55,
@@ -92,14 +169,34 @@
         "polis": 0,
         "bandits": 45
       },
-      "pressure": {},
-      "tags": ["tunnel", "abandoned", "mutant_activity"]
+      "pressure": {
+        "security": 0,
+        "blockade": 0,
+        "mutant_activity": 15,
+        "bandit_activity": 12,
+        "supply_disruption": 0
+      },
+      "tags": [
+        "tunnel",
+        "abandoned",
+        "mutant_activity",
+        "bandit_activity",
+        "high_risk"
+      ],
+      "ui": {
+        "line_group": "serpukhovsko_timiryazevskaya",
+        "line_style": "danger_tunnel",
+        "display_order": 50
+      }
     },
     "route_nagornaya_nakhimovsky_prospekt": {
       "id": "route_nagornaya_nakhimovsky_prospekt",
+      "display_name": "Nagornaya - Nakhimovsky Prospekt",
       "from_station_id": "nagornaya",
       "to_station_id": "nakhimovsky_prospekt",
       "route_type": "tunnel",
+      "line": "serpukhovsko_timiryazevskaya",
+      "bidirectional": true,
       "travel_time_ticks": 100,
       "distance": 1,
       "danger": 60,
@@ -111,14 +208,33 @@
         "polis": 0,
         "bandits": 30
       },
-      "pressure": {},
-      "tags": ["tunnel", "abandoned", "mutant_activity"]
+      "pressure": {
+        "security": 0,
+        "blockade": 0,
+        "mutant_activity": 20,
+        "bandit_activity": 8,
+        "supply_disruption": 0
+      },
+      "tags": [
+        "tunnel",
+        "abandoned",
+        "mutant_activity",
+        "high_risk"
+      ],
+      "ui": {
+        "line_group": "serpukhovsko_timiryazevskaya",
+        "line_style": "danger_tunnel",
+        "display_order": 60
+      }
     },
     "route_nakhimovsky_prospekt_sevastopolskaya": {
       "id": "route_nakhimovsky_prospekt_sevastopolskaya",
+      "display_name": "Nakhimovsky Prospekt - Sevastopolskaya",
       "from_station_id": "nakhimovsky_prospekt",
       "to_station_id": "sevastopolskaya",
       "route_type": "tunnel",
+      "line": "serpukhovsko_timiryazevskaya",
+      "bidirectional": true,
       "travel_time_ticks": 90,
       "distance": 1,
       "danger": 50,
@@ -130,8 +246,24 @@
         "polis": 20,
         "bandits": 25
       },
-      "pressure": {},
-      "tags": ["tunnel", "frontier_route"]
+      "pressure": {
+        "security": 0,
+        "blockade": 0,
+        "mutant_activity": 12,
+        "bandit_activity": 6,
+        "supply_disruption": 0
+      },
+      "tags": [
+        "tunnel",
+        "frontier_route",
+        "sevastopolskaya_approach",
+        "dangerous"
+      ],
+      "ui": {
+        "line_group": "serpukhovsko_timiryazevskaya",
+        "line_style": "frontier_tunnel",
+        "display_order": 70
+      }
     }
   }
 }
