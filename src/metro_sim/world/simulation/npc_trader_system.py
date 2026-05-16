@@ -1,9 +1,19 @@
+from dataclasses import dataclass
+
 from metro_sim.world.models.npc_trader import NpcTrader
 from metro_sim.world.models.world_log_entry import WorldLogEntry, create_world_log_entry
 from metro_sim.world.models.world_state import WorldState
 from metro_sim.world.simulation.movement_system import start_world_movement
-from metro_sim.world.simulation.trader_decision_service import evaluate_trader_target
+from metro_sim.world.simulation.trader_decision_service import (
+    TraderTargetEvaluation,
+    evaluate_trader_target,
+    evaluation_to_dict,
+)
 
+@dataclass
+class TraderTargetChoice:
+    selected_station_id: str | None
+    evaluations: list[TraderTargetEvaluation]
 
 def process_npc_traders_tick(world: WorldState) -> list[WorldLogEntry]:
     logs: list[WorldLogEntry] = []
@@ -38,9 +48,30 @@ def process_single_trader_tick(
     if trader.status != "idle":
         return logs
 
-    target_station_id = choose_trader_target_station(
+    target_choice = choose_trader_target_station(
         world=world,
         trader=trader,
+    )
+
+    target_station_id = target_choice.selected_station_id
+
+    logs.append(
+        create_world_log_entry(
+            tick=world.current_tick,
+            category="npc_trader_target_evaluated",
+            message=f"Trader {trader.name} evaluated trade targets.",
+            target_type="npc_trader",
+            target_id=trader_id,
+            importance="debug",
+            data={
+                "current_station_id": trader.current_station_id,
+                "selected_station_id": target_station_id,
+                "evaluations": [
+                    evaluation_to_dict(evaluation)
+                    for evaluation in target_choice.evaluations
+                ],
+            },
+        )
     )
 
     if target_station_id is None:
@@ -81,6 +112,15 @@ def process_single_trader_tick(
     trader.target_station_id = target_station_id
     trader.active_movement_id = movement.id
 
+    selected_evaluation = next(
+        (
+            evaluation
+            for evaluation in target_choice.evaluations
+            if evaluation.station_id == target_station_id
+        ),
+        None,
+    )
+
     logs.append(
         create_world_log_entry(
             tick=world.current_tick,
@@ -96,6 +136,11 @@ def process_single_trader_tick(
                 "station_path": movement.station_path,
                 "route_path": movement.route_path,
                 "arrives_at_tick": movement.arrives_at_tick,
+                "selected_evaluation": (
+                    evaluation_to_dict(selected_evaluation)
+                    if selected_evaluation is not None
+                    else None
+                ),
             },
         )
     )
@@ -137,9 +182,10 @@ def choose_trader_target_station(
     *,
     world: WorldState,
     trader: NpcTrader,
-) -> str | None:
+) -> TraderTargetChoice:
     preferred_targets = trader.data.get("preferred_targets", [])
 
+    evaluations: list[TraderTargetEvaluation] = []
     best_station_id = None
     best_score = -9999
 
@@ -156,6 +202,8 @@ def choose_trader_target_station(
             target_station_id=station_id,
         )
 
+        evaluations.append(evaluation)
+
         if not evaluation.success:
             continue
 
@@ -163,4 +211,7 @@ def choose_trader_target_station(
             best_score = evaluation.score
             best_station_id = station_id
 
-    return best_station_id
+    return TraderTargetChoice(
+        selected_station_id=best_station_id,
+        evaluations=evaluations,
+    )

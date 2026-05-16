@@ -143,3 +143,15 @@ def calculate_target_score(
     travel_penalty = travel_time_ticks // 20
 
     return expected_profit - route_risk - travel_penalty
+
+def evaluation_to_dict(evaluation: TraderTargetEvaluation) -> dict:
+    return {
+        "station_id": evaluation.station_id,
+        "success": evaluation.success,
+        "expected_profit": evaluation.expected_profit,
+        "route_risk": evaluation.route_risk,
+        "travel_time_ticks": evaluation.travel_time_ticks,
+        "effective_risk_tolerance": evaluation.effective_risk_tolerance,
+        "score": evaluation.score,
+        "error": evaluation.error,
+    }
