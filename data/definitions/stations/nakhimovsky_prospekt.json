@@ -9,6 +9,12 @@
       "line": "serpukhovsko_timiryazevskaya",
       "station_type": "abandoned_frontier_station",
       "inhabited": false,
+      "ui": {
+        "map_x": 140,
+        "map_y": 580,
+        "icon_type": "station",
+        "display_group": "nakhimovsky_prospekt"
+      },
       "tags": ["abandoned", "frontier", "mutant_activity", "near_sevastopolskaya", "transit"],
       "population": 0,
       "resources": {

@@ -9,6 +9,12 @@
       "line": "koltsevaya",
       "station_type": "hansa_station",
       "inhabited": true,
+      "ui": {
+        "map_x": 60,
+        "map_y": 100,
+        "icon_type": "station",
+        "display_group": "paveletskaya_ring"
+      },
       "tags": ["hansa", "ring_line", "trade", "station_complex"],
       "population": 600,
       "resources": {
@@ -64,6 +70,12 @@
       "line": "zamoskvoretskaya",
       "station_type": "independent_frontier_station",
       "inhabited": true,
+      "ui": {
+        "map_x": 140,
+        "map_y": 180,
+        "icon_type": "station",
+        "display_group": "paveletskaya_radial"
+      },
       "tags": ["independent", "frontier", "mutant_pressure", "station_complex"],
       "population": 420,
       "resources": {

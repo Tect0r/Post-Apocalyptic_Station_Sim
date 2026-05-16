@@ -9,6 +9,12 @@
       "line": "serpukhovsko_timiryazevskaya",
       "station_type": "abandoned_station",
       "inhabited": false,
+      "ui": {
+        "map_x": 140,
+        "map_y": 500,
+        "icon_type": "station",
+        "display_group": "nagornaya"
+      },
       "tags": ["abandoned", "dark_zone", "mutant_activity", "transit", "danger_node"],
       "population": 0,
       "resources": {

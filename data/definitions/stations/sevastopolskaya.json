@@ -9,6 +9,12 @@
       "line": "serpukhovsko_timiryazevskaya",
       "station_type": "frontier_stronghold",
       "inhabited": true,
+      "ui": {
+        "map_x": 140,
+        "map_y": 660,
+        "icon_type": "station",
+        "display_group": "sevastopolskaya"
+      },
       "tags": ["frontier", "military", "defensive", "mutant_pressure", "isolated"],
       "population": 520,
       "resources": {

@@ -9,6 +9,12 @@
       "line": "serpukhovsko_timiryazevskaya",
       "station_type": "abandoned_station",
       "inhabited": false,
+      "ui": {
+        "map_x": 140,
+        "map_y": 420,
+        "icon_type": "station",
+        "display_group": "nagatinskaya"
+      },
       "tags": ["abandoned", "dark_zone", "transit", "bandit_activity", "low_traffic"],
       "population": 0,
       "resources": {

@@ -9,6 +9,12 @@
       "line": "serpukhovsko_timiryazevskaya",
       "station_type": "transit_station_complex",
       "inhabited": true,
+      "ui": {
+        "map_x": 140,
+        "map_y": 260,
+        "icon_type": "station",
+        "display_group": "dobryninskaya_serpukhovskaya"
+      },
       "tags": ["station_complex", "transit", "independent"],
       "population": 260,
       "resources": {

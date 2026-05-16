@@ -9,6 +9,12 @@
       "line": "serpukhovsko_timiryazevskaya",
       "station_type": "small_outpost",
       "inhabited": true,
+      "ui": {
+        "map_x": 140,
+        "map_y": 340,
+        "icon_type": "station",
+        "display_group": "tulskaya"
+      },
       "tags": ["outpost", "transit", "low_population", "unstable"],
       "population": 120,
       "resources": {
