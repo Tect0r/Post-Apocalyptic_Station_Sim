@@ -15,6 +15,7 @@ def create_initial_npc_traders() -> dict[str, NpcTrader]:
             "trade_goods": 10
         },
         data={
+            "rest_duration_ticks": 30,
             "preferred_targets": [
                 "paveletskaya_radial",
                 "dobryninskaya_serpukhovskaya",

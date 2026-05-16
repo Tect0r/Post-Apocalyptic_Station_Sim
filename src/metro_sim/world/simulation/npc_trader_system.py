@@ -27,6 +27,13 @@ def process_single_trader_tick(
 ) -> list[WorldLogEntry]:
     logs: list[WorldLogEntry] = []
 
+    if trader.status == "resting":
+        return process_resting_trader_tick(
+            world=world,
+            trader_id=trader_id,
+            trader=trader,
+        )
+
     if trader.status != "idle":
         return logs
 
@@ -107,3 +114,33 @@ def choose_trader_target_station(
             return station_id
 
     return None
+
+def process_resting_trader_tick(
+    *,
+    world: WorldState,
+    trader_id: str,
+    trader: NpcTrader,
+) -> list[WorldLogEntry]:
+    if trader.rest_until_tick is None:
+        trader.status = "idle"
+        return []
+
+    if world.current_tick < trader.rest_until_tick:
+        return []
+
+    trader.status = "idle"
+    trader.rest_until_tick = None
+
+    return [
+        create_world_log_entry(
+            tick=world.current_tick,
+            category="npc_trader_rest_completed",
+            message=f"Trader {trader.name} is ready to travel again.",
+            target_type="npc_trader",
+            target_id=trader_id,
+            importance="debug",
+            data={
+                "current_station_id": trader.current_station_id,
+            },
+        )
+    ]

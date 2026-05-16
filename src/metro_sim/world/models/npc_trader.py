@@ -13,6 +13,7 @@ class NpcTrader:
     status: str = "idle"
     target_station_id: str | None = None
     active_movement_id: str | None = None
+    rest_until_tick: int | None = None
 
     inventory: dict[str, int] = field(default_factory=dict)
     data: dict[str, Any] = field(default_factory=dict)

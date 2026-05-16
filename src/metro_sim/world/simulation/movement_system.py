@@ -110,7 +110,10 @@ def apply_movement_completion_to_actor(
         if trader is None:
             return
 
+        rest_duration_ticks = int(trader.data.get("rest_duration_ticks", 30))
+
         trader.current_station_id = movement.to_station_id
         trader.target_station_id = None
         trader.active_movement_id = None
-        trader.status = "idle"
+        trader.status = "resting"
+        trader.rest_until_tick = world.current_tick + rest_duration_ticks
